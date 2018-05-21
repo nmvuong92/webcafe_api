@@ -127,7 +127,7 @@ namespace Web.Areas.Admin.Controllers
                 ct.Product.Id = item.SanPhamId;
                 ct.Product.Price = (int)item.DonGia;
                 ct.Product.MaSo = item.SanPham.MaSo;
-                ct.Product.ProductName = item.SanPham.ProductName;
+                ct.Product.ProductName = item.SanPham.ProductName+"<code>"+item.TenGia+"</code>";
                 ct.Product.ProductCatId = item.SanPham.ProductCatId;
                 ct.Product.ThumbnailImage = item.SanPham.ThumbnailImage;
                 lst.Add(ct);
@@ -172,15 +172,24 @@ namespace Web.Areas.Admin.Controllers
                 {
                     Id = s.Id,
                     ThucDonId = s.Id,
+                    GiaId = 0,//mac dinh la 0 => chế ra danh sách giá dựa vào bảng giá lúc đó append vào danh sách giá sẽ khác 0 (Id giá)
+                    
                     Product = new Product()
                     {
                         Id = s.Id,
                         ProductName = s.ProductName,
                         SoLuongGia = s.SoLuongGia,
-                        
                         Price = s.Price,
                         ThumbnailImage = s.ThumbnailImage,
-                    }
+                    },
+                    BangGia = s.BangGiaCT.ToList().Select(bg=>new BangGiaThucDonVM()
+                    {
+                        Id = bg.Id,
+                        Ten = bg.Ten,
+                        Price = bg.Price,
+                        ProductId = bg.ProductId,
+                        SoLuong = 0,
+                    }).ToList()
                 }).ToList();
             }
             return Json(thucdon, JsonRequestBehavior.AllowGet);

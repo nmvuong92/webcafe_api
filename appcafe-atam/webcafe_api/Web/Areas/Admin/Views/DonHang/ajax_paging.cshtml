@@ -44,7 +44,7 @@
             <td>
                 @foreach (var mon in item.CTDonHangs)
                 {
-                    <span>- @mon.SanPham.ProductName (@mon.SoLuong)</span><br />
+                    <span>- @mon.SanPham.ProductName <code>@mon.TenGia</code> (@mon.SoLuong)</span><br />
                 }
                 @if (item.HinhThucMuaHangId == 3)
                 {

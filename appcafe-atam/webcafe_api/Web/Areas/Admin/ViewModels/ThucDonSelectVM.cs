@@ -13,6 +13,13 @@ namespace Web.Areas.Admin.ViewModels
 
     public class ThucDonCTSelectVM : ThucDonCT
     {
+        public int GiaId { get; set; }
+        public int SoLuong { get; set; }
+        public List<BangGiaThucDonVM> BangGia { get; set; } 
+    }
+
+    public class BangGiaThucDonVM : BangGiaCT
+    {
         public int SoLuong { get; set; }
     }
 
