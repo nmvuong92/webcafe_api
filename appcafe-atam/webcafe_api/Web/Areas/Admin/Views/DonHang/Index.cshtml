@@ -500,17 +500,24 @@
             },
             methods: {
                 initial: function () {
-                    $.getJSON("@Url.Action("ajax_auth_ddlquan","Roles")", function (    ) {
-                        data.unshift({
+                    var ddl_temp = [
+                        {
                             Id: -1,
                             TenQuan: "-Tất cả quán-",
+                        }
+                    ];
+                    $.getJSON("@Url.Action("ajax_auth_ddlquan","Roles")", function (qdata) {
+                        if (qdata.length == 0) {
+                            swal("Tài khoản này chưa sở  hữu quán, vui lòng liên hệ quản trị viên!!!");
+                            return;
+                        }
+                        vueDonHang.ddlQuan = qdata;
+                        vueDonHang.ddlQuan.push({
+                            Id:-1,
+                            TenQuan:"-Tất cả quán-"
                         });
-                        vueDonHang.ddlQuan = data;
-                        $.getJSON("@Url.Action("ajax_lay_quan_mac_dinh","Roles")", function (idquanmacdinh) {
-                            var check=vueDonHang.ddlQuan.find(function(s){return s.Id==idquanmacdinh;});
-                            vueDonHang.QuanDefaultId = parseInt(check!=undefined?idquanmacdinh:-1);
-                            cls.fnInit();
-                        });
+                        vueDonHang.QuanDefaultId = qdata[0].Id;
+                        cls.fnInit();
                     });
                     $.getJSON("@Url.Action("ajax_ddl_trangthaidonhang", "Roles")", function (data) {
                         data.ddlTrangThaiGiaoHang.unshift({

@@ -34,12 +34,8 @@ namespace Web.Controllers
             ThanhToanVM vm = new ThanhToanVM();
             using (var __db = new vuong_cms_context())
             {
-        
-
                  //user
                 var uuu = MySsAuthUsers.GetAuth();
-
-
                 if (uuu != null)
                 {
                     var user = __db.Users.Find(uuu.ID);
