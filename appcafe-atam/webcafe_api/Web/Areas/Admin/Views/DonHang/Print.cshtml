@@ -50,7 +50,6 @@
         .clear {
             clear: both;
         }
-
         .text-center {
             text-align: center;
         }
@@ -134,14 +133,19 @@
                         <td>Số biên lai</td>
                         <td class="text-right">@Model.Id</td>
                     </tr>
+                    
                     <tr>
-                        <td>Dùng tại bàn</td>
-                        <td class="text-right">@Model.Ban</td>
+                        <td>HTMH</td>
+                        <td class="text-right">@Model.HinhThucMuaHang.Ten</td>
                     </tr>
-                    <tr>
-                        <td>Phục vụ bởi</td>
-                        <td class="text-right"></td>
-                    </tr>
+                    @if (Model.HinhThucMuaHangId == 1)
+                    {
+                        <tr>
+                            <td>Tại bàn</td>
+                            <td class="text-right">@Model.Ban</td>
+                        </tr>
+                    }
+                  
                     <tr>
                         <td>Thời gian</td>
                         <td class="text-right">@Model.CreatedDate.XuatDateTime()</td>
@@ -182,7 +186,7 @@
                             {
                                 tt++;
                                 <tr>
-                                    <td>@item.SanPham.ProductName <br/>@item.DonGia.ToMoneyStrHD()</td>
+                                    <td>@item.SanPham.ProductName @(item.GiaId!=0?"("+item.TenGia+")":"") <br/>@item.DonGia.ToMoneyStrHD()</td>
                                     <td class="text-right">@item.SoLuong</td>
                                     <td class="text-right">@item.ThanhTien.ToMoneyStrHD()</td>
                                 </tr>
