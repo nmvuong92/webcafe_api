@@ -440,9 +440,7 @@ $(document).on('input', '.clearable', function(){
 });
 
 function fnInit() {
-    $('.img-popup').magnificPopup({
-        type: 'image'
-    });
+  
 }
 
 

@@ -24,10 +24,13 @@ namespace Web.Areas.Admin.ViewModels
 
     public class GioHangVM
     {
+        
         public int ProductId { get; set; }
+        public int GiaId { get; set; }
         public int Price { get; set; }
         public int SoLuong { get; set; }
         public int ThucDonId { get; set; }
+        public string TenGia { get; set; }
 
         public int ThanhTien
         {

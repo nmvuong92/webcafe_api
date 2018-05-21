@@ -25,6 +25,11 @@
         margin-top: -4px;
         color: #555;
     }
+    .trselected {
+        background-color: #ffdede !important;
+        color: black !important;
+       
+    }
 </style>
 
 <div id="ViewTinTuc">
@@ -158,13 +163,13 @@
                         <table class="table table-bordered table-striped table-fixed">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    <th></th>
+                                    <th style="width:50px;"></th>
+                                    <th class="mobile_hid"></th>
                                     <th>SẢN PHẨM</th>
                                     <th>ĐƠN GIÁ</th>
-                                    <th>SỐ LƯỢNG</th>
+                                    <th style="width:100px;">SỐ LƯỢNG</th>
                                     <th>THÀNH TIỀN</th>
-                                    <th></th>
+                                   
                                 </tr>
                             </thead>
                             <tbody>
@@ -177,34 +182,26 @@
 
                                     </td>
                                 </tr>
-                                <tr v-for="(item,index) of giohang">
+                                <tr v-for="(item,index) of giohang" v-bind:class="{trselected:item.SoLuong>0}">
                                     <td>{{index+1}}</td>
-                                    <td>
+                                    <td class="mobile_hid">
                                         <img v-bind:src="item.Product.ThumbnailImage" style="width: 100px;" />
                                     </td>
                                     <td>
-                                        <span v-bind:class="{selected:item.SoLuong>0}" v-html="item.Product.ProductName"></span>
+                                        <span v-html="item.Product.ProductName"></span>
                                     </td>
                                     <td>
                                         <p class="font-bold">{{vmoney(item.Product.Price)}}</p>
                                     </td>
                                     <td>
-                                        <div class="input-group">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default btn-circle waves-effect waves-circle waves-float" type="button" v-on:click="selectThucDonCT(item,parseInt(item.SoLuong)-1,1);">-</button>
-                                            </span>
-                                            <input min="0" max="1000" style="height: 42px;" class="form-control" v-on:change="selectThucDonCT(item,item.SoLuong,1)" type="number" v-model="item.SoLuong" />
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default btn-circle waves-effect waves-circle waves-float" type="button" v-on:click="selectThucDonCT(item,parseInt(item.SoLuong)+1,1);">+</button>
-                                            </span>
-                                        </div>
+                                        <select v-model="item.SoLuong" v-on:change="fnCartChangeSL(item)" class="form-control">
+                                            <option v-for="item_sl of ddlSL" v-bind:value="item_sl">{{item_sl}}</option>
+                                        </select>
                                     </td>
                                     <td>
                                         {{vmoney(item.Product.Price*item.SoLuong)}}
                                     </td>
-                                    <td>
-                                        <button class="btn btn-danger btn-lg" v-if="item.SoLuong>0" v-on:click="removeCart(item);">BỎ CHỌN</button>
-                                    </td>
+                                   
                                 </tr>
                                 <tr>
                                     <td colspan="100%">
@@ -294,12 +291,12 @@
                                 <table class="table table-bordered table-striped" v-if="thucdonchon!=null">
                                     <thead>
                                         <tr>
-                                            <th></th>
-                                            <th></th>
+                                            <th style="width:50px;"></th>
+                                            <th class="mobile_hid"></th>
                                             <th>SẢN PHẨM</th>
                                             @*<th>ĐƠN GIÁ</th>*@
-                                            <th>SỐ LƯỢNG</th>
-                                            <th></th>
+                                            <th>TÊN GIÁ/ĐƠN GIÁ x SỐ LƯỢNG = THÀNH TIỀN</th>
+                                           
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -308,43 +305,35 @@
                                                 <div class="text-center animated fadeIn">0 sản phẩm</div>
                                             </td>
                                         </tr>
-                                        <tr v-for="(item,index) of thucdonchon.ThucDonCTSelectVM">
+                                        <tr v-for="(item,index) of thucdonchon.ThucDonCTSelectVM" v-bind:class="{trselected:item.SoLuong>0}">
                                             <td>{{index+1}}</td>
-                                            <td>
+                                            <td class="mobile_hid">
                                                 <img v-bind:src="item.Product.ThumbnailImage" style="width: 100px;" />
                                             </td>
                                             <td>
-                                                <span v-bind:class="{selected:item.SoLuong>0}" v-html="item.Product.ProductName"></span>
+                                                <span v-html="item.Product.ProductName"></span>
                                             </td>
                                             @*<td>
                                                 <p class="font-bold">{{vmoney(item.Product.Price)}}</p>
                                             </td>*@
                                             <td>
-                                                @*<div class="input-group">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default btn-circle waves-effect waves-circle waves-float" type="button" v-on:click="selectThucDonCT(item,parseInt(item.SoLuong)-1,2);">-</button>
-                                                    </span>
-                                                    <input min="0" max="1000" style="height: 42px;" class="form-control" v-on:change="selectThucDonCT(item,item.SoLuong,2)" type="number" v-model="item.SoLuong" />
-                                                    <span class="input-group-btn">
-                                                        <button class="btn btn-default btn-circle waves-effect waves-circle waves-float" type="button" v-on:click="selectThucDonCT(item,parseInt(item.SoLuong)+1,2);">+</button>
-                                                    </span>
-                                                </div>*@
+                                             
                                                 <table>
                                                     <tr>
                                                         <td>Niêm yết</td>
                                                         <td>{{vmoney(item.Product.Price)}}</td>
                                                         <td>
-                                                            <select v-model="item.SoLuong" v-on:change="fnCartChangeSL(item,1,item)" class="form-control">
+                                                            <select v-model="item.SoLuong" v-on:change="fnMenuChangeSL(item,1,item)" class="form-control">
                                                                 <option v-for="item_sl of ddlSL" v-bind:value="item_sl">{{item_sl}}</option>
                                                             </select>
                                                         </td>
                                                         <td>{{vmoney(item.Product.Price*item.SoLuong)}}</td>
                                                     </tr>
-                                                    <tr v-for="bg of item.BangGia">
-                                                        <td>{{bg.Ten}}</td>
+                                                    <tr v-for="bg of item.BangGia" v-bind:class="{trselected:bg.SoLuong>0}">
+                                                        <td>{{bg.ProductId}}-{{bg.Ten}}-{{bg.Id}}</td>
                                                         <td>{{vmoney(bg.Price)}}</td>
                                                         <td>
-                                                            <select v-model="bg.SoLuong" v-on:change="fnCartChangeSL(bg,2,item)" class="form-control">
+                                                            <select v-model="bg.SoLuong" v-on:change="fnMenuChangeSL(bg,2,item)" class="form-control">
                                                                 <option v-for="item_sl of ddlSL" v-bind:value="item_sl">{{item_sl}}</option>
                                                             </select>
                                                         </td>
@@ -352,9 +341,7 @@
                                                     </tr>
                                                 </table>
                                             </td>
-                                            <td>
-                                                <button class="btn btn-danger btn-lg" disabled="item.SoLuong==0" v-on:click="selectThucDonCT(item,0,2);">BỎ CHỌN</button>
-                                            </td>
+                                          
                                         </tr>
                                     </tbody>
                                 </table>
@@ -498,6 +485,7 @@
                 mode: 2,
                 QuanDefaultId: -1,
                 ddlQuan: [],
+                ddlSLC:[],
                 ddlSL:[],
                 ddlTrangThaiGiaoHang: [],
                 ddlTrangThaiThanhToan: [],
@@ -528,6 +516,9 @@
             methods: {
                 initial: function () {
                     for (var i = 0; i <= 100; i++) {
+                        if (i > 0) {
+                            this.ddlSLC.push(i);
+                        }
                         this.ddlSL.push(i);
                     }
                     var ddl_temp = [
@@ -646,21 +637,64 @@
                     return total;
                 },
                 removeCart:function(item) {
-                    for (var i = 0; i < this.giohang.length; i++) {
-                        if (this.giohang[i].Id == item.Id) {
-                            this.giohang.splice(i, 1);
-                            break;
+                    this.fnUpdateMenuSL(item.Id, item.GiaId,0, true);
+                },
+                fnUpdateMenuSL:function(__spid,__giaid,__sl,__is_remove_in_cart) {
+                    //remove in array
+                    if (__is_remove_in_cart|| __sl==0) {
+                        for (var i = 0; i < this.giohang.length; i++) {
+                            if (this.giohang[i].Id == __spid&&this.giohang[i].GiaId == __giaid) {
+                                this.giohang.splice(i, 1);
+                                break;
+                            }
                         }
                     }
-                    this.syncEdit();
+                   
+                    //xu ly thuc don ct
+                    outer_loop: 
+                        for (var i = 0; i < this.thucdon.length;i++) {
+                            dance:
+                                for (var j = 0; j < this.thucdon[i].ThucDonCTSelectVM.length; j++) { //search in menu
+                                    if (this.thucdon[i].ThucDonCTSelectVM[j].Id ==__spid && this.thucdon[i].ThucDonCTSelectVM[j].GiaId == __giaid) {
+                                        this.thucdon[i].ThucDonCTSelectVM[j].SoLuong = __sl;
+                                        break outer_loop;
+                                    } else { //search in gia phu
+                                        for (var k = 0; k < this.thucdon[i].ThucDonCTSelectVM[j].BangGia.length; k++) {
+                                            if (this.thucdon[i].ThucDonCTSelectVM[j].BangGia[k].ProductId == __spid
+                                                && this.thucdon[i].ThucDonCTSelectVM[j].BangGia[k].Id  == __giaid) {
+                                                this.thucdon[i].ThucDonCTSelectVM[j].BangGia[k].SoLuong = __sl;
+                                                break outer_loop;
+                                            }
+                                        }
+                                    }
+                                }
+                        }
                 },
                 ///type:1 niem yet, 2: gia phu
-                fnCartChangeSL:function(item,type,sanpham) { //item có thể là sanpham hoặc 1 bảng giá
+                fnMenuChangeSL:function(item,type,sanpham) { //item có thể là sanpham hoặc 1 bảng giá
+                   
+                    if (item.SoLuong == 0) {
+                        //remove in array
+                        var __giaid = -1;
+                        
+                            if (type == 1) {
+                                __giaid = item.GiaId;
+                            }else if (type == 2) {
+                                __giaid = item.Id;
+                            }
+                            for (var i = 0; i < this.giohang.length; i++) {
+                                if (this.giohang[i].Id == sanpham.Id&&this.giohang[i].GiaId == __giaid) {
+                                    this.giohang.splice(i, 1);
+                                    break;
+                                }
+                            }
+                            return;
+                    }
                     if (type == 1) { //nếu là giá niêm yết
                         //nếu tồn tại trong giỏ hàng thì cập nhật giá
                         var in_cart = false;
                         for (var i = 0; i < this.giohang.length; i++) {
-                            if (this.giohang[i].ProductId == item.Id && this.giohang[i].GiaId == item.GiaId) {
+                            if (this.giohang[i].Id == item.Id && this.giohang[i].GiaId == item.GiaId) {
                                 this.giohang[i].SoLuong = item.SoLuong;
                                 in_cart = true;
                                 break;
@@ -669,13 +703,14 @@
                         //nếu không tồn tại thì thêm mới vào giỏ hàng
                         if (!in_cart) {
                             var newCartItem = clone(sanpham);
+                            newCartItem.TenGia = "NY";
                             this.giohang.push(newCartItem);
                         }
-                    } else if(type==2){ //GIÁ PHỤ
+                    }else if(type==2){ //GIÁ PHỤ
                         //kt nếu tồn tại trong giỏ hàng thì cập nhật giá
                         var in_cart = false;
                         for (var i = 0; i < this.giohang.length; i++) {
-                            if (this.giohang[i].ProductId == item.ProductId && this.giohang[i].GiaId == item.Id) {
+                            if (this.giohang[i].Id == item.ProductId && this.giohang[i].GiaId == item.Id) {
                                 this.giohang[i].SoLuong = item.SoLuong;
                                 in_cart = true;
                                 break;
@@ -686,35 +721,14 @@
                             var newCartItem = clone(sanpham);
                             newCartItem.SoLuong = item.SoLuong;
                             newCartItem.GiaId = item.Id;
+                            newCartItem.TenGia = item.Ten;
                             this.giohang.push(newCartItem);
                         }
                     }
 
                 },
-                selectThucDonCT: function (_thucdonct, _sl,_type) {
-                    _thucdonct.SoLuong = _sl;
-                    if (_sl == 0) { //remove
-                        for (var i = 0; i < this.giohang.length; i++) {
-                            if (this.giohang[i].Id == _thucdonct.Id) {
-                                this.giohang.splice(i, 1);
-                                break;
-                            }
-                        }
-                    } else {
-                        //check exists
-                        var exists = false;
-                        //update so luong
-                        for (var i = 0; i < this.giohang.length; i++) {
-                            if (this.giohang[i].Id == _thucdonct.Id) {
-                                this.giohang[i].SoLuong = _thucdonct.SoLuong;
-                                exists = true;
-                                break;
-                            }
-                        }
-                        if (!exists) {
-                            this.giohang.push(_thucdonct);
-                        }
-                    }
+                fnCartChangeSL:function(item) {
+                    this.fnUpdateMenuSL(item.Id, item.GiaId, item.SoLuong,false);
                 },
                 vmoney:function(x) {
                     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "₫";
@@ -746,9 +760,12 @@
                             ProductId: this.giohang[i].Product.Id,
                             Price: this.giohang[i].Product.Price,
                             SoLuong: this.giohang[i].SoLuong,
-                            ThucDonId: this.giohang[i].ThucDonId
+                            ThucDonId: this.giohang[i].ThucDonId,
+                            TenGia: this.giohang[i].TenGia,
+                            GiaId: this.giohang[i].GiaId,
                         });
                     }
+                   
                     var ajaxops = {
                         url: "@Url.Action("ajax_dathang")",
                         param: JSON.stringify({ model: _model }),
@@ -774,21 +791,12 @@
                     }
                 },
 
-                syncEdit:function() {
-                    for (var i = 0; i < this.thucdon.length; i++) {
-                        for (var j = 0; j < this.thucdon[i].ThucDonCTSelectVM.length; j++) {
-                            var _timthucdonid = this.thucdon[i].ThucDonCTSelectVM[j].Id;
-
-                            var findx = this.giohang.find(function(s) {
-                                return s.ThucDonId == _timthucdonid;
-                            });
-
-                            if (findx != undefined) {
-                                this.thucdon[i].ThucDonCTSelectVM[j].SoLuong = findx.SoLuong;
-                            } else {
-                                this.thucdon[i].ThucDonCTSelectVM[j].SoLuong = 0;
-                            }
-                        }
+                syncEditCart:function() {
+                    for (var a = 0; a < this.giohang.length; a++) {
+                        var __giaid = this.giohang[a].GiaId;
+                        var __spid = this.giohang[a].Id;
+                        var __sl= this.giohang[a].SoLuong;
+                        this.fnUpdateMenuSL(__spid, __giaid,__sl, false);
                     }
                 },
 
@@ -824,7 +832,9 @@
                             vueDonHang.DiaChiGiaoHang = data.DiaChiGiaoHang;
                             vueDonHang.DSGopYJson = data.DSGopYJson;
                             //
-                            vueDonHang.syncEdit();
+                            vueDonHang.syncEditCart();
+
+                           
 
                         });
                     });
@@ -853,9 +863,12 @@
                             ProductId: this.giohang[i].Product.Id,
                             Price: this.giohang[i].Product.Price,
                             SoLuong: this.giohang[i].SoLuong,
-                            ThucDonId: this.giohang[i].ThucDonId
+                            ThucDonId: this.giohang[i].ThucDonId,
+                            TenGia: this.giohang[i].TenGia,
+                            GiaId: this.giohang[i].GiaId,
                         });
                     }
+                  
                     var ajaxops = {
                         url: "@Url.Action("ajax_edit_dathang")",
                         param: JSON.stringify({ model: _model }),

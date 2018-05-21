@@ -109,6 +109,9 @@ namespace Web.Areas.Admin.Controllers
             dh.TrangThaiThanhToanId = en.TrangThaiThanhToanId;
             dh.GhiChuDonHang = en.GhiChuDonHang;
             dh.Ban = en.Ban;
+            dh.DiaChiGiaoHang = en.DiaChiGiaoHang;
+            dh.SDT = en.SDT;
+            dh.YeuCauKhac = en.YeuCauKhac;
 
             List<ThucDonCTSLVM> lst = new List<ThucDonCTSLVM>();
 
@@ -248,6 +251,7 @@ namespace Web.Areas.Admin.Controllers
                 dh.Ban = model.Ban;
 
 
+                
                
                 dh.SDT = model.SDT;
                 dh.YeuCauKhac = model.YeuCauKhac;
@@ -262,6 +266,8 @@ namespace Web.Areas.Admin.Controllers
                         ThanhTien = item.ThanhTien,
                         SoLuong = item.SoLuong,
                         ThucDonId = item.ThucDonId,
+                        GiaId = item.GiaId,
+                        TenGia = item.TenGia,
                     });
                 }
 
@@ -293,7 +299,11 @@ namespace Web.Areas.Admin.Controllers
                     donhang.HinhThucMuaHangId = model.HinhThucMuaHangId;
                     donhang.ModifiedDate = DateTime.Now;
                     donhang.TongTienHang = model.GioHang.Sum(s => (int?)(s.Price * s.SoLuong)) ?? 0;
-             
+
+                    donhang.SDT = model.SDT;
+                    donhang.YeuCauKhac = model.YeuCauKhac;
+                    donhang.DiaChiGiaoHang = model.DiaChiGiaoHang;
+
                     __db.SaveChanges();
                     // Delete children
                     var itemsToDelete = __db.CTDonHangs.Where(x => x.DonHangID==model.DonHangId);
@@ -309,8 +319,10 @@ namespace Web.Areas.Admin.Controllers
                             SoLuong = item.SoLuong,
                             ThucDonId = item.ThucDonId,
                             SanPhamId=item.ProductId,
-                            ThanhTien = item.Price*item.SoLuong,
+                            ThanhTien = item.ThanhTien,
                             DonHangID = model.DonHangId,
+                            GiaId = item.GiaId,
+                            TenGia = item.TenGia,
                         });
                     }
                     __db.CTDonHangs.AddRange(lst);
