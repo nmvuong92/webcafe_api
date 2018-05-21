@@ -1,0 +1,72 @@
+﻿@model IEnumerable<VD.Data.Model.Role>
+
+
+@{
+    
+    ViewBag.Title = "Roles";
+    ViewBag.Title2 = "List";
+    Layout = "~/Views/Shared/_md.cshtml";
+}
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-bordered" id="dataTables">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>Permistions</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            
+            <tr>
+                <td>
+                  @item.Name
+                </td>
+                <td>
+                  @foreach (var per in item.Permissions)
+                  {
+                      <code>@per.Name</code>
+                  }
+                </td>
+                <td>
+                    <a class="btn btn-success btn-xs" href="@Url.Action("Edit",new{id=item.ID})"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-danger btn-xs" href="javascript:void(0);" onclick="fnDelete(@item.ID,$(this))"><i class="fa fa-remove"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script type="text/javascript">
+    var fnDelete = function (_id, thiss) {
+        if (confirm("Are you sure?") == true) {
+            fnPostPaging("@Url.Action("Delete")",
+                "POST",
+                JSON.stringify({ id: _id }), "json",
+                function () { //Before
+
+                },
+                function (data) { //Success
+
+                    if (!data.r) {
+                        alert(data.m);
+                    } else {
+                        myDataTable.row(thiss.parents('tr')).remove().draw();
+                    }
+                },
+                function () { //Complete
+
+                });
+        }
+    }
+
+</script>

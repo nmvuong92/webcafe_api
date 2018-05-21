@@ -1,0 +1,219 @@
+﻿@model Web.ViewModels.MF.ChiTietSanPhamView
+@{
+    ViewBag.Title = Model.SanPham.ProductName;
+    Layout = "~/Views/Shared/_layout.cshtml";
+
+    string back_url = myBase64EncodeDecode.EncodeBase64(Request.RawUrl);
+}
+
+<link rel="stylesheet" href="/Content/lightslider/src/css/lightslider.css" />
+<style>
+    ul {
+        list-style: none outside none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    .demo .item {
+        margin-bottom: 60px;
+    }
+
+    .content-slider li {
+        background-color: #ed3020;
+        text-align: center;
+        color: #FFF;
+    }
+
+    .content-slider h3 {
+        margin: 0;
+        padding: 70px 0;
+    }
+
+    .demo {
+        width: 100%;
+    }
+
+    .lSPager {
+        margin-top: -200px;
+    }
+
+        .lSPager .active {
+            opacity: 0.5;
+            border: 2px gray solid;
+        }
+</style>
+
+<!-- === BEGIN CONTENT === -->
+
+@*<div id="container" class="background-white">
+    <div class="row">
+        <div class="col-md-12">
+            @Html.myBreadCrumbs(new List<MvcHtmlString>()
+            {
+                new MvcHtmlString("<a href='" + Url.Action("Index", "SanPham", new { catid = string.Empty }) + "'>" + mui.mui.product + "</a>"),
+                new MvcHtmlString("<a href='" + Url.Action("Index", "SanPham", new { catid = Model.SanPham.ProductCatId }) + "'>" +  Model.SanPham.ProductCat.Name + "</a>"),
+
+            }, Model.SanPham.ProductName)
+            <div class="text-center">
+                <div class="content-title">
+                    <h2 class="title"> Chi tiết</h2>
+                    <p class="info-title">@Model.SanPham.ProductName</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+
+<!-- News -->
+<div class="container" style="margin-top: 15px;">
+    <div class="row">
+        <div class="sp">
+            <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+
+
+                <!-- Tab panes -->
+                <div class="tab-content text-center" style="position: relative; width: 100%; overflow: hidden;">
+                    <div class="tab-pane active text-center" id="home">
+                        <div class="demo text-center">
+                            <div class="item  text-center">
+                                <div class="clearfix" style="max-width:650px;margin:0px auto;">
+                                    <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
+
+                                        @if (Model.SanPham.ImgTmp != null)
+                                        {
+                                            foreach (var item in Model.SanPham.ImgTmp.ImgTmpDetails)
+                                            {
+                                                <li data-thumb="@item.Thumbnail">
+                                                    <img src="@item.FullImage" />
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 thongtinsp">
+
+                <div class="padding-10">
+                    @Html.Raw(Model.SanPham.Infomation)
+                </div>
+                <h4 class="padding-10">
+
+                    @if (Model.SanPham.IsGiamGia)
+                    {
+                        <span class="price">@Model.SanPham.GiamGiaCon.ToMoneyStr()</span>
+                        <span class="price-off">@Model.SanPham.Price.ToMoneyStr()</span>
+                    }
+                    else
+                    {
+                        <span class="price-off">@Model.SanPham.Price.ToMoneyStr()</span>
+                    }
+                    <span class="VAT">VAT: 0%</span>
+                </h4>
+
+                <div class="button padding-10">
+                    @using (Html.BeginForm("ThemSanPham", "DonHang", FormMethod.Post))
+                    {
+
+                        @Html.Hidden("SanPhamId", Model.Id)
+                        @Html.Hidden("back_url", back_url)
+                        <input id="dQy" name="SoLuong" value="1" min="1" max="1000" type="number">
+                        <button class="btn btn-warning" type="submit">
+                            <i class="glyphicon glyphicon-shopping-cart"></i> Đặt hàng
+                        </button>
+                        <button type="button" class="btn btn-warning"><a href="@Url.Action("HuongDanMuaHang","TinTuc")" onclick="return ModelGuide();"><i class="fa fa-align-left"></i> Hướng dẫn mua hàng </a> </button>
+                    }
+                    <div class="clearfix"></div>
+                    <div class=" padding-top-20">
+                        <div class="share-fotter product clearfix">
+                            <span>CHIA SẺ</span><span class="border-share"> | </span> <i class="fa fa-2x fa-facebook padding-horiz-20"></i><i class="fa fa-2x  fa-twitter padding-horiz-20"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="infodetail">
+                <div class="col-xs-12 caption-product pad-0">
+                    <div class="text-center">
+                        <div class="content-title">
+                            <h2 class="title"> Thông tin sản phẩm</h2>
+                            <p class="info-title">@Model.SanPham.ProductName</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class=" margin-horiz-40 padding-10 margin-bottom-40">
+                    @Html.Raw(Model.SanPham.Infomation)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="col-xs-12 caption-product pad-0">
+        <div class="text-center">
+            <div class="content-title">
+                <h2 class="title"> Sản phẩm khác </h2>
+                <p class="info-title"> Có thể bạn thích </p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- Icons -->
+        @foreach (var item in Model.SanPhamLienQuan)
+        {
+            string link = Url.Action("Detail", new { id = item.Id, seo_title = item.ProductName.URLFriendly() });
+            <div class="col-md-3 text-center product-item">
+                <div class="img">
+                    <a href="@link"><img src="@item.ThumbnailImage" alt=""></a>
+                </div>
+                <h4 class="padding-top-10 animate fadeIn">
+                    <a href="@link">@item.ProductName</a>
+                </h4>
+                <h5>
+                    @if (item.IsGiamGia)
+                    {
+                        <span class="price">@item.GiamGiaCon.ToMoneyStr()</span>
+                        <span class="price-off">@item.Price.ToMoneyStr()</span>
+                    }
+                    else
+                    {
+                        <span class="price-off">@item.Price.ToMoneyStr()</span>
+                    }
+                </h5>
+                <!--<span class="sticker-discount sprite sprite-productlist-sticker-discount"> -30% </span>-->
+                <a href="@link"><p class="link small">Xem chi tiết <i class="fa fa-angle-double-right"></i></p></a>
+            </div>
+        }
+    </div>
+</div>
+<!-- End News -->
+<!-- === END CONTENT === -->
+@section JS{
+    <script src="/Content/lightslider/src/js/lightslider.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#content-slider").lightSlider({
+                loop: true,
+                keyPress: true
+            });
+            $('#image-gallery').lightSlider({
+                autoWidth: false,
+                gallery: true,
+                item: 1,
+                thumbItem: 9,
+                slideMargin: 5,
+                speed: 500,
+                auto: @Json.Encode(Model.SanPham.ImgTmp.ImgTmpDetails.Count>=2),
+                loop: @Json.Encode(Model.SanPham.ImgTmp.ImgTmpDetails.Count>=2),
+                onSliderLoad: function () {
+                    $('#image-gallery').removeClass('cS-hidden');
+                }
+            });
+        });
+    </script>
+}

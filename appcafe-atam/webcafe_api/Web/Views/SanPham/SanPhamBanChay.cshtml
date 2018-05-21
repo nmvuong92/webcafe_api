@@ -1,0 +1,40 @@
+﻿@model IEnumerable<VD.Data.Entity.MF.Product>
+
+<div class="container padding-40">
+    <div class="col-xs-12 caption-product padding-40">
+        <div class="text-center">
+            <div class="content-title">
+                <h2 class="title"> Sản phẩm bán chạy</h2>
+                <p class="info-title">Có thể bạn thích</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- Icons -->
+        @foreach (var item in Model)
+        {
+            string link = Url.Action("Detail", new { id = item.Id, seo_title = item.ProductName.URLFriendly() });
+            <div class="col-md-3 text-center product-item">
+                <div class="img">
+                    <a href="@link"><img src="@item.ThumbnailImage" alt=""></a>
+                </div>
+
+                <h4 class="padding-top-10 animate fadeIn"><a href="@link">@item.ProductName</a></h4>
+
+                <h5>
+                    @if (item.IsGiamGia)
+                    {
+                        <span class="price">@item.GiamGiaCon.ToMoneyStr()</span>
+                        <span class="price-off">@item.Price.ToMoneyStr()</span>
+                    }
+                    else
+                    {
+                        <span class="price-off">@item.Price.ToMoneyStr()</span>
+                    }
+                </h5>
+                <!--<span class="sticker-discount sprite sprite-productlist-sticker-discount"> -30% </span>-->
+                <a href="@link"><p class="link small">Xem chi tiết <i class="fa fa-angle-double-right"></i></p></a>
+            </div>
+        }
+    </div>
+</div>

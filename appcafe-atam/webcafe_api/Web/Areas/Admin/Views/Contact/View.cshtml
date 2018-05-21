@@ -1,0 +1,86 @@
+﻿@model VD.Data.Entity.MF.Contact
+
+@{
+   
+    Layout = "~/Views/Shared/_bootstrap_modal.cshtml";
+    IEnumerable<SelectListItem> ddlRole = ViewBag.ddlRole;
+}
+<style>
+    .group{
+        border:1px #f7f6f6 solid;
+        padding:2px;
+        border-radius:15px;
+        margin:10px 0px;
+    }
+    .group h2{
+        margin:0px; 
+        padding:0px;
+        font-size:0.8em;
+       text-align:center;
+       
+    }
+</style>
+
+
+
+<div class="modal-body">
+   
+
+    <div class="group">
+        <h2>Tiêu đề</h2>
+        @Model.TieuDe
+    </div>
+    <div class="group">
+        <h2>Nội dung</h2>
+        @Model.NoiDung
+    </div>
+
+    <div class="group">
+        <h2>Họ tên</h2>
+        @Model.HoTen
+    </div>
+    <div class="group">
+        <h2>Địa chỉ</h2>
+        @Model.DiaChi
+    </div>
+
+    <div class="group">
+        <h2>Email</h2>
+        @Model.Email
+
+    </div>
+
+
+    <div class="group">
+        <h2>SĐT</h2>
+        @Model.SDT
+
+    </div>
+    <div class="group">
+        <h2>Công ty</h2>
+        @Model.CompanyName
+    </div>
+
+    <div class="group">
+        <h2>Trạng thai</h2>
+        @Html.Raw(Model.ContactStatus.NameHtml)
+
+    </div>
+
+    @if (Model.KetQuaGuiMail == true)
+    {
+        <div style="color:red;background-color: yellow;">
+            @Html.Raw(Model.LoiGuiMail)
+        </div>
+    }
+    else
+    {
+        <p><i class="fa fa-checked">Gửi email thành công</i></p>
+    }
+
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">@mui.mui.cancel</button>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+﻿@using VD.Data.Entity.MF
+@model IQueryable<VD.Data.Entity.MF.Catalog>
+@{
+    var mot = Model.FirstOrDefault();
+    List<Catalog> conlai = null;
+    if (mot != null)
+    {
+        conlai = Model.Where(w => w.Id != mot.Id).ToList();
+    }
+}
+<div id="icons">
+    <div class="row">
+        <!-- Icons -->
+            @if (mot != null)
+            {
+                <div class="@mot.CssClassDiv">
+                    <a href="@mot.Url" target="@mot.Target"><img class="@mot.CssClass" src="@mot.HinhAnh" alt=""></a>
+                </div>
+            }
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 no-padding">
+            @if (conlai != null && conlai.Any())
+            {
+                foreach (var item in conlai)
+                {
+                        <div class="@item.CssClassDiv">
+                            <a href="@item.Url"><img class="@item.CssClass" src="@item.HinhAnh" alt=""></a>
+                        </div>
+                }
+            }
+      
+        </div>
+    </div>
+</div>
+
+
+
+

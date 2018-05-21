@@ -1,0 +1,17 @@
+﻿@model Web.Areas.Admin.ViewModels.GiaVipVM
+@{
+    ViewBag.Title = "Giá nâng cấp thành viên VIP";
+    ViewBag.Title2 = "Paging row per page";
+    Layout = "~/Views/Shared/_md.cshtml";
+}
+@using (Html.BeginForm())
+{
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.menh_gia_the_cao_mua_thanh_vien_vip1)
+        @Html.TextBoxFor(m => m.menh_gia_the_cao_mua_thanh_vien_vip1, new { @class = "form-control num" })
+    </div>
+
+
+    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update setting</button>
+}

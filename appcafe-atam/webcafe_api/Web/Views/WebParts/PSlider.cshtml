@@ -1,0 +1,47 @@
+﻿@model IEnumerable<VD.Data.Entity.MF.Slider>
+
+<div id="slideshow">
+    <div class="no-padding background-white">
+        <div class="row">
+            <!-- Carousel Slideshow -->
+            <div id="carousel-example" class="carousel slide padding-bottom-40" data-ride="carousel">
+                <!-- Carousel Indicators -->
+                <ol class="carousel-indicators">
+                    @{
+                        bool first_active = true;
+                        int islide = 0;
+                    }
+
+                    @foreach (var item in Model)
+                    {
+                        <li data-target="#carousel-example" data-slide-to="@islide" class="@(first_active?"active":"")"></li>
+                        first_active = false;
+                        islide++;
+                    }
+                </ol>
+                <div class="clearfix"></div>
+                <!-- End Carousel Indicators -->
+                <!-- Carousel Images -->
+                <div class="carousel-inner">
+                    @{
+                        first_active = true;
+                    }
+                    @foreach (var item in Model)
+                    {
+                        <a src="@item.Url">
+                            <div class="item @(first_active?"active":"")">
+                                <img src="@item.Image" alt="">
+                            </div>
+                        </a>
+                        first_active = false;
+                    }
+                </div>
+                <!-- End Carousel Images -->
+                <!-- Carousel Controls -->
+                <a class="left carousel-control" href="#carousel-example" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> </a> <a class="right carousel-control" href="#carousel-example" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span> </a>
+                <!-- End Carousel Controls -->
+            </div>
+            <!-- End Carousel Slideshow -->
+        </div>
+    </div>
+</div>

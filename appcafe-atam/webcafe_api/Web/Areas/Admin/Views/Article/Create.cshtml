@@ -1,0 +1,147 @@
+﻿@model Web.Areas.Admin.ViewModels.MF.ArticleCRUD
+@{
+    ViewBag.Title = "Article";
+    ViewBag.Title2 = "Tạo mới";
+    Layout = "~/Views/Shared/_bootstrap_modal.cshtml";
+    List<SelectListItem> ddlCategory = ViewBag.ddlCategory;
+}
+
+<div class="modal-body">
+    @using (Ajax.BeginForm("Create", "Article", FormMethod.Post, new AjaxOptions { OnSuccess = "fnOnSuccess" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="show_err" style="color:red;">
+            @Html.ValidationSummary(false)
+        </div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Title, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.SEOTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.SEOTitle, new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.SEOTitle, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control  sEditor" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Content, new { @class = "form-control fEditor" })
+                    @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.CategoryId, ddlCategory, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FontAwesomeIcon, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.FontAwesomeIcon, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.FontAwesomeIcon, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ImageThumbnail, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.ImageThumbnail, new { @class = "form-control", @style = "display: none;" })
+                    @Html.ValidationMessageFor(model => model.ImageThumbnail, "", new { @class = "text-danger" })
+                    <div class="ajaxImg" style="position: relative;">
+
+                        <img alt="User Pic" src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/128/image-up-icon.png" id="profile-image1" class="img-circle img-responsive">
+
+                        <input id="profile-image-upload" class="hidden" type="file" data-val="#ImageThumbnail" />
+                        <div style="color:#999;">@mui.mui.click_here_change_image</div>
+                        <div style="position: absolute; top:0px; right:50%;">
+                            <input type="checkbox" id="cbCLC" /> Up ảnh lớn
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">@mui.mui.cancel</button>
+            <button type="submit" class="btn btn-primary">@mui.mui.save</button>
+        </div>
+    }
+</div>
+
+
+<script>
+    function fnOnSuccess(data) {
+        if (data.r) {
+            $('#modalCRUD').modal('hide');
+            cls.fnReload();
+        } else {
+            toastr.error(data.m);
+        }
+    }
+
+    $("#Title").keyup(function() {
+        $("#SEOTitle").val(bodauTiengViet($(this).val()));
+    });
+</script>
+
+
+
+
+<script>
+    $(function () {
+        $('#profile-image1').on('click', function () {
+            $('#profile-image-upload').click();
+        });
+    });
+    $("#profile-image-upload").change(function () {
+        var formData = new FormData();
+        var returnVal = $($(this).data("val"));
+        var totalFiles = document.getElementById("profile-image-upload").files.length;
+        for (var i = 0; i < totalFiles; i++) {
+            var file = document.getElementById("profile-image-upload").files[i];
+            formData.append("profile-image-upload", file);
+            formData.append("pathAppSettings", "path_img_article");
+            if ($("#cbCLC").is(":checked")) {
+                formData.append("sw", "2000");
+                formData.append("sh", "2000");
+            }
+        }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UploadImg","Ajax",new{area="Admin"})',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $("#profile-image1").attr("src", response.v);
+                returnVal.val(response.v);
+            },
+            error: function (error) {
+                alert("errror");
+            }
+        });
+    });
+</script>
+<script>
+    fnInitEditor($("#myModal"));
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $('.divEditor').addClass('animated bounce');
+    });
+</script>

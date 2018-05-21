@@ -1,0 +1,45 @@
+﻿@model VD.Data.Paging.PG<VD.Data.Entity.MF.ProductCat>
+
+@if (Model.L.Any())
+{
+
+    foreach (var item in Model.L)
+    {
+
+        <tr>
+
+            <td>
+                <input type="checkbox" class="cb_item" value="@item.Id" />
+            </td>
+            <td>
+                <a class="btn btn-default btn-xs waves-effect" onclick="clsProduct.fnShowEdit(@item.Id,$(this))">@item.Id</a>
+            </td>
+            <td>@item.Name</td>
+            <td>
+                <a class="img-popup" href="@item.ImageThumbnail">
+                    <img src="@item.ImageThumbnail" width="50px;" />
+                </a>
+            </td>
+            <td><span class="label label-@(item.Products.Count > 0 ? "success" : "default")">@item.Products.Count</span></td>
+            <td>[@item.Quan.MaQuan] @item.Quan.TenQuan</td>
+            @*<td>
+                <div class="btn-group">
+                    <a class="btn btn-default waves-effect" title="Chỉnh sửa" onclick="clsProduct.fnShowEdit(@item.Id,$(this))"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default waves-effect" title="Xóa" onclick="clsProduct.fnDelete(@item.Id,$(this))"><i class="fa fa-remove"></i></a>
+                </div>
+            </td>*@
+    </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="100%" class="nodata">Empty</td>
+    </tr>
+}
+<tr class="trfooter">
+    <td colspan="100%">
+        @Html.Raw(Model.thongtinphantrang)
+    </td>
+</tr>
+

@@ -1,0 +1,17 @@
+﻿@model Web.Areas.Admin.ViewModels.SettingRppVM
+@{
+    ViewBag.Title = "Setting";
+    ViewBag.Title2 = "Paging row per page";
+    Layout = "~/Views/Shared/_md.cshtml";
+}
+@using (Html.BeginForm())
+{
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.row_per_page)
+        @Html.TextBoxFor(m => m.row_per_page, new { @class = "form-control num" })
+    </div>
+
+
+    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update setting</button>
+}

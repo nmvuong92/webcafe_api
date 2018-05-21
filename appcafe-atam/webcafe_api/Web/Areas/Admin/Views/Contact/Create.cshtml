@@ -1,0 +1,92 @@
+﻿
+@model Web.ViewModels.Admin.Form.Users.FrmCreateUserVM
+
+@{
+    ViewBag.Title = "USERS";
+    ViewBag.Title2 = "CREATE NEW";
+    Layout = "~/Views/Shared/_bootstrap_modal.cshtml";
+    IEnumerable<SelectListItem> ddlRole = ViewBag.ddlRole;
+}
+
+        @using (Ajax.BeginForm("Create", "Users", FormMethod.Post, new AjaxOptions { OnSuccess = "fnOnSuccess" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="show_err" style="color:red;">
+                @Html.ValidationSummary(false)
+            </div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-md-6 col-sm-6 form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.HoTen, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.HoTen, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.HoTen, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DiaChi, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DienThoai, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.DienThoai, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DienThoai, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Role</label>
+                        <div class="col-md-10">
+                            @Html.DropDownListFor(m => m.RoleID, ddlRole, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">@mui.mui.cancel</button>
+        <button type="submit" class="btn btn-primary">@mui.mui.save</button>
+    </div>
+            
+        }
+
+
+
+
+<script>
+    function fnOnSuccess(data) {
+        $('#myModal').modal('hide');
+        cls.fnReload();
+    }
+</script>

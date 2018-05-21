@@ -1,0 +1,200 @@
+﻿@model VD.Data.Entity.MF.DonHang
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Print</title>
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #FAFAFA;
+            font: 12pt "Tahoma";
+        }
+
+        * {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        .page {
+            width: 6cm;
+            min-height: 297mm;
+           /* padding: 20mm;
+            margin: 10mm auto;
+            border: 1px #D3D3D3 solid;
+            border-radius: 5px;
+            background: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);*/
+        }
+
+        .subpage {
+            /*
+                padding: 1cm;
+            border: 5px red solid;
+            height: 257mm;
+            outline: 2cm #FFEAEA solid;
+            */
+        }
+
+        .left {
+            float: left;
+        }
+
+        .right {
+            float: right;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .header {
+            position: relative;
+        }
+
+        .dot {
+            border: none;
+            border-bottom: 1px dotted #f00;
+            font-weight: bold;
+        }
+
+        * {
+            font-family: "Times New Roman";
+        }
+
+        .table {
+            margin-top: 15px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            .table td, .table th {
+                border: 1px #ffffff solid;
+            }
+
+        @@page {
+            size: A4;
+            margin: 0;
+        }
+
+        @@media print {
+            html, body {
+                width: 210mm;
+                height: 297mm;
+            }
+
+            .page {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: initial;
+                background: initial;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="book">
+        <div class="page">
+            <div class="subpage">
+                <div class="header">
+                    <div class="text-center" >
+                    
+                        <div style="font-size: 0.8em;padding-left: 10px;">
+                            <strong>@Model.Quan.TenQuan</strong>
+                            <br />@Model.Quan.DiaChi
+                            <br/>SĐT: @Model.Quan.DienThoai
+                        </div>
+                        <p style="font-weight: bold;">BIÊN LAI</p>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                <hr style="border-top: dotted 1px;" />
+                <table>
+                    <tr>
+                        <td>Số biên lai</td>
+                        <td class="text-right">@Model.Id</td>
+                    </tr>
+                    <tr>
+                        <td>Dùng tại bàn</td>
+                        <td class="text-right">@Model.Ban</td>
+                    </tr>
+                    <tr>
+                        <td>Phục vụ bởi</td>
+                        <td class="text-right"></td>
+                    </tr>
+                    <tr>
+                        <td>Thời gian</td>
+                        <td class="text-right">@Model.CreatedDate.XuatDateTime()</td>
+                    </tr>
+                </table>
+                <hr style="border-top: dotted 1px;" />
+                <div class="main">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                              
+                                <th>Mặt hàng</th>
+                                <th style="width: 1cm" class="text-right">SL</th>
+                                <th class="text-right">Số tiền</th>
+                            </tr>
+                            @{
+                                int tt = 0;
+                            }
+                            @foreach (var item in Model.CTDonHangs)
+                            {
+                                tt++;
+                                <tr>
+                                    <td>@item.SanPham.ProductName <br/>@item.DonGia.ToMoneyStrHD()</td>
+                                    <td class="text-right">@item.SoLuong</td>
+                                    <td class="text-right">@item.ThanhTien.ToMoneyStrHD()</td>
+                                </tr>
+                            }
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <td class="text-left" colspan="2">Tổng cộng</td>
+                                <td class="text-right">@Model.TongTienHang.ToMoneyStrHD()</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <hr style="border-top: dotted 1px;" />
+         
+              
+                <div class="footer text-center" style="margin-top:15px;">
+
+                    <p>Cảm ơn & chúc bạn một ngày tuyệt vời</p>
+
+                </div>
+            </div>
+        </div>
+        @*<div class="page">
+                <div class="subpage">Page 2/2</div>
+         </div>*@
+    </div>
+    <script>
+        window.print();
+    </script>
+</body>
+
+</html>

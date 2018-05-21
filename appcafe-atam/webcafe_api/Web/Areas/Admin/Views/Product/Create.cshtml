@@ -1,0 +1,206 @@
+﻿@using Web.App_Code
+@model Web.Areas.Admin.ViewModels.MF.ProductCRUD
+@{
+    ViewBag.Title = Model.ProductCat.Quan.TenQuan + " | " + Model.ProductCat.Name;
+    Layout = "~/Views/Shared/_bootstrap_modal.cshtml";
+}
+
+
+<div class="modal-body">
+    @using (Ajax.BeginForm("Create", "Product", FormMethod.Post, new AjaxOptions { OnSuccess = "fnOnSuccess" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.ProductCatId)
+        <div class="show_err" style="color:red;">
+            @Html.ValidationSummary(false)
+        </div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                @Html.RequiredLabelFor(model => model.ProductName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.RequiredLabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-sm-2" })
+                <div class="col-sm-5 col-sm-5">
+                    @Html.TextBoxFor(model => model.Price, new { @class = "form-control num" })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">Giá khác (tối đa 10 giá)</label>
+                <div class="col-md-10">
+                    <table class="table table-bordered" id="tblThemSP">
+                        <thead>
+                            <tr>
+                                <th>#STT</th>
+                                <th>Tên giá</th>
+                                <th>Giá bán</th>
+                                <th>...</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var i = 0; i < 10; i++)
+                            {
+                                <tr class="tr_gia" style="display: none;">
+                                    <td>@(i + 1)</td>
+                                    <td>@Html.TextBoxFor(model => model.BangGiaCT[i].Ten, new { @class = "form-control" })</td>
+                                    <td>@Html.TextBoxFor(model => model.BangGiaCT[i].Price, new { @class = "form-control num" })</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-xs waves-effect btn-default" onclick="clsThemSP.fnXoa($(this));"><i style="color:red;" class="fa fa-remove"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <td colspan="100%">
+                                    <div class="text-center">
+                                        <button type="button" onclick="clsThemSP.ThemTruongGia();" class="btn btn-xs waves-effect btn-default"><i class="fa fa-plus"></i> Thêm giá</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.RequiredLabelFor(model => model.Infomation, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Infomation, new { @class = "form-control fEditor" })
+                    @Html.ValidationMessageFor(model => model.Infomation, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*<div class="form-group">
+                    @Html.RequiredLabelFor(model => model.ProductCatId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @{Html.RenderAction("ddlParent", "ProductCat", new { name = Html.IdFor(m => m.ProductCatId), SelectedValue = Model.ProductCatId });}
+                    </div>
+                </div>*@
+            <div class="demo-checkbox">
+                <div class="col-md-2"></div>
+                <div class="col-md-10">
+                    @Html.CheckBoxFor(model => model.IsGiamGia, new { })
+                    @Html.RequiredLabelFor(model => model.IsGiamGia, htmlAttributes: new { @class = "" })
+
+                    @Html.CheckBoxFor(model => model.Hot, new { })
+                    @Html.RequiredLabelFor(model => model.Hot, htmlAttributes: new { @class = "" })
+
+                    @Html.CheckBoxFor(model => model.New, new { })
+                    @Html.RequiredLabelFor(model => model.New, htmlAttributes: new { @class = "" })
+
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="header bg-blue-grey">
+                    <h2>
+                        Hình ảnh <small>Tải ảnh lên...</small>
+                    </h2>
+                    <ul class="header-dropdown m-r--5">
+                        <li>
+                            <a href="javascript:void(0);">
+                                <i class="material-icons">mic</i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body">
+                    @Html.TextBoxFor(model => model.ThumbnailImage, new { @class = "form-control", @style = "display: none;" })
+                    <div class="ajaxImg text-center">
+                        <img alt="User Pic" src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/128/image-up-icon.png" id="profile-image1">
+                        <input id="profile-image-upload" class="hidden" type="file" data-val="#@(Html.IdFor(m => m.ThumbnailImage))" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">@mui.mui.cancel</button>
+            <button type="submit" class="btn btn-primary">@mui.mui.save</button>
+        </div>
+    }
+</div>
+
+
+<script type="text/javascript">
+    var clsThemSP = new function() {
+        var self = this;
+        self.SLGia = 0;
+        self.ThemTruongGia = function() {
+            if (self.SLGia + 1 <= 10) {
+                self.SLGia++;
+            }else {
+                alert("Tối đa 10 giá phụ!");
+            }
+            self.init();
+        }
+        self.fnXoa = function (that) {
+            that.closest(".tr_gia").find("input[type=text]").val("");
+            $('.tbody_gia').append(that.closest(".tr_gia"));
+            if (self.SLGia - 1 >= 0) {
+                self.SLGia--;
+            }
+            self.init();
+        }
+        self.init = function() {
+            for (var i = 0; i < $("#tblThemSP .tr_gia").length; i++) {
+                if (i+1 <= self.SLGia) {
+                    $("#tblThemSP .tr_gia").eq(i).show();
+                } else {
+                    $("#tblThemSP .tr_gia").eq(i).hide();
+                }
+            }
+        }
+    }
+    clsThemSP.init();
+    function fnOnSuccess(data) {
+        if (data.r) {
+            $('#modalCRUD').modal('hide');
+            cls.fnReload();
+        } else {
+            toastr.error(data.m);
+        }
+    }
+
+    $(function () {
+        $('#profile-image1').on('click', function () {
+            $('#profile-image-upload').click();
+        });
+    });
+    $("#profile-image-upload").change(function () {
+        var formData = new FormData();
+        var returnVal = $($(this).data("val"));
+        var totalFiles = document.getElementById("profile-image-upload").files.length;
+        for (var i = 0; i < totalFiles; i++) {
+            var file = document.getElementById("profile-image-upload").files[i];
+            formData.append("profile-image-upload", file);
+            formData.append("pathAppSettings", "path_img_quan");
+            if ($("#cbCLC").is(":checked")) {
+                formData.append("sw", "200");
+                formData.append("sh", "200");
+            }
+        }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UploadImg","Ajax",new{area="Admin"})',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $("#profile-image1").attr("src", response.v);
+                returnVal.val(response.v);
+            },
+            error: function (error) {
+                alert("errror");
+            }
+        });
+    });
+</script>

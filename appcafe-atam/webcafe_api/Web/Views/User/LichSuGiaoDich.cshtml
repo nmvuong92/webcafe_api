@@ -1,0 +1,75 @@
+﻿@model IEnumerable<VD.Data.Entity.BQC.LichSuGiaoDich>
+@{
+    ViewBag.Title = "Lịch sử giao dịch";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<link href="~/Content/css/profile.css?v=1" rel="stylesheet" />
+<div id="user-profile-2" class="user-profile vcontainer">
+    <div class="tabbable">
+        <ul class="nav nav-tabs padding-18">
+
+            <li>
+                <a href="@Url.Action("Profile","User")">
+                    <i class="green ace-icon fa fa-user bigger-120"></i>
+                    Tiểu sử
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("DonHang","User")">
+                    <i class="blue fa fa-folder bigger-120"></i>
+                    Đơn hàng
+                </a>
+            </li>
+
+            <li class="active">
+                <a href="@Url.Action("LichSuGiaoDich","User")">
+                    <i class="orange ace-icon fa fa-clock-o bigger-120"></i>
+                    Lịch sử giao dịch
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("LichSuNapThe","User")">
+                    <i class="blue ace-icon fa fa-users bigger-120"></i>
+                    Lịch sử nạp thẻ
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+    <div>
+        
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Tên giao dịch</th>
+                    <th>Mệnh giá</th>
+                    <th>Ngày giao dịch</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr class="animated bounceIn text-center">
+                        <td colspan="100%">0 giao dịch</td>
+                    </tr>
+                }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.tengiaodich</td>
+                        <td>@item.menhgia</td>
+                        <td>@item.ngaygiaodich.XuatDateTime()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        
+
+    </div>
+
+</div>

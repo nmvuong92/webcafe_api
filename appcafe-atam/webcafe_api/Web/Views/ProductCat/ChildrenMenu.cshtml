@@ -1,0 +1,20 @@
+﻿@using VD.Data.Entity.MF
+@model IEnumerable<VD.Data.Entity.MF.ProductCat>
+@{
+    ProductCat p = ViewBag.p;
+}
+@if (Model.Any())
+{
+    <li>
+        <a href="javascript:void(0);">@p.Name > </a>
+        <ul class="dropdown-menu">
+            @foreach (var item in Model)
+            {
+                <li>
+                    <a href="@Url.Action("Index","SanPham",new{catid=item.Id})">@item.Name (@(item.Products.Count + item.Products2.Count))</a>
+                    @Html.Action("ChildrenMenu", "ProductCat", new { ParentId = @item.Id })
+                </li>
+            }
+        </ul>
+    </li>
+}

@@ -1,0 +1,36 @@
+﻿@model Web.ViewModels.MF.TinTucChiTietView
+@{
+    ViewBag.Title = Model.BaiViet.Title;
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<div id="content">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <!-- breadcrumb -->
+            @*<div class="breadcrumb clearfix">
+                    <a class="home" href="index.html" title="Trở về trang chủ">Trang chủ</a>
+                    <span class="navigation-pipe"></span>
+                    <span class="navigation_page">Chi tiết</span>
+
+                </div>*@
+            @Html.myBreadCrumbs(null, mui.mui.news)
+            <!-- ./breadcrumb -->
+            <div class="detail">
+                <div class="page-heading">
+                    <span class="page-heading-title">@Model.BaiViet.Title</span>
+                </div>
+                <p class="child pull-right">@Model.BaiViet.CreatedDate.XuatDateTime()</p>
+                <hr style="margin: 5px;">
+                <div class="para">
+                    @Html.Raw(Model.BaiViet.Content)
+                </div>
+            </div>
+        </div>
+
+
+        <hr />
+    </div>
+    <!-- /.our-team -->
+</div>
+

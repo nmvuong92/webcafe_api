@@ -1,0 +1,84 @@
+﻿
+@using System.Threading
+@using VD.Data.Model
+@using VD.Data.Temp
+@{
+    Conf cf =ViewBag.cf;
+    var cur = Thread.CurrentThread.CurrentCulture.Name;
+    loginVM log = ViewBag.curUser;
+}
+ 
+@if (log != null)
+{
+    @*<b id="b_welcome">Xin chào: </b>    <a href="@Url.Action("Profile", "Auth")"><i class="fa fa-user"></i> @(log.Username)</a>
+   
+        if (log.Username == "admin")
+        {
+             <span>| <a href="@Url.Action("Index", "Home",new {area="admin"})"> <i class="fa fa-cogs"></i> Administrator</a></span>
+        }
+        <span>| <a href="@Url.Action("Logout", "Auth")"> <i class="fa fa-power-off"></i> Thoát</a></span>*@
+    <li class="dropdown">
+        
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+           
+            @if (cur == "vi-VN")
+            {
+                <span>Vietnamese</span>
+            }
+            else
+            {
+                <span>English</span>
+            }
+        </a>
+        <ul class="dropdown-menu" style="width: 100px; background-color: #ff6347;">
+            <!-- User image -->
+            
+            @if (cur != "vi-VN")
+            {
+                <li><a href="javascript:void(0);" onclick="fnChangeLang('vi-VN'); ">Viet Nam</a></li>
+            }
+            @if (cur != "en-US")
+            {
+                <li><a href="javascript:void(0);" onclick="fnChangeLang('en-US'); ">English</a></li>
+            }
+          
+        </ul>
+    </li>
+
+    <li class="dropdown user user-menu">
+     
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <img src="http://growthforcesystems.com/wp-content/themes/ebiz/images/icon-system-run.png" class="user-image" alt="User Image">
+
+            <span class="hidden-xs">@(log.FullName)</span>
+        </a>
+        <ul class="dropdown-menu">
+            <!-- User image -->
+            <li class="user-header">
+                <img src="@cf.Logo"  class="img-circle" alt="User Image">
+                <p>
+                    @log.FullName 
+                    <small>@log.Username</small>
+                    <small>@DateTime.Now.XuatDate()</small>
+                </p>
+            </li>
+            <!-- Menu Footer-->
+            <li class="user-footer">
+                <div class="pull-left">
+                    <a href="@Url.Action("Profile", "Auth")" class="btn btn-default btn-flat"><i class="fa fa-edit"></i> Thông tin cá nhân</a>
+                </div>
+                <div class="pull-right">
+                    <a href="@Url.Action("Logout", "Auth")" class="btn btn-default btn-flat"> <i class="fa fa-power-off"></i> Thoát</a>
+                    @*<a href="#" class="btn btn-default btn-flat">Sign out</a>*@
+                </div>
+            </li>
+        </ul>
+    </li>
+}
+else
+{
+    <li>
+        <a href="@Url.Action("Login","Auth",new{area=""})">Đăng nhập</a>
+    </li>
+   
+}

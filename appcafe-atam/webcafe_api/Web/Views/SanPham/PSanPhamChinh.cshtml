@@ -1,0 +1,31 @@
+﻿@model IEnumerable<VD.Data.Entity.MF.Product>
+<div class="container">
+    <div class="title-section text-center"><a href="san-pham.html" title="Đồ trang trí">@mui.mui.san_pham_chinh</a> <span></span> </div>
+
+    <div class="product-featured clearfix">
+        <div class="product-featured-content">
+            <div class="product-featured-list">
+                <div class="tab-container">
+                    <!-- tab product -->
+                    <div class="tab-panel active">
+                        <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav="true" data-margin="30" data-autoplaytimeout="1000" data-autoplayhoverpause="true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":4}}'>
+                            @foreach (var item in Model)
+                            {
+                                string url = Url.Action("Detail", "SanPham", new { id = item.Id, seo_title = item.ProductName.URLFriendly() });
+                                <li>
+                                    <div class="product-container">
+                                        <div class="left-block"> <a href="@url" title="@item.ProductName"> <img class="img-responsive image-p-home" alt="@item.ProductName" src="@item.ThumbnailImage" /> </a> </div>
+                                        <div class="right-block">
+                                            <h5 class="product-name"><a href="@url" title="@item.ProductName">@item.ProductName</a></h5>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <!-- tab product -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

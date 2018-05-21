@@ -1,0 +1,118 @@
+﻿@model Web.Areas.Admin.ViewModels.SettingThongBaoDatHangVM
+@{
+    ViewBag.Title = "Setting Contact Email";
+    ViewBag.Title2 = "Paging row per page";
+    Layout = "~/Views/Shared/_md.cshtml";
+}
+<div class="container">
+    <div class="col-md-6">
+        <table class="table table-bordered table-template-data">
+            <thead>
+                <tr>
+                    <th style="width:30%;">Input key</th>
+                    <th>explanation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>{danh_xung}</th>
+                    <td>Danh xưng (Anh, Chị)</td>
+                </tr>
+                <tr>
+                    <th>{ho}</th>
+                    <td>Họ</td>
+                </tr>
+                <tr>
+                    <th>{ten}</th>
+                    <td>Tên</td>
+                </tr>
+                <tr>
+                    <th>{dia_chi}</th>
+                    <td>Địa chỉ</td>
+                </tr>
+                <tr>
+                    <th>{sdt}</th>
+                    <td>Số điện thoại</td>
+                </tr>
+
+                <tr>
+                    <th>{tinh_thanh}</th>
+                    <td>Tỉnh thành</td>
+                </tr>
+
+                <tr>
+                    <th>{quan_huyen}</th>
+                    <td>Quận huyện</td>
+                </tr>
+                <tr>
+                    <th>{phuong_xa}</th>
+                    <td>Phường xã</td>
+                </tr>
+
+              
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <table class="table table-bordered table-template-data">
+            <thead>
+                <tr>
+                    <th style="width:30%;">Input key</th>
+                    <th>explanation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>{hinh_thuc_thanh_toan}</th>
+                    <td>Hình thức thanh toán</td>
+                </tr>
+                <tr>
+                    <th>{tinh_trang_giao_hang}</th>
+                    <td>Tình trạng giao hàng</td>
+                </tr>
+                <tr>
+                    <th>{tinh_trang_thanh_toan}</th>
+                    <td>Tình trạng thanh toán</td>
+                </tr>
+                <tr>
+                    <th>{tong_tien_hang}</th>
+                    <td>Tổng tiền hàng</td>
+                </tr>
+
+                <tr>
+                    <th>{pt_vat}</th>
+                    <td>Phần trăm VAT</td>
+                </tr>
+                <tr>
+                    <th>{tien_vat}</th>
+                    <td>Tiền VAT</td>
+                </tr>
+                <tr>
+                    <th>{tong_tien_thanh_toan}</th>
+                    <td>Tổng tiền thanh toán</td>
+                </tr>
+                <tr>
+                    <th>{ngay_mua_hang}</th>
+                    <td>Ngày mua hàng</td>
+                </tr>
+                <tr>
+                    <th>{chi_tiet_don_hang}</th>
+                    <td>Chi tiết đơn hàng</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.etmp_thong_bao_dat_hang_title)
+        @Html.TextAreaFor(m => m.etmp_thong_bao_dat_hang_title, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.etmp_thong_bao_dat_hang)
+        @Html.TextAreaFor(m => m.etmp_thong_bao_dat_hang, new { @class = "form-control sEditor" })
+    </div>
+    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update setting</button>
+}

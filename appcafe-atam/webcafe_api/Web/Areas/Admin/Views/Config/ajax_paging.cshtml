@@ -1,0 +1,60 @@
+﻿@using VD.Data.Entity;
+@model VD.Data.Paging.PG<Conf>
+
+@if (Model.L.Any())
+{
+
+    foreach (var item in Model.L)
+    {
+
+        <tr>
+          
+            <td>
+                <input type="checkbox" class="cb_item" value="@item.Id" />
+            </td>
+          
+            <td>
+                <div style="max-width:130px; overflow:auto;">
+                    @item.Key
+                </div>
+            </td>
+            <td>
+                @item.Description
+               
+            </td>
+           
+            <td>
+                <div style="max-height:150px; overflow:auto;">
+                    @if (item.IsHtmlEditor)
+                    {
+                        @Html.Raw(item.Content)
+                    }
+                    else if (item.IsImg)
+                    {
+                        <a class="img-popup" href="@item.Content"><img src="@item.Content" style="max-width: 199px" /></a>
+                    }
+                    else
+                    {
+                        @item.Content
+                    }
+                </div>
+            </td>
+            <td>
+                <a class="btn btn-xs btn-primary" href="javascript:void(0)" onclick="clsUsers.fnShowEdit(@item.Id,$(this))"> <i class="fa fa-pencil"></i></a>
+            </td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="100%" class="nodata">Empty</td>
+    </tr>
+}
+
+<tr class="trfooter">
+    <td colspan="100%">
+        @Html.Raw(Model.thongtinphantrang)
+    </td>
+</tr>
+

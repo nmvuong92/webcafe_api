@@ -1,0 +1,54 @@
+﻿@using PagedList.Mvc
+@model Web.ViewModels.MF.ProductIndexByCatView
+@{
+    ViewBag.Title = "SẢN PHẨM";
+}
+
+
+<div id="icons" class="margin-30">
+    <div id="catagory1" class="container">
+        <div class="col-xs-12 caption-product pad-10 margin-20">
+            <div class="text-center">
+                <div class="content-title">
+                    <h2 class="title"> @Model.ProductCat.Name</h2>
+                    <p class="info-title">@Model.ProductCat.Description</p>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            @foreach (var item in Model.Products)
+            {
+                string url = Url.Action("Detail", "SanPham", new { id = item.Id, seo_title = item.ProductName.URLFriendly() });
+            <!-- Icons -->
+                <div class="col-md-3 text-center product-item">
+                    <div class="img">
+                        <a href="@url"><img src="@item.ThumbnailImage" alt=""></a>
+                    </div>
+                    <h4 class="padding-top-10 animate fadeIn"><a href="@url">@item.ProductName</a></h4>
+                    <h5 class="padding-10">
+                        @if (item.IsGiamGia)
+                        {
+                            <span class="price">@item.GiamGiaCon.ToMoneyStr()</span>
+                            <span class="price-off">@item.Price.ToMoneyStr()</span>
+                        }
+                        else
+                        {
+                            <span class="price-off">@item.Price.ToMoneyStr()</span>
+                        }
+                    </h5>
+                    <!--<span class="sticker-discount sprite sprite-productlist-sticker-discount"> -30% </span>-->
+                    <a href="@url"><p class="link small">Xem chi tiết <i class="fa fa-angle-double-right"></i></p></a>
+                </div>
+
+            }
+
+            <div class="clearfix"></div>
+            <div class="container">
+                @Html.PagedListPager(Model.Products, page => Url.Action("Index", "SanPham", new { page = page }))
+            </div>
+
+            @*<p style="text-align: center"><a class="btn btn-xs btn-info" href="@Url.Action("Index","SanPham",new{catid=Model.ProductCat.Id})">-Xem thêm-</a></p>*@
+        </div>
+    </div>
+
+</div>

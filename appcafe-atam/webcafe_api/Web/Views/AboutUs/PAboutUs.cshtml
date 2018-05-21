@@ -1,0 +1,43 @@
+﻿@model VD.Data.Entity.MF.Article
+@{  Web.Models.VIEWSETTING __vs = ViewBag.__viewsetting;
+    string url = Url.Action("Detail", "TinTuc", new { id = Model.Id, seo_title = Model.SEOTitle });
+}
+<div id="content" class="background-white">
+    <div class="col-xs-12 caption-product pad-0">
+        <div class="text-center">
+            <div class="content-title">
+                <h2 class="title"> About Us </h2>
+                <p class="info-title"><a href="@url"><img class="padding-right-40 padding-top-40" src="@__vs.__config.website_logo" alt=""></a></p>
+            </div>
+        </div>
+    </div>
+    <div class="row margin-vert-30 m">
+        <!-- Main Text -->
+        <div class="col-md-6 padding-horiz-50">
+            <div id="lead-index">
+                <div>
+                    <div>
+                        <div>
+                            <div>
+                                <div>
+                                    <div>
+                                        <div>
+                                            @Html.Raw(Model.Description)
+                                        </div>
+                                    </div>
+                                    <p>&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<span class="sticker-discount sprite sprite-productlist-sticker-discount"> -30% </span>-->
+              
+                <a type="submit" class="btn btn-blue pull-right" href="@url">Xem chi tiết</a>
+            </div>
+            <p>&nbsp;</p>
+        </div>
+        <!-- End Main Text -->
+        <div class="col-md-6"> <img class="img-responsive" src="@Model.ImageThumbnail" alt=""> </div>
+    </div>
+</div>

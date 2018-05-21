@@ -1,0 +1,130 @@
+﻿@using VD.Data
+@model VD.Data.Temp.loginVM
+@{
+    Layout = null;
+    SysConfigVM __config = ViewBag.__config;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Administrator - Thiết kế Vườn Đào</title>
+
+    <!-- Bootstrap -->
+    <link href="~/Content/gentelella/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="~/Content/gentelella/vendors/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- NProgress -->
+    <link href="~/Content/gentelella/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="~/Content/gentelella/vendors/animate.css/animate.min.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+
+    <link href="~/Content/gentelella/build/css/custom.css" rel="stylesheet" />
+    <link href="~/Content/Plugin/toastr/toastr.min.css" rel="stylesheet" />
+    <link href="~/Content/css/animate.css" rel="stylesheet" />
+    <style>
+        .hidden {display:none;}
+    </style>
+</head>
+
+<body class="login">
+    <div>
+
+        <div class="login_wrapper">
+            <div class="animate form login_form">
+                <section class="login_content">
+                    @using (Ajax.BeginForm("LoginProccess", "Auth", new AjaxOptions()
+                    {
+                        OnBegin = "fnLoginBegin",
+                        OnSuccess = "fnLoginSuccess",
+                        OnComplete = "fnLoginComplete"
+
+                    }, new { @autocomplete = "off" }))
+                    {
+                        <h1>@__config.conf_website</h1>
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.ReturnUrl)
+                        @Html.HiddenFor(m => m.role)
+                        <div class="hidden">
+                            <input type="password" />
+                        </div>
+                        <fieldset class="boxBody">
+                            <label>Username</label>
+                            @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "Tên đăng nhập", @autofocus = "autofocus" })
+
+                            <label>@*<a href="#" class="rLink">Forget your password?</a>*@Password</label>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Mật khẩu", @autocomplete = "new-password" })
+                        </fieldset>
+
+                        <label style="display:none;">@Html.CheckBoxFor(m => m.RememberMe) Remember me</label>
+                        <div style="text-align:center;">
+                            <input style="float:none; margin:0px; " type="submit" class="btnLogin" id="btnLogin" value="Login" tabindex="4" onclick="return fnVal();">
+                        </div>
+                    }
+
+                    <div class="clearfix"></div>
+                    <div class="separator">
+                        <div class="clearfix"></div>
+                        <br />
+                        <div>
+                            <h1><img src="../../Content/img/logo-icon.png" alt="" /> THIẾT KẾ VƯỜN ĐÀO</h1>
+                            <p>©2017 All Rights Reserved. <a href="http://thietkevuondao.com/">thietkevuondao.com</a></p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery-unobtrusive-ajax")
+    <script src="~/Content/Plugin/toastr/toastr.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Content/Plugin/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript">
+     
+        $("#Username").val("");
+        $("#Password").val("");
+        function fnVal() {
+            if ($("#Username").val() == "") {
+                alert("Vui lòng nhập tên đăng nhập");
+                $("#Username").focus();
+                return false;
+            }
+            return true;
+        }
+        function fnLoginBegin() {
+            $("#btnLogin").val("...");
+            $("#btnLogin,#Username,#Password").attr("disabled", "disabled");
+        }
+        function fnLoginSuccess(data) {
+
+            if (data.r) {
+                toastr.success(data.m);
+                //alert(data.v);
+                window.location.assign(data.v);
+                // window.location.assign(data.v.replace("Admin","vdadmin"));
+
+            } else {
+                toastr.error(data.m, "Thông báo");
+                $("#Password").val("");
+                $("#btnLogin").val("Login");
+                $("#btnLogin,#Username,#Password").removeAttr("disabled");
+            }
+        }
+        function fnLoginComplete() {
+
+        }
+    </script>
+
+</body>
+</html>

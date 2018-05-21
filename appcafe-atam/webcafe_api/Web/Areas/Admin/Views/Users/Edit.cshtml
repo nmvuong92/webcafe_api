@@ -1,0 +1,168 @@
+﻿@using Web.App_Code
+@model Web.ViewModels.Admin.Form.Users.FrmCreateUserVM
+
+@{
+    ViewBag.Title = "USERS";
+    ViewBag.Title2 = "EDIT";
+    Layout = "~/Views/Shared/_bootstrap_modal.cshtml";
+    IEnumerable<SelectListItem> ddlRole = ViewBag.ddlRole;
+}
+<div class="modal-body">
+    @using (Ajax.BeginForm("Edit", "Users", FormMethod.Post, new AjaxOptions { OnSuccess = "fnOnSuccess" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="show_err" style="color:red;">
+            @Html.ValidationSummary(false)
+        </div>
+        @Html.HiddenFor(model => model.ID)
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.RequiredLabelFor(model => model.Fullname, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Fullname, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Fullname, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.RequiredLabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Username, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.RequiredLabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.RequiredLabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.RequiredLabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.RequiredLabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.RequiredLabelFor(model => model.GioiTinh, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.GioiTinh, Model.ddlGioiTinh, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.GioiTinh, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Role</label>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.RoleId, ddlRole, new { @class = "form-control" })
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="header bg-blue-grey">
+                    <h2>
+                        Hình ảnh <small>Tải ảnh lên...</small>
+                    </h2>
+                    <ul class="header-dropdown m-r--5">
+                        <li>
+                            <a href="javascript:void(0);">
+                                <i class="material-icons">mic</i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body">
+                    @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+
+                    @Html.TextBoxFor(model => model.Image, new { @class = "form-control", @style = "display: none;" })
+                    @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+
+                    <div class="ajaxImg" style="position: relative;">
+                        @if (!string.IsNullOrWhiteSpace(Model.Image))
+                        {
+                            <img alt="User Pic" src="@Model.Image" id="profile-image1" class="img-circle img-responsive">
+                        }
+                        else
+                        {
+                            <img alt="User Pic" src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/128/image-up-icon.png" id="profile-image1" class="img-circle img-responsive">
+                        }
+                        <input id="profile-image-upload" class="hidden" type="file" data-val="#@(Html.IdFor(m=>m.Image))" />
+                        <div style="color:#999;">@mui.mui.click_here_change_image</div>
+                        <div style="position: absolute; top:0; right:50%;">
+                            <input type="checkbox" id="cbCLC" /> Up ảnh lớn
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">@mui.mui.cancel</button>
+        <button type="submit" class="btn btn-primary">@mui.mui.save</button>
+    </div>
+
+    }
+</div>
+<script>
+    function fnOnSuccess(data) {
+        if (data.r) {
+            $('#modalCRUD').modal('hide');
+            cls.fnReload();
+        } else {
+            toastr.error(data.m);
+        }
+    }
+    $(function () {
+        $('#profile-image1').on('click', function () {
+            $('#profile-image-upload').click();
+        });
+    });
+    $("#profile-image-upload").change(function () {
+        var formData = new FormData();
+        var returnVal = $($(this).data("val"));
+        var totalFiles = document.getElementById("profile-image-upload").files.length;
+        for (var i = 0; i < totalFiles; i++) {
+            var file = document.getElementById("profile-image-upload").files[i];
+            formData.append("profile-image-upload", file);
+            formData.append("pathAppSettings", "path_img_nhanvien");
+            if ($("#cbCLC").is(":checked")) {
+                formData.append("sw", "200");
+                formData.append("sh", "200");
+            }
+        }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UploadImg","Ajax",new{area="Admin"})',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $("#profile-image1").attr("src", response.v);
+                returnVal.val(response.v);
+            },
+            error: function (error) {
+                alert("errror");
+            }
+        });
+    });
+
+</script>

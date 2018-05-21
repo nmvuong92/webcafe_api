@@ -1,0 +1,209 @@
+﻿@{
+    var cur = myCookies.Get("app-menu");
+    if (cur == string.Empty || (cur != "show" && cur != "hide"))
+    {
+        cur = "show";
+    }
+    int v = 33;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title> @ViewBag.Title | Diện chẩn BQC</title>
+
+    <!-- core CSS -->
+    <link href="/content/corlate/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/Plugin/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="/content/corlate/css/animate.min.css" rel="stylesheet">
+    <link href="/content/corlate/css/prettyPhoto.css" rel="stylesheet">
+    <link href="~/Content/Plugin/Magnific-Popup/dist/magnific-popup.css" rel="stylesheet" />
+
+
+
+
+    <link href="/content/corlate/css/main.css?v=@v" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <script src="/content/corlate/js/html5shiv.js"></script>
+    <script src="/content/corlate/js/respond.min.js"></script>
+    <![endif]-->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+    <link href="/content/corlate/css/responsive.css?v=@v" rel="stylesheet">
+
+    <style>
+        img {
+            pointer-events: none;
+            -webkit-user-select: none; /* Chrome, Opera, Safari */
+             -webkit-touch-callout:none;
+            -moz-user-select: none; /* Firefox 2+ */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none; /* Standard syntax */
+        }
+    </style>
+</head><!--/head-->
+
+<body class="homepage">
+    @{ Html.RenderAction("AppMenu", "WebParts");}
+    <section id="app-bqc" style="margin-top: 0px;padding: 10px;">
+        <div class="vcontainer" style="margin-top: 45px;">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Trang chủ</a></li>
+                @RenderSection("BC", required: false)
+                <li class="breadcrumb-item active">@ViewBag.Title</li>
+
+            </ol>
+            @*<h2 style="padding: 5px; margin-bottom: 5px; font-weight: bold; border-bottom: 2px #d3d3d3 solid;">@ViewBag.Title</h2>*@
+            <div class="x_content">
+                @if (TempData["message"] != null)
+                {
+                    string type = "alert-success";
+                    if (TempData["message"].ToString().ToLower().Contains("error"))
+                    {
+                        type = " alert-error";
+                    }
+                    <div class="alert @type alert-dismissible animated bounce">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button" onclick="$(this).parent().hide();">×</button>
+                        <h4><i class="icon fa fa-info"></i> Thông điệp!</h4>
+                        @TempData["message"]
+                    </div>
+                }
+                <p>@ViewBag.Description</p>
+                <!-- end project list -->
+            </div>
+        </div>
+
+
+
+        @RenderBody()
+
+        <!-- Modal -->
+        <div id="modalLogin" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Đăng nhập</h4>
+                    </div>
+                    <div class="modal-body">
+                        @{Html.RenderAction("mLogin", "User");}
+                    </div>
+                    @*<div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    </div>*@
+                </div>
+
+            </div>
+        </div>
+        <!-- Modal -->
+        <div id="mymodal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                   
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    @{Html.RenderAction("Footer", "WebParts");}
+    <script src="/content/corlate/js/jquery.js"></script>
+    <script src="~/Content/Plugin/jquery.navgoco.js"></script>
+    <script src="/content/corlate/js/bootstrap.min.js"></script>
+    <script src="/content/corlate/js/jquery.prettyPhoto.js"></script>
+    <script src="/content/corlate/js/jquery.isotope.min.js"></script>
+
+    <script src="/content/corlate/js/wow.min.js"></script>
+    <script src="~/Content/Plugin/chongcoppy.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery-unobtrusive-ajax")
+    <script src="/content/corlate/js/main.js?v=@v"></script>
+    @RenderSection("JS", required: false)
+
+
+
+    <script type="text/javascript">
+
+        jQuery.validator.setDefaults({
+            highlight: function (element, errorClass, validClass) {
+                if (element.type === 'radio') {
+                    this.findByName(element.name).addClass(errorClass).removeClass(validClass);
+                } else {
+                    $(element).addClass(errorClass).removeClass(validClass);
+                    $(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+                }
+            },
+            unhighlight: function (element, errorClass, validClass) {
+                if (element.type === 'radio') {
+                    this.findByName(element.name).removeClass(errorClass).addClass(validClass);
+                } else {
+                    $(element).removeClass(errorClass).addClass(validClass);
+                    $(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+                }
+            }
+        });
+
+        $(function () {
+
+            $("span.field-validation-valid, span.field-validation-error").addClass('help-block');
+            $("div.form-group").has("span.field-validation-error").addClass('has-error');
+            $("div.validation-summary-errors").has("li:visible").addClass("alert alert-block alert-danger");
+
+        });
+
+    </script>
+
+
+
+
+
+
+
+    <!-- jQuery Reference-->
+    @*<script src="/Scripts/jquery-1.6.4.min.js"></script>*@
+    <!-- signalR Reference-->
+    <script src="/Scripts/jquery.signalR-1.0.1.min.js"></script>
+    <!-- signalR Hubs Reference-->
+    <script src="/signalR/hubs"></script>
+    <script type="text/javascript">
+        $(function () {
+            var usr = $.connection.usersOnLine;
+            $.connection.hub.start()
+                .done(function () {
+                    //connected
+                });
+
+            usr.client.log = function (message) {
+                $('#message').append('<li>' + message + '</li>');
+            };
+            usr.client.showUsersOnLine = function (data) {
+                $("#total_online").html(data);
+            };
+
+        });
+
+        $(function() {
+            $("img").contextmenu(function () {
+                return false;
+            });
+            $(document).contextmenu(function () {
+                return false;
+            });
+        });
+    </script>
+
+
+
+</body>
+</html>

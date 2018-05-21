@@ -1,0 +1,180 @@
+﻿@using Web.Models
+@{
+    Layout = null;
+    string con = ViewContext.ParentActionViewContext.RouteData.Values["controller"].ToString().ToLower();
+    string ac = ViewContext.ParentActionViewContext.RouteData.Values["action"].ToString().ToLower();
+    var ocurid = ViewContext.ParentActionViewContext.RouteData.Values["id"];
+
+
+    var activeThongtin = con == "thongtin";
+    var activeHuyetbqc = con == "huyetbqc";
+    var activeDohinhphanchieu = con == "dohinhphanchieu";
+    var activeGiovuongtangphu = con == "giovuongtangphu";
+    var activeSotaydienchan = con == "sotaydienchan";
+    var activePhacdocuatoi = con == "phacdocuatoi";
+    var activeSachBQC = con == "sachbqc";
+    var activeDangNhap = con == "user" && ac == "plogin";
+    var activeProfile = con == "user" && ac == "profile";
+    var activeDangKy = con == "user" && ac == "pregister";
+    const string active = "vactive";
+
+
+    VIEWSETTING __viewsetting = ViewBag.__viewsetting;
+    bool islog = __viewsetting.__login != null;
+    bool isvip = islog && __viewsetting.__login.IsVip1 == true;
+}
+<nav>
+    <div class="scroll0">
+        <div class="scroll">
+            <ul class="list-unstyled main-menu">
+
+                <li class="text-right" id="nav-close-li"><a href="javascript:void(0)" id="nav-close">X</a></li>
+
+
+
+                @*@if (__viewsetting.__login != null)
+                {
+                    <li class="@(activeProfile ? active : "")">
+                        <a href="@Url.Action("Profile","User")"><img src="/content/img/icon/ic_user.png" /> 
+                            @if (isvip)
+                            {
+                                <i class="fa fa-star" title="Thành viên VIP">&nbsp;</i>
+                                
+                            }
+                            <span>@__viewsetting.__login.Username</span> <span class="icon"></span>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li><a href="javascript:void(0);" onclick="clsUser.showPopLogin('Đăng nhập','/user/profile');"><img src="/content/img/icon/ic_login1.png" />  <span>Đăng nhập</span><span class="icon"></span></a></li>
+                    <li class="@(activeDangKy ? active : "")"><a href="@Url.Action("PRegister", "User")"><img src="/content/img/icon/ic_register.png" /> <span>Đăng ký</span><span class="icon"></span></a></li>
+                }*@
+
+
+
+                <li class="@(activeThongtin ? active : "")"><a href="@Url.Action("Index","ThongTin")"><img src="/content/img/icon/ic_bqc.png" /> <span>Thông tin</span><span class="icon"></span></a></li>
+                <li class="@(activeHuyetbqc ? active : "")"><a href="@Url.Action("Index","HuyetBQC")"><img src="/content/img/icon/icon_point.png" /> <span>Huyệt BQC</span><span class="icon"></span></a></li>
+                <li class="@(activeDohinhphanchieu ? active : "")"><a href="@Url.Action("Index","DoHinhPhanChieu")"><img src="/content/img/icon/icon_do_hinh2.png" /> <span>Đồ hình phản chiếu</span><span class="icon"></span></a></li>
+                <li class="@(activeGiovuongtangphu ? active : "")"><a href="@Url.Action("Index","GioVuongTangPhu")"><img src="/content/img/icon/icon_giovuongtangphu.png" /> <span>Giờ vượng tạng phủ</span><span class="icon"></span></a></li>
+                <li class="@(activeSotaydienchan ? active : "")"><a href="@Url.Action("Index","SoTayDienChan")"><img src="/content/img/icon/if_book_173163.png" /> <span>Sổ tay diện chẩn</span><span class="icon"></span></a></li>
+                <li class="@(activePhacdocuatoi ? active : "")">
+                    @if (islog)
+                    {
+                        if (isvip)
+                        {
+                            <a href="@Url.Action("Index", "PhacDoCuaToi")"><img src="/content/img/icon/icon_pdct.png" /> <span>Diện chẩn Note</span><span class="icon"></span></a>
+
+                        }
+                        else
+                        {
+                            <a href="javascript:void(0);" onclick="alert('Vui lòng nâng cấp thành viên VIP để sử dụng tính năng này!');"><img src="/content/img/icon/icon_pdct.png" /> <span>Diện chẩn Note</span><span class="icon"></span></a>
+                        }
+
+                    }
+                    else
+                    {
+                        <a href="javascript:void(0);" onclick="clsUser.showPopLogin('Đăng nhập > Phác đồ của tôi','/phacdocuatoi');"><img src="/content/img/icon/icon_pdct.png" /> <span>Diện chẩn Note</span> <i class="fa fa-lock"></i> <span class="icon"></span></a>
+                    }
+                </li>
+                <li class="@(activeSachBQC ? active : "")"><a href="@Url.Action("Index","SachBQC")"><img src="/content/img/icon/icon_book_2016.png" /> <span>Sách diện chẩn</span><span class="icon"></span></a></li>
+                <li><a target="blank" href="http://dienchan.com/vi/khoa-hoc/bai-thu-hoach/"><img src="/content/img/icon/icon_note_new.png" /> <span>Bài thu hoạch</span><span class="icon"></span></a></li>
+                <li><a target="blank" href="https://www.youtube.com/user/Jayleefac/videos"><img src="/content/img/icon/icon_youtube.png" /> <span>Video</span><span class="icon"></span></a></li>
+
+                @*@if (islog)
+                {
+                    <li>
+                        <a href="@Url.Action("Logout", "User")"><img src="/content/img/icon/ic_logout.png" /> <span>Đăng xuất</span><span class="icon"></span></a>
+                    </li>
+                }*@
+
+
+
+                @*<li>
+
+                        <a href="https://itunes.apple.com/vn/app/di%E1%BB%87n-ch%E1%BA%A9n-bqc/id1119072167?mt=8&at=10l6Xd&ct=j81f1qbsqe00xkod01g9a">
+                            <img src="/Content/img/app-store.png" style="width: 100%;" />
+                        </a>
+                    </li>
+                    <li>
+                        <a href='https://play.google.com/store/apps/details?id=com.vietydao.webit.dienchanbqcpro&hl=vi&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+                            <img style="width: 100%;" alt='Tải nội dung trên Google Play' src='~/Content/css/img/google-play-badge.png' />
+                        </a>
+                    </li>*@
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="vcontainer">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="@Url.Action("Index","Home")" style="line-height: 0px;"><img src="/content/img/bqc-logo.png" alt="logo" style="height: auto;width: 115px;margin-top: 2px;"></a>
+
+        </div>
+    
+        <ul class="nav navbar-nav" id="navLogin">
+
+            @if (__viewsetting.__login == null)
+            {
+                <li><a href="javascript:void(0);" onclick=" clsUser.showPopLogin('Đăng nhập', '/user/profile'); ">Đăng nhập</a></li>
+                <li class="@(activeDangKy ? active : "")"><a href="@Url.Action("PRegister", "User")">Đăng ký</a></li>
+            }
+            else
+            {
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        @if (isvip)
+                        {
+                            <i class="fa fa-star" style="color:yellow;"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-arrow-up"></i>
+                        }
+                        &nbsp;@__viewsetting.__login.Username <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        
+                        <li><a href="@Url.Action("Profile", "User")"><i class="fa fa-sign-in"></i> Thông tin tài khoản</a></li>
+                        <li><a href="javascript:void(0);" onclick="clsUser.fnShowDoiMatKhau();"><i class="fa fa-key"></i> Đổi mật khẩu</a></li>
+                        <li><a href="javascript:void(0);" onclick="clsUser.fnShowCapNhatThongTin();"><i class="fa fa-info"></i> Cập nhật thông tin</a></li>
+                        @*<li role="separator" class="divider"></li>
+                        <li class="dropdown-header">Nav header</li>*@
+                        <li><a href="@Url.Action("Logout", "User")"><i class="fa fa-sign-out"></i> Đăng xuất</a></li>
+
+                    </ul>
+                </li>
+            }
+
+        </ul>
+
+        @*<ul class="nav navbar-nav" id="navLogin">
+            
+            @if (__viewsetting.__login != null)
+            {
+                <li class="@(activeProfile ? "active" : "")"><a href="@Url.Action("Profile", "User")">Chào mừng: @__viewsetting.__login.Username</a></li>
+            }
+            else
+            {
+                <li><a href="javascript:void(0);" onclick="clsUser.showPopLogin('Đăng nhập','/user/profile');">Đăng nhập</a></li>
+                <li class="@(activeDangKy ? active : "")"><a href="@Url.Action("PRegister", "User")">Đăng ký</a></li>
+            }
+        </ul>*@
+
+        <div class="navbar-header pull-right">
+            <a id="nav-expander" class="nav-expander fixed">
+                MENU &nbsp;<i class="fa fa-bars fa-lg white"></i>
+            </a>
+        </div>
+    </div><!--/.container-->
+</div>
+

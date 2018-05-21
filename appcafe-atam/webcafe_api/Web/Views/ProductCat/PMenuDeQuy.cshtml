@@ -1,0 +1,16 @@
+﻿@model IEnumerable<VD.Data.Entity.MF.ProductCat>
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+}
+
+<ul class="dropdown-menu">
+    @foreach (var item in Model)
+    {
+      
+        <li>
+            <a href="@Url.Action("Index","SanPham",new{catid=item.Id})">@item.Name</a>
+        </li>
+       
+    }
+</ul>

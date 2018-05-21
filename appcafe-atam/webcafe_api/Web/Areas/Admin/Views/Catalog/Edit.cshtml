@@ -1,0 +1,74 @@
+﻿@model  VD.Data.Entity.MF.Catalog
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_md.cshtml";
+    IEnumerable<SelectListItem> ddlTarget = new List<SelectListItem>
+    {
+        new SelectListItem() {Text = "_self (Opens the linked document in the same frame as it was clicked)", Value = "_self"},
+        new SelectListItem() {Text = "_blank (Opens the linked document in a new window or tab)", Value = "_blank"}
+    };
+    IEnumerable<SelectListItem> ddlThuThu = Enumerable.Range(1, 10).Select(s => new SelectListItem()
+    {
+        Text = s.ToString(),
+        Value = s.ToString()
+    });
+
+    IEnumerable<SelectListItem> ddlCssClassDiv = new List<SelectListItem>
+    {
+        new SelectListItem() {Text = "_col-lg-6 col-md-6 col-sm-12 col-xs-12 text-center", Value = "col-lg-6 col-md-6 col-sm-12 col-xs-12 text-center"},
+        new SelectListItem() {Text = "_col-lg-12 col-md-12 col-sm-12 col-xs-12", Value = "col-lg-12 col-md-12 col-sm-12 col-xs-12"},
+       new SelectListItem() {Text = "col-lg-6 col-md-6 col-sm-12 col-xs-12", Value = "col-lg-6 col-md-6 col-sm-12 col-xs-12"}
+    };
+
+    IEnumerable<SelectListItem> ddlCssClass = new List<SelectListItem>
+    {
+        new SelectListItem() {Text = "img-home padding-left-40", Value = "img-home padding-left-40"},
+        new SelectListItem() {Text = "img-home padding-right-40 padding-bottom-40", Value = "img-home padding-right-40 padding-bottom-40"},
+       new SelectListItem() {Text = "img-home-2 padding-bottom-20", Value = "img-home-2 padding-bottom-20"},
+       new SelectListItem() {Text = "img-home-3 padding-right-40", Value = "img-home-3 padding-right-40"}
+    };
+}
+
+@using (Html.BeginForm("Edit", "Catalog", FormMethod.Post, new { data_confirm = "Are you sure?", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m=>m.Id)
+    @Html.HiddenFor(m => m.HinhAnh)
+    <div class="show_err">@Html.ValidationSummary()</div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title)
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Url)
+        @Html.TextBoxFor(m => m.Url, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Target)
+        @Html.DropDownListFor(m => m.Target, ddlTarget, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CssClassDiv)
+        @Html.DropDownListFor(m => m.CssClassDiv, ddlCssClassDiv, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.CssClass)
+        @Html.DropDownListFor(m => m.CssClass, ddlCssClass, new { @class = "form-control" })
+    </div>
+  
+    <div class="form-group">
+        @Html.LabelFor(m => m.ThuTu)
+        @Html.DropDownListFor(m => m.ThuTu, ddlThuThu, new { @class = "form-control" })
+    </div>
+    
+    <div class="form-group group-img-ck">
+        @Html.TextBox("file", "", new { type = "file" })
+    </div>
+ 
+
+    <button type="submit" class="btn btn-primary">@mui.mui.save</button>
+    <a href="@Url.Action("Index")" class="btn btn-default">@mui.mui.cancel</a>
+}

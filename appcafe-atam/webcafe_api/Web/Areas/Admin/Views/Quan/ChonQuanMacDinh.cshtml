@@ -1,0 +1,33 @@
+﻿@model List<VD.Data.Entity.MF.Quan>
+
+@{
+    ViewBag.Title = "Chọn quán mặc định";
+    ViewBag.Title2 = "LIST";
+    Layout = "~/Views/Shared/_md.cshtml";
+    int? id = ViewBag.id;
+}
+<table class="tblData">
+    <thead>
+        <tr>
+            <th>Tên quán</th>
+            <th>...</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="100%">0 mục</td>
+            </tr>
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TenQuan</td>
+                <td>
+                    <a class="btn btn-@(id!=null&&id.Value==item.Id?"success":"default") btn-xs waves-effect" href="@Url.Action("ChonQuanMacDinh",new{id=item.Id})">Đặt là mặc định</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

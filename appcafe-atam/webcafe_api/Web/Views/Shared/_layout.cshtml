@@ -1,0 +1,262 @@
+﻿@{
+    int v = 2;
+}
+<!DOCTYPE html>
+<!-- === BEGIN HEADER === -->
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!-- InstanceBegin template="/Templates/HeaderFooter.dwt" codeOutsideHTMLIsLocked="false" -->
+<!--<![endif]-->
+<head>
+    <!-- Title -->
+    <!-- InstanceBeginEditable name="doctitle" -->
+    <title>Diện Chẩn Bùi Quốc Châu</title>
+    <!-- InstanceEndEditable -->
+    <!-- Meta -->
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <!-- Favicon -->
+    <link href="favicon.ico" rel="shortcut icon">
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/content/dccd/assets/css/bootstrap.css">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/content/dccd/assets/css/animate.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/content/dccd/assets/css/nexus.css">
+    <link rel="stylesheet" href="/content/dccd/assets/css/responsive.css">
+    <link rel="stylesheet" href="/content/dccd/assets/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/content/dccd/slider_chitietsp/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/content/dccd/slider_chitietsp/css/style.css">
+    <script src="/content/dccd/slider_chitietsp/js/jssor.slider-21.1.6.min.js" type="text/javascript"></script>
+    <script src="/content/dccd/slider_chitietsp/js/jquery.min.js"></script>
+    <script src="/content/dccd/slider_chitietsp/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/MyScripts/ajaxHelpers.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.6/vue.min.js"></script>
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery-unobtrusive-ajax")
+    <script src="/content/corlate/js/main.js?v=@v"></script>
+    <script type="text/javascript">
+        
+
+        jssor_1_slider_init = function () {
+
+            var jssor_1_options = {
+                $AutoPlay: true,
+                $DragOrientation: 2,
+                $PlayOrientation: 2,
+                $ThumbnailNavigatorOptions: {
+                    $Class: $JssorThumbnailNavigator$,
+                    $Cols: 9,
+                    $Orientation: 2,
+                    $Align: 0,
+                    $NoDrag: true
+                }
+            };
+
+            var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+
+            /*responsive code begin*/
+            /*you can remove responsive code if you don't want the slider scales while window resizing*/
+            function ScaleSlider() {
+                var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+                if (refSize) {
+                    refSize = Math.min(refSize, 700);
+                    jssor_1_slider.$ScaleWidth(refSize);
+                }
+                else {
+                    window.setTimeout(ScaleSlider, 30);
+                }
+            }
+            ScaleSlider();
+            $Jssor$.$AddEvent(window, "load", ScaleSlider);
+            $Jssor$.$AddEvent(window, "resize", ScaleSlider);
+            $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
+            /*responsive code end*/
+        };
+
+        jssor_2_slider_init = function () {
+
+            var jssor_1_options = {
+                $AutoPlay: true,
+                $DragOrientation: 2,
+                $PlayOrientation: 2,
+                $ThumbnailNavigatorOptions: {
+                    $Class: $JssorThumbnailNavigator$,
+                    $Cols: 9,
+                    $Orientation: 2,
+                    $Align: 0,
+                    $NoDrag: true
+                }
+            };
+
+            var jssor_1_slider = new $JssorSlider$("jssor_2", jssor_1_options);
+
+            /*responsive code begin*/
+            /*you can remove responsive code if you don't want the slider scales while window resizing*/
+            function ScaleSlider() {
+                var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+                if (refSize) {
+                    refSize = Math.min(refSize, 700);
+                    jssor_1_slider.$ScaleWidth(refSize);
+                }
+                else {
+                    window.setTimeout(ScaleSlider, 30);
+                }
+            }
+            ScaleSlider();
+            $Jssor$.$AddEvent(window, "load", ScaleSlider);
+            $Jssor$.$AddEvent(window, "resize", ScaleSlider);
+            $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
+            /*responsive code end*/
+        };
+
+
+    </script>
+    <!-- InstanceBeginEditable name="head" -->
+    <!-- InstanceEndEditable -->
+    <style>
+        * {
+            font-family: tahoma;
+        }
+        .product-item {
+              border-top: 1px solid #ececec;
+              border-right: 1px solid #ececec;
+              border-left: 1px solid #ececec;
+              border-bottom: 1px solid #ececec;
+        }
+        .product-item:hover {
+            
+ 
+            border-radius:13px;
+           
+        }
+        .product-item img {
+            width: 100%;
+            position: absolute;  
+            top: 0;  
+            bottom: 0;  
+            left: 0;  
+            right: 0;  
+            margin: auto;  
+        }
+        .product-item .img{
+            position: relative;
+            min-height: 180px;
+        }
+        #hornav ul#hornavmenu > li > a, #hornav ul#hornavmenu > li > span, #hornav span,  #hornav  a{
+            font-size: 0.9em;
+        }
+        #hornav .dropdown-menu a {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div id="body-bg">
+        @{Html.RenderAction("Header", "WebParts");}
+      
+        @if (TempData["message"] != null)
+        {
+            string type = "alert-success";
+            if (TempData["message"].ToString().ToLower().Contains("error"))
+            {
+                type = " alert-error";
+            }
+            <div class="alert @type alert-dismissible animated bounce">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button" onclick="$(this).parent().hide();">×</button>
+                <h4><i class="icon fa fa-info"></i> Thông điệp!</h4>
+                @Html.Raw(TempData["message"])
+            </div>
+        }
+        
+
+        @RenderBody()
+        <!-- Modal -->
+        <div id="modalLogin" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Đăng nhập</h4>
+                    </div>
+                    <div class="modal-body">
+                        @{Html.RenderAction("mLogin", "User");}
+                    </div>
+                    @*<div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    </div>*@
+                </div>
+
+            </div>
+        </div>
+        
+        <!-- Modal -->
+        <div id="mymodal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- modalThongBao -->
+        <div id="modalThongBao" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Đăng nhập</h4>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    @*<div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    </div>*@
+                </div>
+
+            </div>
+        </div>
+        
+
+        @{Html.RenderAction("Footer", "WebParts");}
+
+    </div>
+
+    <!-- End Footer -->
+    <!-- JS -->
+    <script type="text/javascript" src="/content/dccd/assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/content/dccd/assets/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/content/dccd/assets/js/scripts.js"></script>
+    <!-- Isotope - Portfolio Sorting -->
+    <script type="text/javascript" src="/content/dccd/assets/js/jquery.isotope.js"></script>
+    <!-- Mobile Menu - Slicknav -->
+    <script type="text/javascript" src="/content/dccd/assets/js/jquery.slicknav.js"></script>
+    <!-- Animate on Scroll-->
+    <script type="text/javascript" src="/content/dccd/assets/js/jquery.visible.js" charset="utf-8"></script>
+    <!-- Sticky Div -->
+    <script type="text/javascript" src="/content/dccd/assets/js/jquery.sticky.js" charset="utf-8"></script>
+    <!-- Slimbox2-->
+    <script type="text/javascript" src="/content/dccd/assets/js/slimbox2.js" charset="utf-8"></script>
+    <!-- Modernizr -->
+    <script src="/content/dccd/assets/js/modernizr.custom.js" type="text/javascript"></script>
+
+
+    @RenderSection("JS",required:false)
+    <!-- End JS -->
+</body>
+<!-- InstanceEnd -->
+</html>
+<!-- === END FOOTER === -->

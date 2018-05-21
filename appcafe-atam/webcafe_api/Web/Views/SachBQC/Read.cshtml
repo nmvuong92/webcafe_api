@@ -1,0 +1,12 @@
+﻿@model Web.ViewModels.BQC.SachBQCModel
+@{
+    ViewBag.Title = Model.TenSach;
+    Layout = "~/Views/Shared/_layout2.cshtml";
+    string sample = "/content/bqc-export/pdf-sample.pdf";
+}
+
+<div class="vcontainer">
+    @*<iframe src="/content/bqc-pdf/@Model.PDF" style="width:100%; height:1000px;" frameborder="0"></iframe>*@
+    <iframe src="@Model.PDF" style="width:100%; height:1000px;" frameborder="0"></iframe>
+
+</div>

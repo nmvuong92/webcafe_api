@@ -1,0 +1,89 @@
+﻿@model Web.ViewModels.MF.FrmLienHeView
+@{
+    ViewBag.Title = mui.mui.contact;
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<style>
+    .contact .title-service-inside {
+        line-height: 1.2em;
+    }
+    .contact p {
+        line-height: 2em;
+    }
+    .contact .dl-horizontal {
+        margin-bottom: 10px;
+    }
+    .contact dt{
+        padding-top: 5px;
+    }
+</style>
+<div class="container content contact">
+    
+    <h1 class="title-service-inside"> Liên hệ</h1>
+    <div class="col-lg-6">
+        <p><b>Head office</b> : @Model.__config.conf_address</p>
+        <p><b>Tel:</b> @Model.__config.conf_tel</p>
+        <p><b> Mail:</b> @Model.__config.conf_email</p>
+        <div>
+            @Html.Raw(Model.__config.conf_google_map)
+        </div>
+    </div>
+
+    <div class="col-lg-6 contact CV">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+           
+            <dl class="dl-horizontal">
+                <dt><span>*</span> @Html.DisplayNameFor(m => m.HoTen):</dt>
+                <dd>
+                    @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control", @placeholder = "" })
+                    @Html.ValidationMessageFor(m => m.HoTen)
+                </dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt><span>*</span> @Html.DisplayNameFor(m => m.SDT):</dt>
+                <dd>
+                    @Html.TextBoxFor(m => m.SDT, new { @class = "form-control", @placeholder = "" })
+                    @Html.ValidationMessageFor(m => m.SDT)
+                </dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt><span>*</span> @Html.DisplayNameFor(m => m.Email):</dt>
+                <dd>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "" })
+                    @Html.ValidationMessageFor(m => m.Email)
+                </dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt><span>*</span> @Html.DisplayNameFor(m => m.TieuDe):</dt>
+                <dd>
+                    @Html.TextAreaFor(m => m.TieuDe, new { @class = "form-control", @placeholder = "" })
+                    @Html.ValidationMessageFor(m => m.TieuDe)
+                </dd>
+            </dl>
+            <dl class="dl-horizontal">
+                <dt><span>*</span> @Html.DisplayNameFor(m => m.NoiDung):</dt>
+                <dd>
+                    @Html.TextAreaFor(m => m.NoiDung, new { @class = "form-control", @placeholder ="", @row = "5" })
+                    @Html.ValidationMessageFor(m => m.NoiDung)
+                </dd>
+            </dl>
+
+            <dl class="dl-horizontal">
+                <dt><span>*</span> @Html.DisplayNameFor(m => m.Captcha):</dt>
+                <dd>
+                    <div>
+                        <img src="@Url.Action("CaptchaImage", "Home", new { prefix = "lh" })" />
+                        @Html.TextBoxFor(m => m.Captcha, new { @class = "form-control", @style = "width:130px;" })
+                        @Html.ValidationMessageFor(m => m.Captcha)
+                        <br/>
+                        <button type="submit" class="btn-default btn btn-primary bg-orange" style="padding: 5px 25px; width: 130px">Gửi</button>
+                    </div>
+                </dd>
+            </dl>
+        }
+    </div>
+
+</div>

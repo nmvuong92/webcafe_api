@@ -1,0 +1,1567 @@
+
+.txt_1 {
+    margin-bottom: 5px;
+    font-size: 12px;
+    text-align: left;
+    font-weight: bold;
+    line-height: 18px;
+    margin-top: 2px;
+}
+
+.txt {
+    font-size: 11px;
+    color: #666;
+    float: left;
+    text-align: left;
+    line-height: 16px;
+}
+
+.txt_2 {
+    margin: 5px 10px;
+    font-size: 11px;
+    color: #666;
+    float: left;
+    text-align: left;
+    float: left;
+}
+
+.txt_3 {
+    line-height: 24px;
+}
+
+.taonhom {
+    float: left;
+    width: 320px;
+    height: 150px;
+    background: url(images/back-taonhom.png) no-repeat left top;
+    margin: 20px 10px 10px 0px;
+    padding: 20px;
+}
+
+    .taonhom label {
+        float: left;
+        font-weight: bold;
+        width: 80px;
+        margin: 5px 0px;
+    }
+
+    .taonhom .rownhom {
+        float: left;
+        width: 150px;
+        margin: 5px 10px;
+    }
+
+    .taonhom .nhombutton {
+        float: left;
+        margin: 5px 20px;
+    }
+
+        .taonhom .nhombutton button {
+            margin: 5px 10px;
+        }
+
+#homemain {
+    width: auto;
+    max-height: 1000px;
+    min-height: 530px;
+    margin: 10px 0;
+}
+
+.third {
+    float: left;
+    width: 332px;
+    height: 156px;
+    background: url(images/home-tab-bg.png) no-repeat left top;
+    margin: 10px 0px 10px 14px;
+}
+
+    .third .box_home {
+        padding: 20px 10px 10px 10px;
+    }
+
+
+.home {
+    display: block;
+    overflow: hidden;
+    height: 120px;
+    width: 95px;
+    text-align: center;
+    font-size: 14px;
+    float: left;
+    color: #666;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.third .box_home .home a {
+    text-decoration: none;
+}
+
+
+.home_list {
+    margin: 0px;
+    list-style: none;
+    text-align: left;
+}
+
+    .home_list li a {
+        color: #333;
+        text-decoration: none;
+    }
+
+    .home_list a:hover {
+        text-decoration: underline;
+    }
+
+.title_bar {
+    z-index: 0;
+    width: 1056px;
+    height: 88px;
+    /*border: solid 1px #BED6F6;
+	background:#e2edf5;*/
+    display: block;
+    margin: 15px 0;
+    text-align: left;
+    font-size: 14px;
+    color: #333;
+    margin: 0px auto;
+}
+
+    .title_bar .apptitle {
+        position: absolute;
+        top: 30px;
+        font-weight: bold;
+    }
+
+    .title_bar img {
+        padding: 5px;
+    }
+
+    .title_bar .addon {
+        float: right;
+        padding: 20px;
+        text-align: center;
+    }
+
+        .title_bar .addon span {
+            text-align: center;
+            font-size: 12px;
+            width: 160px;
+            line-height: 12px;
+        }
+
+        .title_bar .addon a {
+            color: #333;
+            text-decoration: none;
+        }
+
+
+            .title_bar .addon a:hover {
+                text-decoration: underline;
+            }
+
+.search_bar {
+    height: 50px;
+    display: block;
+    text-align: left;
+    color: #333;
+    position: relative;
+}
+
+
+    .search_bar .row1 {
+        padding: 0px;
+        font-size: 12px;
+        float: left;
+        display: block;
+    }
+
+    .search_bar .row2 {
+        padding-right: 12px;
+        font-size: 12px;
+        float: right;
+        display: block;
+    }
+
+.row1 .rowsearch, .row2 .rowsearch {
+    float: left;
+    margin-top: 5px;
+    padding: 0 5px;
+}
+
+.row2 .rowdatetime {
+    float: left;
+    margin-top: 5px;
+    width: 145px;
+    margin-right: 30px;
+}
+
+
+.row1 .rowdatetime {
+    float: left;
+    margin-top: 5px;
+    width: 110px;
+    margin-right: 30px;
+}
+
+
+.row1 .rowbutton, .row2 .rowbutton {
+    float: left;
+    display: block;
+    text-align: center;
+    width: 40px;
+}
+
+
+.search_bar label {
+    font-size: 12px;
+    color: #1c1c1c;
+    width: auto;
+    display: block;
+    float: left;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.search_bar input {
+    display: block;
+    border: 1px solid #c5c5c5;
+    outline: 0;
+    padding: 6px;
+    margin: 0;
+    font: 12px Arial;
+    color: #1c1c1c;
+    width: 120px;
+}
+
+.search_bar select {
+    display: block;
+    border: 1px solid #c5c5c5;
+    outline: 0;
+    padding: 6px;
+    margin: 0;
+    font: 12px Arial;
+    color: #1c1c1c;
+    width: 150px;
+}
+
+
+
+.chitiet_nhanvien {
+    margin: 20px 0px;
+    padding: 20px;
+    border: 1px solid #e5e5e5;
+    overflow: hidden;
+}
+
+.hinh_nhanvien {
+    float: left;
+    width: 160px;
+    margin: 0px 10px;
+    padding: 10px;
+    font-weight: bold;
+    color: #F30;
+    background-color: #eeefef;
+    border: 1px #999;
+}
+
+.chuthich {
+    float: left;
+    font-weight: normal;
+    padding-top: 15px;
+    width: 160px;
+    color: #333;
+    border: 1px #999;
+}
+
+.hinh_nhanvien img {
+    border: 2px solid #e5e5e5;
+}
+
+.chitiet_noidung {
+    float: left;
+    margin: 0px 10px;
+    padding: 0px;
+    width: 750px;
+}
+
+.chitiet_row {
+    float: left;
+    margin: 0px;
+    padding: 5px 0;
+}
+
+.chitiet_left {
+    float: left;
+    width: 120px;
+    text-align: right;
+    font-weight: bold;
+    line-height: 28px;
+}
+
+.chitiet_mid_weekall {
+    float: left;
+    margin: 0px 0px;
+    width: 300px;
+    text-align: left;
+    padding-left: 0px;
+}
+
+.chitiet_mid_week {
+    float: left;
+    padding-left: 10px;
+    text-align: justify;
+    width: 130px;
+    display: block;
+}
+
+.chitiet_mid {
+    float: left;
+    margin: 0px 10px;
+    width: 300px;
+    text-align: left;
+}
+
+    .chitiet_mid .chitiet_full {
+        width: 315px;
+    }
+
+    .chitiet_mid .chitiet_small {
+        width: 165px;
+    }
+
+.chitiet_row .chitiet_full select {
+    width: 315px;
+}
+
+.div_ctkh {
+    float: left;
+    width: 900px;
+    padding-top: 10px;
+}
+
+/* Group col_mid */
+.col_mid {
+    float: left;
+    margin: 0px 10px;
+    width: 350px;
+    text-align: left;
+}
+
+    .col_mid .col_full {
+        /*width:275px;*/ width: 340px;
+        font-family: Arial;
+    }
+
+.col_full select {
+    width: 300px;
+}
+/* End Group col_mid */
+.combo_baogia {
+    width: 380px;
+    height: 30px;
+    border: 1px solid rgb(212, 212, 212);
+    padding-top: 4px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.chitiet_right {
+    float: left;
+    margin: 0px 20px;
+}
+
+.table_row #row_lv1, .table_row #row_lv2, .table_row #row_lv3, .table_row #row_lv4 {
+    display: none;
+}
+
+.table_row #noidung1, .table_row #noidung2, .table_row #noidung3, .table_row #noidung4 {
+    background: #fff;
+    border: 1px solid #cedde2;
+    min-height: 20px;
+    /*max-height:100px;*/
+    width: 972px;
+    margin: 5px 10px 5px 70px;
+    float: left;
+    text-align: left;
+}
+
+.table_row #noidung1b {
+    background: #fff;
+    border: 1px solid #cedde2;
+    /*max-height:100px;*/
+    margin: 5px 10px 5px 20px;
+    float: left;
+    text-align: left;
+    width: 1018px;
+}
+
+
+#noidung1b .table_doanhso {
+    padding: 0px;
+    margin: 0px;
+    height: 0px;
+}
+
+.table_doanhso .doanhso_soluong {
+    float: left;
+    width: 496px;
+    border: 1px solid #cedde2;
+}
+
+.doanhso_soluong .doanhso_col {
+    float: left;
+    width: 80px;
+    padding: 5px;
+    text-align: left;
+    border-right: 1px solid #cedde2;
+    border-bottom: 1px solid #cedde2;
+}
+
+.doanhso_soluong .doanhso_col2 {
+    float: left;
+    width: 30px;
+    padding: 5px;
+    text-align: left;
+    border-right: 1px solid #cedde2;
+    border-bottom: 1px solid #cedde2;
+}
+
+
+
+
+.doanhso_soluong .doanhso_colb {
+    float: left;
+    width: 80px;
+    padding: 5px;
+    text-align: left;
+    border-right: 1px solid #cedde2;
+    border-bottom: 1px solid #cedde2;
+    background: #CCFFFF;
+}
+
+.doanhso_soluong .doanhso_col2b {
+    float: left;
+    width: 30px;
+    padding: 5px;
+    text-align: left;
+    border-right: 1px solid #cedde2;
+    border-bottom: 1px solid #cedde2;
+    background: #CCFFFF;
+}
+
+
+
+
+.table_doanhso .doanhso_nam {
+    float: left;
+    width: 468px;
+    border: 1px solid #cedde2;
+}
+
+.doanhso_nam .doanhso_col {
+    float: left;
+    width: 36px;
+    padding: 5px 0px;
+    text-align: center;
+    background: #CCFFFF;
+    border-bottom: 1px solid #cedde2;
+}
+
+.doanhso_nam .doanhso_col2 {
+    float: left;
+    width: 35px;
+    padding: 5px 0px;
+    text-align: center;
+    border-right: 1px solid #cedde2;
+    border-bottom: 1px solid #cedde2;
+}
+
+
+
+
+.doanhso_tong .doanhso_col {
+    float: left;
+    width: 50px;
+    text-align: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #cedde2;
+}
+
+.doanhso_tong .tong_title {
+    float: left;
+    width: 48px;
+    height: 21px;
+    padding: 15px 0px;
+    text-align: center;
+    background: #FF9900;
+    font-weight: bold;
+    border: 1px solid #cedde2;
+}
+
+
+
+.table_doanhso .doanhso_tong {
+    float: left;
+    width: 48px;
+    height: 50px;
+    text-align: center;
+    border-bottom: 1px solid #cedde2;
+}
+
+
+.table_doanhso .doanhso_title {
+    background-color: #B3D9FF;
+    padding-left: 20px;
+    height: 22px;
+    font-weight: bold;
+}
+
+
+
+
+.table_row #noidung2 {
+    padding-left: 20px;
+    /*width:880px;*/
+    width: 952px;
+}
+
+.table_row #noidung3 {
+    padding-left: 40px;
+    /*width:860px;*/
+    width: 932px;
+}
+
+.table_row #noidung4 {
+    padding-left: 60px;
+    /*width:840px;*/ width: 912px;
+}
+
+.table_top {
+    float: left;
+    margin: 0px;
+    background: #e9f5fd;
+    padding: 8px 0;
+    border: 1px solid #cedde2;
+    color: #666;
+    width: 1056px;
+}
+
+
+.table_row {
+    float: left;
+    margin: 0px;
+    padding: 15px 0;
+    border: 1px solid #cedde2;
+    border-top: none;
+    color: #666;
+    width: 1056px;
+}
+
+    .table_row table {
+        /*border: 2px solid #fff;*/
+        border: 1px solid #cedde2;
+        background: #fff;
+    }
+
+
+.row_number {
+    float: left;
+    width: 20px;
+    text-align: center;
+}
+
+/*.row_check {
+	float: left;
+	width:42px;
+	display:block;
+	text-align:center;
+}
+
+
+
+
+
+.row_ma {
+	float: left;
+	width:130px;
+	text-align:center;
+}
+
+.row_maip {
+	float: left;
+	width:60px;
+	text-align:left; margin-left:10px;
+}
+.row_ten {
+	float: left;
+	width:220px;
+	text-align:left;
+}
+
+.row_diachi {
+	float: left;
+	/*width:250px;*/
+/*width:240px;
+	text-align:left; padding-left:15px; padding-right:15px;
+}
+.row_xeploai {
+	float: left;
+	width:50px;
+	text-align:left; padding-right:6px;
+}
+.row_tinhthanh {
+	float: left;
+	width:100px;
+	text-align:left;
+}
+
+.row_quanhuyen {
+	float: left;
+	width:100px;
+	text-align:left;
+}
+.row_dienthoai {
+	float: left;
+	width:80px;
+	text-align:left;
+}
+.row_tensale {
+	float: left;
+	width:120px;
+	text-align:left;
+}
+.row_sale {
+	float: left;
+	width:80px;
+	text-align:left;
+}*/
+
+.row_check {
+    float: left;
+    width: 20px;
+    display: block;
+    text-align: center;
+}
+
+
+.row_ma {
+    float: left;
+    /*width:130px;*/
+    width: 60px;
+    text-align: center;
+}
+
+.row_maip {
+    float: left;
+    width: 60px;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.row_ten {
+    float: left;
+    width: 200px;
+    text-align: left;
+}
+
+.row_diachi {
+    float: left;
+    /*width:250px;*/
+    /*width:240px;*/
+    width: 150px;
+    text-align: left;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.row_tinhthanh {
+    float: left;
+    width: 100px;
+    text-align: left;
+}
+
+.row_giamoiap {
+    float: left;
+    width: 40px;
+    text-align: left;
+}
+
+.row_giamoiap_no {
+    color: #F00;
+    font-size: 14px;
+    font-weight: bold;
+    float: left;
+    width: 40px;
+    text-align: left;
+}
+
+.row_xeploai {
+    float: left;
+    width: 50px;
+    text-align: center;
+    padding-right: 6px;
+}
+
+.row_thoihanno {
+    float: left;
+    width: 20px;
+    text-align: left;
+}
+
+.row_lapmay {
+    float: left;
+    width: 120px;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.row_dienthoai {
+    float: left;
+    width: 80px;
+    text-align: left;
+}
+
+.row_khieunai {
+    float: left;
+    width: 10px;
+    text-align: left;
+    padding-right: 10px;
+}
+
+.row_khieunai_co {
+    float: left;
+    width: 10px;
+    color: #F60;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
+    padding-right: 10px;
+}
+
+.row_tensale {
+    float: left;
+    width: 60px;
+    text-align: left;
+    padding-left: 15px;
+}
+
+.row_sale {
+    float: left;
+    width: 70px;
+    text-align: left;
+}
+
+.row_kehoach {
+    float: left;
+    /*width:210px;*/ width: 190px;
+    text-align: left;
+}
+
+.row_manv {
+    float: left;
+    width: 60px;
+    text-align: left;
+}
+
+.row_baocao {
+    float: left;
+    width: 70px;
+    text-align: left;
+}
+
+.row_baogia_4 {
+    float: left;
+    width: 172px; /*160*4=640px + 15*4= 700px*/
+    text-align: left;
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+.row_baogia_khunggia {
+    float: left;
+    width: 182px; /*160*4=640px*/
+    text-align: left;
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+.row_tacvu {
+    float: left;
+    width: 60px;
+    text-align: center;
+}
+
+.nd {
+    padding-left: 35px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    line-height: 20px;
+}
+
+.pad {
+    padding: 10px 10px 10px 10px;
+}
+
+.pad_bar {
+    padding: 10px 10px 10px 10px;
+    background-color: #CCC;
+}
+
+.padding {
+    padding: 10px 10px 10px 10px;
+}
+
+.padding_bg {
+    padding: 10px 10px 10px 10px;
+    background-color: #cedde2;
+}
+
+.bg_tr {
+    padding: 10px 10px 10px 10px;
+    background-color: #FFC;
+}
+
+.bg_trungthau {
+    background-color: #FFC;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.p_left {
+    padding-left: 32px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: bold;
+}
+
+.croll {
+    overflow: auto;
+    max-height: 400px;
+}
+
+.red {
+    color: #F00;
+}
+
+.row_tacvu2 {
+    float: left;
+    width: 85px;
+    text-align: center;
+    height: 20px;
+}
+
+.row_khachhang {
+    float: left;
+    width: 245px;
+    text-align: left;
+    height: 20px;
+}
+
+.row_nvsale {
+    float: left;
+    width: 232px;
+    text-align: left;
+}
+
+
+.row_date {
+    float: left;
+    width: 120px;
+    text-align: center;
+    padding: 0 12px;
+}
+
+/*----- css cho table thau -------*/
+
+.row_mathau {
+    float: left;
+    width: 90px;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.row_goithau {
+    float: left;
+    /*width:250px;*/
+    /*width:230px;*/ width: 140px;
+    text-align: left;
+    padding-right: 10px;
+}
+
+.row_ngay {
+    float: left;
+    width: 80px;
+    /*width:90px;*/
+    text-align: left;
+    padding-right: 6px;
+}
+
+.row_ghichu {
+    float: left;
+    width: 120px;
+    text-align: left;
+}
+
+.row_thongtin {
+    float: left;
+    width: 344px; /*172*2=344px*/
+    text-align: left;
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+
+/*----- css cho table ke hoach cong tac -------*/
+
+/********* css list style ************/
+.list_li_phus {
+    list-style-image: url(../images/plus.png);
+}
+/********* end css list style ************/
+.table_row #noidung_khct {
+    float: left;
+    width: 1056px;
+}
+
+.table_row img {
+    padding-bottom: 20px;
+    padding-right: 5px;
+}
+
+.row_nv {
+    float: left;
+    text-align: center;
+    width: 130px;
+    padding-right: 12px;
+}
+
+.row_solan {
+    float: left;
+    text-align: center;
+    width: 35px;
+}
+
+.row_tenkh {
+    float: left;
+    width: 150px;
+    text-align: left;
+    padding-right: 14px;
+}
+
+.row_loaict {
+    float: left;
+    width: 58px;
+    text-align: left;
+}
+
+.row_ngaydi {
+    float: left;
+    width: 80px;
+    text-align: center;
+}
+
+.row_ngayve {
+    float: left;
+    width: 80px;
+    text-align: center;
+}
+
+.row_baocao {
+    float: left;
+    width: 200px;
+    text-align: left;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.row_tinhtrang {
+    float: left;
+    width: 80px;
+    text-align: left;
+}
+
+.row_danhgia {
+    float: left;
+    /*width:80px;*/ width: 130px;
+    text-align: left;
+}
+
+.row_tacvu {
+    float: left;
+    width: 60px;
+    text-align: center;
+}
+/* End css tabble ke hoach cong tac */
+
+/*-----------Css Calendar ------*/
+
+.calendar_all {
+    float: left;
+    margin-bottom: 30px;
+    background: #e9f5fd;
+    padding: 0px;
+    border: 1px solid #cedde2;
+    color: #666;
+    width: 100%;
+}
+
+.calendar_left {
+    float: left;
+    width: 250px;
+    margin: 0px;
+    padding: 0px;
+    background: #fff;
+}
+
+.calendar_thang {
+    float: left;
+    width: 254px;
+    margin: 0px;
+    padding: 0px 10px;
+    background: #fff;
+    height: 645px;
+}
+
+.calendar_title {
+    background: #e9f5fd;
+    padding: 8px 0px;
+    color: #666;
+    width: 280px;
+    border-bottom: 1px solid #cedde2;
+    text-align: center;
+}
+
+.calendar_ngay {
+    margin: 0px;
+    padding-right: 2px;
+    width: auto;
+    float: right;
+}
+
+
+
+.calendar_thang #wp-calendar {
+    padding: 0px;
+    margin-top: -35px;
+    border: 1px solid #fff;
+    height: 100px;
+    text-align: center;
+}
+
+#wp-calendar {
+    color: #666;
+    font-size: 12px;
+    border-collapse: collapse;
+}
+
+    #wp-calendar caption {
+        background: #9fbef5;
+        color: #000;
+        font-size: 14px;
+        margin: 0px;
+        text-align: center;
+        z-index: -99;
+        padding: 5px;
+    }
+
+        #wp-calendar caption a {
+            margin: 10px;
+            padding: 5px;
+            color: #000;
+            font-size: 18px;
+        }
+
+    #wp-calendar thead th {
+        font-size: 12px;
+        padding: 5px 0;
+        color: #666;
+        text-transform: uppercase;
+        background: #f7f7f7;
+    }
+
+    #wp-calendar tbody td {
+        color: #666;
+        padding: 5px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+        #wp-calendar tbody td.pad {
+            background: #FFCC66;
+        }
+
+    #wp-calendar #today {
+        color: #000;
+        border: 1px solid #990000;
+        background: #ffec96;
+    }
+
+
+#calendarmonth {
+    margin: 0px;
+    padding: 0px;
+    background: #fefbc6;
+}
+
+    #calendarmonth th, #calendarmonth td {
+        border: 1px solid #cedde2;
+    }
+
+    #calendarmonth .weekend {
+        color: #ff0000;
+    }
+
+    #calendarmonth td {
+        width: 106px;
+        height: 106px;
+        padding: 5px 5px 0 0px;
+        text-align: right;
+    }
+
+        #calendarmonth td .day {
+            width: 95px;
+            height: 95px;
+            overflow: auto;
+            text-align: left;
+            padding: 5px;
+            color: #000000;
+            line-height: 14px;
+        }
+
+            #calendarmonth td .day span {
+                color: #ff0000;
+            }
+
+        #calendarmonth td .date strong {
+            color: #000000;
+        }
+
+    #calendarmonth tbody .next, #calendarmonth tbody .previous {
+        background-color: #f1eeb7;
+    }
+
+    #calendarmonth th {
+        font: 1em bold Arial, Helvetica, sans-serif;
+    }
+/* ---------- End Css Calendar ------------ */
+
+#main .nav_page {
+    margin: 20px 0px;
+    float: right;
+}
+
+    #main .nav_page select {
+        width: 40px;
+        display: block;
+        float: left;
+    }
+
+    #main .nav_page .chon {
+        width: 40px;
+        float: left;
+        /*background : url(../images/table.gif) no-repeat right -115px transparent;*/
+        border: none;
+        text-align: center;
+    }
+
+
+#main {
+    display: block;
+    padding: 0;
+    min-height: 400px;
+}
+
+#main_tb {
+    display: block;
+    /*overflow : hidden;*/
+    padding: 0;
+}
+
+#main a {
+    color: #006699;
+    text-decoration: none;
+}
+
+    #main a:hover {
+        text-decoration: underline;
+    }
+
+.ui-widget-overlay {
+    position: absolute;
+    top: 0;
+    background: #1C1C1C;
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+
+#footer {
+    clear: both;
+    background: #025077;
+    height: 110px;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+}
+
+    #footer .line {
+        margin: 0 auto;
+        background: #005c8b;
+        height: 10px;
+    }
+
+    #footer img {
+        padding: 10px;
+    }
+
+    #footer span {
+        font-size: 26px;
+    }
+
+    #footer a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+        #footer a:hover {
+            text-decoration: underline;
+        }
+
+
+
+/* PopUp */
+
+
+#blanket {
+    background-color: #111;
+    opacity: 0.3;
+    position: absolute;
+    z-index: 9001;
+    width: 100%;
+}
+
+#popUpDiv {
+    position: absolute;
+    background: #f7f6f6;
+    width: 360px;
+    height: 360px;
+    border: 1px solid #999;
+    z-index: 9002;
+    -moz-box-shadow: 0px 3px 5px 6px #ccc;
+    -webkit-box-shadow: 0px 3px 5px 6px #ccc;
+    box-shadow: 0px 3px 5px 6px #ccc;
+}
+
+    #popUpDiv .popupdiv_row {
+        margin: 10px;
+        display: block;
+        width: 100%;
+        height: 50px;
+    }
+
+.popupdiv_title {
+    background: #6b9bef;
+    font-size: 18px;
+    height: 40px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ccc;
+}
+
+#popUpDiv .popupdiv_text {
+    width: 300px;
+    float: left;
+    text-align: left;
+    padding-left: 10px;
+}
+
+#popUpDiv .popupdiv_close {
+    width: 30px;
+    display: block;
+    float: right;
+    height: 30px;
+    margin-top: 10px;
+}
+
+#popUpDiv .popupdiv_datetime {
+    width: 80px;
+    display: block;
+    float: left;
+    height: 30px;
+    color: #9b0202;
+}
+
+    #popUpDiv .popupdiv_datetime strong {
+        color: #000;
+    }
+
+#popUpDiv .popupdiv_noidung {
+    display: block;
+    float: left;
+    height: 30px;
+    width: 250px;
+    text-align: justify;
+    margin: 0 10px;
+}
+
+    #popUpDiv .popupdiv_noidung a {
+        color: #9b0202;
+    }
+
+
+
+#popUpDiv2 {
+    position: absolute;
+    top: 25%;
+    right: 2%;
+    text-align: center;
+    display: none;
+    z-index: 99999;
+}
+
+#popUpDiv2_form {
+    background: url(../images/back-nhacviec.png) no-repeat;
+    width: 215px;
+    height: 222px;
+    margin: 0 auto;
+}
+
+.popUpDiv2_title {
+    padding: 0 50px;
+    text-align: center;
+    display: block;
+    font-size: 14px;
+}
+
+.popUpDiv2_noidung {
+    padding: 0 10px;
+    text-align: left;
+    display: block;
+    font-size: 12px;
+}
+
+.red {
+    color: Red;
+    font-weight: normal;
+}
+
+.droplist {
+    width: 315px;
+    padding: 4px;
+    border: solid 1px #c5c5c5;
+}
+
+.listbox {
+    width: 315px;
+    padding: 4px;
+    border: solid 1px #c5c5c5;
+}
+
+.bg_tr {
+    background: #9FF;
+}
+
+.td_nhomhang {
+    width: 150px;
+}
+
+.td_sp {
+    width: 200px;
+}
+
+.td_dvt {
+    width: 20px;
+}
+
+.td_slhd {
+    width: 30px;
+}
+
+.td_slt {
+    width: 30px;
+}
+
+.td_thang {
+    width: 15px;
+}
+
+.td_tong {
+    width: 25px;
+}
+
+.thongbao {
+    padding: 100px 0;
+    text-align: center;
+    clear: both;
+    font-size: 18px;
+}
+
+.bgHSGV {
+    background: #e2edf5;
+    height: 30px;
+}
+
+.gvtable tr th, .gvtable tr td {
+    border: solid 1px #BED6F6;
+    padding: 5px;
+}
+
+/*mystyle 25.08.2015*/
+.numred {
+    color: #FF0000;
+}
+
+
+/**/
+.filter_img {
+    height: 19px;
+    width: 19px;
+    position: absolute;
+    margin-top: 3px;
+    margin-left: 2px;
+}
+
+    .filter_img:hover {
+        outline: 1px solid #a3c0e8;
+    }
+
+#div2show {
+    display: none;
+    width: 299px;
+    max-height: 350px;
+    overflow: auto;
+    background-color: white;
+    position: absolute;
+    padding: 5px;
+    border: 1px solid #a3c0e8;
+}
+
+    #div2show ul {
+    }
+
+    #div2show li a {
+        display: block;
+    }
+
+        #div2show li a:hover {
+            background-color: #CCC;
+        }
+
+    #div2show li.all {
+        background-color: #facece;
+    }
+
+.trfooter .current {
+    background-color: #ffe7a2;
+    border: 1px solid #ffbd69;
+    color: #000000;
+    font: 9pt Tahoma;
+    padding: 0 3px;
+    text-decoration: none;
+}
+
+.edited {
+    background-color: #90ee90;
+}
+
+.deleted {
+    background-color: #ffc0cb;
+}
+
+/*datatables*/
+
+.dataTables_wrapper .row:first-child {
+    margin: 0px -2px !important;
+    /*background: url(http://ors73h7nc19atkf1io43qcgj.wpengine.netdna-cdn.com/wp-content/uploads/blue-title-bar-background.jpg);*/
+    padding-top: 5px;
+}
+
+.dataTables_wrapper .row:last-child {
+    margin: 0px -2px !important;
+    /*background: url(http://ors73h7nc19atkf1io43qcgj.wpengine.netdna-cdn.com/wp-content/uploads/blue-title-bar-background.jpg);*/
+}
+
+.dataTables_wrapper {
+    /*border:2px #BFE1FA solid;*/
+    border: 1px #fbfbfb solid;
+    box-shadow: 5px;
+}
+
+img.active {
+    outline: 3px red solid;
+    border: 1px yellow solid;
+}
+
+/**/
+.td_hit {
+    display: none;
+}
+
+
+/*validation*/
+[class$="-error"],
+[class*="-error "] {
+    color: red;
+    background-color: yellow;
+}
+
+.my-pnl {
+    margin-bottom: 10px;
+}
+
+.wrap_img_ck input {
+}
+
+.wrap_img_ck img {
+    width: 100%;
+}
+
+.group-img-ck {
+    background-color: yellow;
+    width: 280px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.show_err {
+    color: red;
+}
+
+/*21 02 2017*/
+.tr_disabled {
+    color: red !important;
+    background-color: yellow !important;
+}
+
+
+/**/
+
+.modal-full {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+    .modal-full .modal-content {
+        height: auto;
+        min-height: 100%;
+        border-radius: 0;
+    }
+
+    .modal-full .modal-footer {
+        /*position: fixed;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        width: 100%;*/
+        padding-top: 10px;
+    }
+
+
+    .ajaxImg img {
+        max-width: 250px;
+
+    }

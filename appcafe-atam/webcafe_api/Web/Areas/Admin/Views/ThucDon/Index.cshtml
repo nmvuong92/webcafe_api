@@ -1,0 +1,626 @@
+﻿@model VD.Data.Entity.MF.Quan
+
+@{
+    ViewBag.Title = "Quản lý thực đơn";
+    Layout = "~/Views/Shared/_md.cshtml";
+}
+<style>
+     .slick-slider .slick-prev {
+        position: absolute;
+        background: url(/Content/sprite.png) -50px -40px no-repeat;
+        display: block;
+        height: 40px;
+        width: 30px;
+        text-indent: -9999px;
+        top: 50%;
+        margin-top: -20px;
+        left: -25px;
+        padding: 0;
+        border: none;
+        background-color: red;
+    }
+
+    .slick-slider .slick-next {
+        position: absolute;
+        background: url(/Content/sprite.png) -90px -40px no-repeat;
+        display: block;
+        height: 40px;
+        width: 30px;
+        text-indent: -9999px;
+        top: 50%;
+        margin-top: -20px;
+        right: -25px;
+        padding: 0;
+        border: none;
+        background-color: red;
+    }
+
+    .menu-product-cat-item {
+        min-width: 105px;
+       
+        padding: 2px;
+        color: #fff;
+        opacity: .6;
+        text-align: center;
+        display: inline-block;
+        vertical-align: top;
+        transition: all .2s;
+        width: 100px;
+       
+        margin: 5px;
+        background: #5d6582;
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .menu-product-cat-item:hover {
+        opacity: 1;
+    }
+
+    .multiple {
+    }
+
+    .selected {
+       
+        outline: none;
+        background: #00c94a;
+        opacity: 1;
+    }
+
+    .td-dssp-wrap {
+        height: calc(100vh - 400px);
+        overflow-y: auto;
+        background: #fff;
+        text-align: justify;
+    }
+
+    .td-dssp-wrap .item {
+        margin: 6px;
+        background: #e9eef0;
+        border-radius: 2px;
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+        position: relative;
+        display: inline-block;
+        vertical-align: top;
+        text-align: center;
+        cursor: pointer;
+        transition: all .2s;
+    }
+
+    .td-dssp-wrap .item .remove {
+        padding: 4px;
+        border-radius: 100px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        right: auto;
+    }
+
+    .td-dssp-wrap .item .clip {
+        transition: all .2s;
+        border-radius: 2px;
+        overflow: hidden;
+        width: 160px;
+        height: 141px;
+    }
+
+    .td-dssp-wrap .item .text.with-image {
+        color: #fbfdff;
+        text-shadow: 0 1px 2px rgba(0,0,0,.5);
+        background: rgba(0,0,0,.5);
+    }
+
+    .td-dssp-wrap .item .text {
+        width: 100%;
+        height: 36px;
+        padding: 9px;
+        font-size: 16px;
+        font-weight: 500;
+        display: block;
+        position: absolute;
+        bottom: 0;
+        text-align: center;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+    }
+
+    .td-menu {
+        width: 100%;
+     
+        padding: 0 15px;
+        background: #252c48;
+        box-shadow: 0 2px 4px 0 rgba(41,48,77,.1);
+        border-radius: 0 0 6px 6px;
+        position: relative;
+        display: inline-block;
+        text-align: left;
+    }
+
+    /*search san pham*/
+    .item-row {
+        width: 100%;
+        padding: 1px 0;
+        background: #fff;
+        cursor: pointer;
+        transition: all .2s;
+        display: table;
+    }
+
+    .item-row:hover {
+        background-color: #d8dcde;
+    }
+
+    .item-row .image {
+        width: 75px;
+        height: 60px;
+        padding: 0 15px 0 0;
+        overflow: hidden;
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .item-row .image img {
+        width: 100%;
+    }
+
+    .item-row .detail {
+        border-bottom: 1px solid #d8dcde;
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .item-row .detail .detail-row {
+        width: 100%;
+        padding: 20px 0;
+        display: table;
+        table-layout: fixed;
+    }
+
+    .item-row .detail .detail-row .text {
+        font-size: 16px;
+        color: #4f5664;
+        line-height: 18px;
+        display: table-cell;
+        vertical-align: middle;
+        white-space: pre;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .item-row .detail .detail-row .price {
+        text-align: right;
+        display: table-cell;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+    .item-row .detail .detail-row .price .value {
+        padding: 0 0 0 20px;
+        font-size: 16px;
+        line-height: 23px;
+        color: #4f5664;
+        opacity: .7;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .item-row .detail .detail-row .price .warning {
+        min-width: 20px;
+        margin: 0 0 0 10px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    #searchinput {
+        width: 100%;
+    }
+    #searchclear {
+        position: absolute;
+        right: 5px;
+        top: 0;
+        bottom: 0;
+        height: 14px;
+        margin: auto;
+        font-size: 14px;
+        cursor: pointer;
+        color: #ccc;
+    }
+</style>
+<div class="row clearfix wait" id="vue-thucdon">
+    <div class="m-b-20 text-center">
+        <h1 v-if="dsquan.length==0">
+            Chưa <a href="@Url.Action("Index","Quan")">Tạo quán</a>
+        </h1>
+        <div class="btn-group">
+            <button type="button" class="btn waves-effect" v-bind:class="{'btn-primary':quan!=null&&item.Id==quan.Id}" v-on:click="chonQuan(item)" v-for="item of dsquan">
+                <i class="material-icons">trending_up</i>
+                <span>{{item.TenQuan}}</span>
+            </button>
+        </div>
+       
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" v-if="quan!=null">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    QUẢN LÝ THỰC ĐƠN
+                </h2>
+                <ul class="header-dropdown m-r--5">
+                  
+                    <li v-if="thucdonchon!=null">
+                        <a title="Sửa thực đơn" class="waves-effect" v-on:click="showPopSuaThucDon();" data-toggle="cardloading" data-loading-effect="pulse">
+                            <i class="material-icons">mode_edit</i>
+                        </a>
+                    </li>
+                    <li class="dropdown" v-if="thucdonchon!=null">
+                        <a href="javascript:void(0);" class="waves-effect dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="javascript:void(0);" v-on:click="xoaThucDon();" class="waves-effect waves-block">Xóa {{thucdonchon.TenThucDon}}</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="body">
+                <!--danh sách sản phẩm thực đơn-->
+                <div class="td-dssp-wrap">
+                    <div class="item" v-for="item of thucdonct" v-if="thucdonchon!=null">
+                        <a class="remove" v-on:click="removeSP(item);"><i class="fa fa-remove"></i></a>
+                        <div class="clip">
+                            <img v-bind:src="item.HinhAnh" />                          
+                            <span class="text with-image">{{item.TenSanPham}}</span>
+                        </div>
+                    </div>
+                    <div class="item waves-effect" v-on:click="showPopThemThucDonCT();" title="Thêm món">
+                        <div class="clip">
+                            <i class="material-icons md-48">add</i>
+                        </div>
+                    </div>
+                   
+                </div>
+                <!--danh sách thực đơn-->
+                <div class="td-menu">
+                    <div class="menu-product-cat-item waves-effect" v-for="item of thucdon" v-on:click="chonThucDon(item);" v-bind:class="{selected:thucdonchon!=null&&thucdonchon.Id==item.Id}">
+                        <img v-bind:src="item.Icon" style="width: 50px;height: 50px;">
+                        <br />
+                        <span>{{item.TenThucDon}}</span>
+                    </div>
+                    <div class="menu-product-cat-item waves-effect" v-on:click="showPopThemThucDon();">
+                        <i class="material-icons md-48">add_circle</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal_crud_thucdon" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{crud.mode==1?"THÊM THỰC ĐƠN":"SỬA THỰC ĐƠN"}}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Tên thực đơn:</label>
+                        <input type="text" class="form-control" v-model="crud.thucdon.TenThucDon">
+                    </div>
+                    <div class="card">
+                        <div class="header bg-blue-grey">
+                            <h2>
+                                Hình ảnh (Không bắt buộc)<small>Tải ảnh lên...</small>
+                            </h2>
+                            <ul class="header-dropdown m-r--5">
+                                <li>
+                                    <a href="javascript:void(0);">
+                                        <i class="material-icons">mic</i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="body">
+                            <label class="control-label col-md-2">Ảnh icon</label>
+                            <textarea id="AnhIcon" class="hidden"></textarea>
+                            <div class="ajaxImg" style="position: relative;">
+                                <img alt="User Pic" v-bind:src="crud.thucdon.Icon" id="profile-image1" class="img-circle img-responsive">
+                                <input id="profile-image-upload" class="hidden" type="file" data-val="#AnhIcon" onchange='vupload($(this))' />
+                                <div style="color:#999;">@mui.mui.click_here_change_image</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Đóng</button>
+                    <button v-if="crud.thucdon.mode==1" type="button" class="btn btn-primary waves-effect" v-on:click="themThucDon();">Thêm mới</button>
+                    <button v-if="crud.thucdon.mode==2" type="button" class="btn btn-primary waves-effect" v-on:click="suaThucDon();">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modal_crud_thucdonct" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Thêm sản phẩm vào thực đơn</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="btn-group" style="width: 100%;">
+                        <input id="searchinput" type="search" class="form-control" v-model="crud.thucdonct.search">
+                        <span v-on:click="crud.thucdonct.search=''" id="searchclear" class="glyphicon glyphicon-remove-circle"></span>
+                    </div>
+                    <div style="max-height: calc(100vh - 212px);overflow-y: auto; margin-top: 10px;">
+                        <h1 v-if="filteredItems.length==0">0 sản phẩm</h1>
+                        <div class="item-row" v-for="item in filteredItems" v-on:click="pickSanPhamVaoThucDon(item);">
+                            <div class="image">
+                                <img v-bind:src="item.ThumbnailImage">
+                            </div>
+                            <div class="detail">
+                                <div class="detail-row">
+                                    <div class="text">{{item.ProductName}}</div>
+                                    <div class="price">
+                                        <div class="value">{{vmoney(item.Price)}}</div><div class="warning"></div>
+                                        <i class="fa fa-check" v-if="IsSanPhamInThucDon(item.Id)"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#profile-image1').on('click', function () {
+            $('#profile-image-upload').click();
+        });
+    });
+    var vupload = function(that) {
+        var formData = new FormData();
+        var returnVal = $(that.data("val"));
+        var totalFiles = document.getElementById("profile-image-upload").files.length;
+        for (var i = 0; i < totalFiles; i++) {
+            var file = document.getElementById("profile-image-upload").files[i];
+            formData.append("profile-image-upload", file);
+            formData.append("pathAppSettings", "path_img_quan");
+            if ($("#cbCLC").is(":checked")) {
+                formData.append("sw", "200");
+                formData.append("sh", "200");
+            }
+        }
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UploadImg","Ajax",new{area="Admin"})',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                $("#profile-image1").attr("src", response.v);
+                returnVal.val(response.v);
+                vueThucDon.crud.thucdon.Icon = response.v;
+            },
+            error: function (error) {
+                alert("errror");
+            }
+        });
+    }
+</script>
+
+@section JS{
+    <script>
+        var vueThucDon = new Vue({
+            el: "#vue-thucdon",
+            data: {
+                quan: null,
+                thucdonchon: null,
+                thucdon: [],
+                thucdonct: [],
+                dsquan: [],
+                isLoading: false,
+                crud: {
+                    thucdon: {
+                        mode: 1,//1: thêm, 2 sửa
+                        TenThucDon: "",
+                        Icon:"",
+                    },
+                    thucdonct: {
+                        search: '',
+                        dssp: [],
+                    }
+                }
+            },
+
+            methods: {
+                chonQuan: function (item) {
+                    this.quan = item;
+                    this.getThucDon();
+                    this.thucdonchon = null;
+                    this.thucdonct = [];
+                },
+                getThucDon: function () {
+                    if (this.quan != null) {
+                        $.getJSON("@Url.Action("ajax_get_thucdon")?quan_id=" + vueThucDon.quan.Id, function (data) {
+                            vueThucDon.thucdon = data;
+                            if (vueThucDon.thucdon.length > 0) {
+                                vueThucDon.chonThucDon(vueThucDon.thucdon[0]);
+                            }
+                        });
+                    }
+                },
+                getQuan: function () {
+                    $.getJSON("@Url.Action("ajax_get_quan")", function (data) {
+                        vueThucDon.dsquan = data;
+                        if (vueThucDon.dsquan.length > 0) {
+                            vueThucDon.chonQuan(vueThucDon.dsquan[0]);
+                        }
+                    });
+                },
+                showPopThemThucDon: function () {
+                    this.crud.thucdon.mode = 1;//thêm
+                    $("#modal_crud_thucdon").modal("show");
+                },
+                themThucDon: function () {
+                    if (this.crud.thucdon.TenThucDon.length > 0) {
+                        var ajaxops = {
+                            url: "@Url.Action("ajax_create_thuc_don")",
+                            param: JSON.stringify({
+                                thucdon: {
+                                    TenThucDon: this.crud.thucdon.TenThucDon,
+                                    QuanId: this.quan.Id,
+                                    Icon: this.crud.thucdon.Icon
+                                }
+                            }),
+                            fnSuccess: function (data) { //Success
+                                if (data.r) {
+                                    vueThucDon.thucdon.push(data.v);
+                                    $("#modal_crud_thucdon").modal("hide");
+                                } else {
+                                    swal("Lỗi", data.m, "error");
+                                }
+                            }
+                        };
+                        fnAjax(ajaxops);
+
+                    } else {
+                        swal("Hãy nhập tên thực đơn!");
+                    }
+                },
+                chonThucDon: function (thucdon) {
+                    this.thucdonchon = thucdon;
+                    this.getThucDonCT(thucdon.Id);
+                },
+                getThucDonCT: function (ThucDonId) {
+                    vueThucDon.thucdonct = [];
+                    $.getJSON("@Url.Action("ajax_get_thucdonct")?ThucDonId=" + ThucDonId, function (data) {
+                        vueThucDon.thucdonct = data;
+                    });
+                },
+                showPopThemThucDonCT: function () {
+                    $.getJSON("@Url.Action("ajax_get_dssp")?QuanId=" + this.quan.Id, function (data) {
+                        vueThucDon.crud.thucdonct.dssp = data;
+                        $("#modal_crud_thucdonct").modal("show");
+                    });
+                },
+                pickSanPhamVaoThucDon: function (sanpham) {
+                    var ajaxops = {
+                        url: "@Url.Action("ajax_pick_sanpham_vao_thucdon")",
+                        param: JSON.stringify({ ProductId: sanpham.Id, ThucDonId: this.thucdonchon.Id }),
+                        fnSuccess: function (data) { //Success
+                            if (data.r) {
+                                vueThucDon.thucdonct.push(data.v);
+                                $("#modal_crud_thucdon").modal("hide");
+                            } else {
+                                swal("Lỗi", data.m, "error");
+                            }
+                        }
+                    };
+                    fnAjax(ajaxops);
+                },
+                removeSP: function (thucdonct) {
+
+                    var ajaxops = {
+                        url: "@Url.Action("ajax_remove_sp")",
+                        param: JSON.stringify({ ThucDonCTId: thucdonct.Id }),
+                        fnSuccess: function (data) { //Success
+                            if (data.r) {
+                                vueThucDon.getThucDonCT(vueThucDon.thucdonchon.Id);
+                            } else {
+                                swal("Lỗi", data.m, "error");
+                            }
+                        }
+                    };
+                    fnAjax(ajaxops);
+                },
+
+                //sửa thực đơn
+                showPopSuaThucDon: function () {
+                    this.crud.thucdon.mode = 2;//sửa
+                    this.crud.thucdon.TenThucDon = this.thucdonchon.TenThucDon;
+                    this.crud.thucdon.Icon = this.thucdonchon.Icon;
+                    $("#modal_crud_thucdon").modal("show");
+                },
+                suaThucDon: function () {
+                    var _thucdon = {
+                        Id: this.thucdonchon.Id,
+                        TenThucDon: this.crud.thucdon.TenThucDon,
+                        Icon: this.crud.thucdon.Icon,
+                    };
+                    var ajaxops = {
+                        url: "@Url.Action("ajax_sua_thucdon")",
+                        param: JSON.stringify({ data: _thucdon }),
+                        fnSuccess: function (data) { //Success
+                            if (data.r) {
+                                $("#modal_crud_thucdon").modal("hide");
+                                vueThucDon.thucdonchon.TenThucDon = _thucdon.TenThucDon;
+                                vueThucDon.thucdonchon.Icon = _thucdon.Icon;
+                            } else {
+                                swal("Lỗi", data.m, "error");
+                            }
+                        }
+                    };
+                    fnAjax(ajaxops);
+                },
+                xoaThucDon: function () {
+                    var _thucdonid = this.thucdonchon.Id;
+                    var ajaxops = {
+                        url: "@Url.Action("ajax_remove_thucdon")",
+                        param: JSON.stringify({ id: _thucdonid }),
+                        fnSuccess: function (data) { //Success
+                            swal(data.m);
+                            if (data.r) {
+                                vueThucDon.thucdonct = [];
+                                vueThucDon.thucdonchon = null;
+                                vueThucDon.xoaThucDonById(_thucdonid);
+                              
+                            }
+                        }
+                    };
+                    fnAjax(ajaxops);
+                },
+                xoaThucDonById: function (_id) {
+                    for (var i = 0; i < this.thucdon.length; i++) {
+                        if (this.thucdon[i].Id == _id) {
+                            this.thucdon.splice(i, 1);
+                        }
+                    }
+                },
+                vmoney: function (x) {
+                    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "₫";
+                },
+                IsSanPhamInThucDon: function(sanphamid){
+                    return this.thucdonct.find(function (s) {
+                        return s.SanPhamId == sanphamid;
+                    });
+                }
+            },
+            computed: {
+                //tim kiem dssp
+                filteredItems: function filteredItems() {
+                    var _this = this;
+                    return this.crud.thucdonct.dssp.filter(function (item) {
+                        return item.ProductName.indexOf(_this.crud.thucdonct.search.toLowerCase()) > -1;
+                    });
+                }
+            }
+        });
+        vueThucDon.getThucDon();
+        vueThucDon.getQuan();
+    </script>
+}

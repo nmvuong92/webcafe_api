@@ -1,0 +1,26 @@
+﻿@model IEnumerable<VD.Data.Entity.Lang>
+@{
+    int __langid = ViewBag.__langid;
+    var first = Model.FirstOrDefault(s => s.Id == __langid);
+}
+
+<li class="">
+    <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+        <img src="@first.Flag" alt="">
+        <span class=" fa fa-angle-down"></span>
+    </a>
+    <ul class="dropdown-menu dropdown-usermenu pull-right">
+        @foreach (var item in Model)
+        {
+            <li><a href="javascript:void(0);" onclick="fnChangeLang('@item.Code');"> <img src="@item.Flag" class="@(item.Id == __langid ? "active" : "")"> @item.Name</a></li>
+
+        }
+    </ul>
+</li>
+<script>
+    function fnChangeLang(_code) {
+        $.getJSON("@Url.Action("SetCulture", "Home", new { area=""})?culture=" + _code, function (data) {
+            window.location.reload(false);
+        });
+    }
+</script>

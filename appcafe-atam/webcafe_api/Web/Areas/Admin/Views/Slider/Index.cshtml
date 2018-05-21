@@ -1,0 +1,76 @@
+﻿@using PagedList.Mvc
+@model Web.Areas.Admin.ViewModels.SliderView
+@{
+    ViewBag.Title = "Slider";
+    ViewBag.Title2 = "Index";
+    Layout = "~/Views/Shared/_md.cshtml";
+}
+<div class="btn-group my-pnl">
+    <a href="@Url.Action("Create")" class="btn btn-default">@mui.mui.create_new</a>
+</div>
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>#ID</th>
+            <th>Url</th>
+            <th>Image</th>
+            <th>Order</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    @if (Model.Rows.Any())
+    {
+        foreach (var item in Model.Rows)
+        {
+            <tr>
+                <td>
+                    <a class="btn btn-xs btn-default" href="@Url.Action("Edit",new{id=item.Id})">@item.Id</a>
+
+                </td>
+                <td>@item.Url</td>
+                <td>
+                    <a class="img-popup" href="@item.Image">
+                        <img src="@item.Image" width="50px;" />
+                    </a>
+                </td>
+                <td>@item.Order</td>
+                <td>
+                    <div class="btn-group">
+
+                        <a class="btn btn-default" title="Sửa" href=" @Url.Action("Edit", new { id = item.Id }) "><i class=" fa fa-pencil"></i></a>
+                        <a class="btn btn-default" title="Xóa" href="javascript:void(0);" onclick="fnDelete(@item.Id);"><i class="fa fa-remove" style=""></i></a>
+
+
+
+                    </div>
+                </td>
+            </tr>
+        }
+
+    }
+</table>
+@Html.PagedListPager(Model.Rows, page => Url.Action("Index", new { page = page }))
+
+
+
+
+<script type="text/javascript">
+
+    var fnDelete = function (_id) {
+        if (confirm("Are you sure?") == true) {
+            var param = {
+                url: "@Url.Action("Delete")",
+                param: JSON.stringify({ id: _id }),
+                fnSuccess: function (data) { //Success
+                    if (!data.r) {
+                        alert(data.m);
+                    } else {
+                        window.location.reload(false);
+                    }
+                }
+            };
+            fnAjax(param);
+        }
+    }
+
+</script>

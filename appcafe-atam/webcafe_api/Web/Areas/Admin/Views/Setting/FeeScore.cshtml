@@ -1,0 +1,68 @@
+﻿@model Web.Areas.Admin.ViewModels.SettingFeeScoreVM
+@{
+    ViewBag.Title = "Setting";
+    ViewBag.Title2 = "Paging row per page";
+    Layout = "~/Views/Shared/_md.cshtml";
+}
+<div class="well">
+    <h2>law charged pay per use service operations</h2>
+    <img src="http://www.webhostingreviewjam.com/wp-content/uploads/2013/02/payment-icon.png" />
+</div>
+<div>
+    @using (Html.BeginForm())
+    {
+        <div class="row">
+            <div class="col-md-6">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">POST JOB & FILTER RESUME</div>
+                    <div class="panel-body">
+                        <div class="form-group  has-feedback">
+                            @Html.LabelFor(m => m.fee_score_filter_profile)/per RESUME/CV
+                            @Html.TextBoxFor(m => m.fee_score_filter_profile, new { @class = "form-control int_num" })
+                            <i class="form-control-feedback fa fa-sort-numeric-asc"></i>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            @Html.LabelFor(m => m.fee_score_post_recruitment)/per JOB
+                            @Html.TextBoxFor(m => m.fee_score_post_recruitment, new { @class = "form-control int_num" })
+                            <i class="form-control-feedback fa fa-sort-numeric-asc"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">FEE ADD LABEL POST PER 1 JOB</div>
+                    <div class="panel-body">
+                        <div class="form-group has-feedback">
+                            @Html.LabelFor(m => m.fee_score_label_hot)
+                            @Html.TextBoxFor(m => m.fee_score_label_hot, new { @class = "form-control int_num" })
+                            <i class="form-control-feedback fa fa-sort-numeric-asc"></i>
+                        </div>
+                        <div class="form-group  has-feedback">
+                            @Html.LabelFor(m => m.fee_score_label_new)
+                            @Html.TextBoxFor(m => m.fee_score_label_new, new { @class = "form-control int_num" })
+                            <i class="form-control-feedback fa fa-sort-numeric-asc"></i>
+                        </div>
+
+                        <div class="form-group has-feedback">
+                            @Html.LabelFor(m => m.fee_score_label_top)
+                            @Html.TextBoxFor(m => m.fee_score_label_top, new { @class = "form-control int_num" })
+                            <i class="form-control-feedback fa fa-sort-numeric-asc"></i>
+                        </div>
+                        <div class="form-group has-feedback">
+                            @Html.LabelFor(m => m.fee_score_label_urgent)
+                            @Html.TextBoxFor(m => m.fee_score_label_urgent, new { @class = "form-control int_num" })
+                            <i class="form-control-feedback fa fa-sort-numeric-asc"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center;">
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update setting</button>
+        </div>
+    }
+</div>

@@ -1,0 +1,33 @@
+﻿@{
+   var strRan=myNumbers.NgauNhienSHA256();
+}
+@RenderSection("Head", required: false) 
+<div class="modal-content" id="@strRan">
+    <div class="modal-header">
+        @*<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>*@
+        
+        <button style="float:right;" type="button" class="btn btn-default btn-circle waves-effect waves-circle waves-float" data-dismiss="modal" aria-label="Close">
+            <i class="material-icons">close</i>
+        </button>
+        
+
+        <h2 class="modal-title header" id="myModalLabel">@ViewBag.Title |  @ViewBag.Title2</h2>
+    </div>
+    
+        @RenderBody()
+
+    @*<div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+            <button type="button" class="btn btn-primary">Lưu</button>
+        </div>*@
+</div>
+<script>
+    fnInitEditor($("#modalCRUD"));
+    format_autonumeric();
+    $.validator.unobtrusive.parse($("#@strRan form"));
+    $('.img-popup').magnificPopup({
+        type: 'image'
+        // other options
+    });
+</script>
+@RenderSection("JS",required:false) 

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:SaleCardControllerwsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap-enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns="http://schemas.xmlsoap.org/wsdl/" name="SaleCardController" targetNamespace="urn:SaleCardControllerwsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:SaleCardControllerwsdl">
+      <xsd:complexType name="TopupToMerchantRequest">
+        <xsd:all>
+          <xsd:element name="merchant_id" type="xsd:string" />
+          <xsd:element name="api_username" type="xsd:string" />
+          <xsd:element name="api_password" type="xsd:string" />
+          <xsd:element name="binding_field" type="xsd:string" />
+          <xsd:element name="transaction_id" type="xsd:string" />
+          <xsd:element name="card_id" type="xsd:string" />
+          <xsd:element name="pin_field" type="xsd:string" />
+          <xsd:element name="seri_field" type="xsd:string" />
+          <xsd:element name="data_sign" type="xsd:string" />
+          <xsd:element name="email" nillable="true" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="TopupToMerchantResponse">
+        <xsd:all>
+          <xsd:element name="error_code" type="xsd:string" />
+          <xsd:element name="error_message" type="xsd:string" />
+          <xsd:element name="transaction_id" type="xsd:string" />
+          <xsd:element name="trans_id" type="xsd:string" />
+          <xsd:element name="info_card" type="xsd:string" />
+          <xsd:element name="data_sign" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="DoTopupToMerchantRequest">
+    <wsdl:part name="request" type="tns:TopupToMerchantRequest" />
+  </wsdl:message>
+  <wsdl:message name="DoTopupToMerchantResponse">
+    <wsdl:part name="return" type="tns:TopupToMerchantResponse" />
+  </wsdl:message>
+  <wsdl:portType name="SaleCardControllerPortType">
+    <wsdl:operation name="DoTopupToMerchant">
+      <wsdl:documentation>Function nhận thông tin thẻ cào xử lý nhà mạng</wsdl:documentation>
+      <wsdl:input message="tns:DoTopupToMerchantRequest" />
+      <wsdl:output message="tns:DoTopupToMerchantResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SaleCardControllerBinding" type="tns:SaleCardControllerPortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="DoTopupToMerchant">
+      <soap:operation soapAction="urn:SaleCardControllerwsdl#DoTopupToMerchant" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:SaleCardControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:SaleCardControllerwsdl" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SaleCardControllerService">
+    <wsdl:port name="SaleCardControllerPort" binding="tns:SaleCardControllerBinding">
+      <soap:address location="https://www.baokim.vn/the-cao/saleCard/wsdl?ws=1" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,60 @@
+﻿@using Web.App_Code
+@model Web.Areas.Admin.ViewModels.MF.BanCRUD
+
+
+@{
+    ViewBag.Title = "Product";
+    ViewBag.Title2 = "CREATE NEW";
+    Layout = "~/Views/Shared/_bootstrap_modal.cshtml";
+}
+
+
+<div class="modal-body">
+    @using (Ajax.BeginForm("Create", FormMethod.Post, new AjaxOptions { OnSuccess = "fnOnSuccess" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="show_err" style="color:red;">
+            @Html.ValidationSummary(false)
+        </div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+     
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                @Html.RequiredLabelFor(model => model.MaBan, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.MaBan, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.MaBan, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.RequiredLabelFor(model => model.TenBan, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.TenBan, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TenBan, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.RequiredLabelFor(model => model.QuanId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.QuanId, Model.ddlQuan,"--Chọn quán--", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.QuanId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">@mui.mui.cancel</button>
+            <button type="submit" class="btn btn-primary">@mui.mui.save</button>
+        </div>
+    }
+    <script type="text/javascript">
+        function fnOnSuccess(data) {
+            if (data.r) {
+                $('#modalCRUD').modal('hide');
+                cls.fnReload();
+            } else {
+                toastr.error(data.m);
+            }
+        }
+    </script>
+</div>

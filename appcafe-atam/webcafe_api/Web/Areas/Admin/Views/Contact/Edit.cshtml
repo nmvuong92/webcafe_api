@@ -1,0 +1,75 @@
+﻿@model Web.Areas.Admin.ViewModels.ContactCRUD
+
+@{
+    ViewBag.Title2 = "EDIT";
+    Layout = "~/Views/Shared/_bootstrap_modal.cshtml";
+    IEnumerable<SelectListItem> ddlRole = ViewBag.ddlRole;
+}
+<style>
+    .group{
+        border:1px #f7f6f6 solid;
+        padding:2px;
+        border-radius:15px;
+        margin:10px 0px;
+    }
+    .group h2{
+        margin:0px; 
+        padding:0px;
+        font-size:0.8em;
+       text-align:center;
+       
+    }
+</style>
+@using (Ajax.BeginForm("Edit", "Contact", FormMethod.Post, new AjaxOptions { OnSuccess = "fnOnSuccess" }, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="show_err" style="color:red;">
+        @Html.ValidationSummary(false)
+    </div>
+    @Html.HiddenFor(model => model.Id)
+
+   
+
+    <div class="group">
+        <h2>Trạng thái thanh toán tiền</h2>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ContactStatusId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.ContactStatusId, Model.ddlContactStatus, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ContactStatusId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="group">
+        <h2>Bổ sung</h2>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.GhiChu, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.GhiChu, new { @class = "form-control",@placeholder="Tùy nhập" })
+                @Html.ValidationMessageFor(model => model.GhiChu, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">@mui.mui.cancel</button>
+        <button type="submit" class="btn btn-primary">@mui.mui.save</button>
+    </div>
+
+}
+<script>
+    function fnOnSuccess(data) {
+       
+        if (data.r) {
+            $('#myModal').modal('hide');
+            cls.fnReload();
+            toastr.success(data.m);
+        } else {
+            toastr.error(data.m);
+        }
+       
+    }
+</script>

@@ -1,0 +1,268 @@
+﻿@using Web.Models
+@model Web.ViewModels.BQC.HuyetBQCSearchModel
+@{
+    ViewBag.Title = "Huyệt BQC";
+    Layout = "~/Views/Shared/_layout2.cshtml";
+    VIEWSETTING __viewsetting = ViewBag.__viewsetting;
+
+    bool islog = __viewsetting.__login != null;
+    bool isvip1 = islog && __viewsetting.__login.IsVip1==true;
+}
+
+<link href="~/Content/css/search.css" rel="stylesheet" />
+<style>
+    /*an number*/
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        /* display: none; <- Crashes Chrome on hover */
+        -webkit-appearance: none;
+        margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    }
+</style>
+<link href="/Content/Plugin/e-smart-zoom/styles.css?v=5" rel="stylesheet" />
+
+
+<style>
+    #mota table {
+        height: auto;
+    }
+
+    #mota p {
+        line-height: 25px;
+        color: #000000;
+    }
+</style>
+<div class="vcontainer">
+
+
+
+
+
+    <div class="text-center" style="margin-top: 15px;">
+        <div class="clearable">
+            <input id="s" type="text" name="txtHuyet" value="@(Model.huyet!=-1?Model.huyet.ToString():"")" placeholder="Nhập huyệt" autocomplete="off" />
+            <i class="clearable__clear">&times;</i>
+        </div>
+
+        <div id="searchInContainer">
+            <input type="radio" name="grid" value="set" id="searchSite" @(Model.grid == true ? "checked=checked" : "") />
+            <label for="searchSite" id="siteNameLabel">Hiện lưới</label>
+
+            <input type="radio" name="grid" value="no-set" id="searchWeb" @(Model.grid == false ? "checked=checked" : "") />
+            <label for="searchWeb">Bỏ lưới</label>
+        </div>
+        <button type="button" onclick="fnSearchHuyet();" class="btn btn-success"><i class="fa fa-search"></i> Tìm kiếm</button>
+        @if (Model.huyet != -1)
+        {
+            <button type="button" onclick="window.location.href='/HuyetBQC/Index'" class="btn btn-default">Trở về</button>
+        }
+    </div>
+    @*@if (Model.somat > 1)
+        {
+            <div class="icons" id="controlLuiTien">
+                <button onclick="fnLui();" class="btn btn-default"><i class="fa fa-arrow-left"></i> Mặt chính diện</button>
+                <button onclick="fnTien();" class="btn btn-default"><i class="fa fa-arrow-right"></i>Mặt cạnh</button>
+            </div>
+        }*@
+
+
+    <div class="row" style="margin-top: 25px;">
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Mặt chính diện</h3>
+                </div>
+                <div class="panel-body" style="padding:0;">
+                    <div class="imgContainer zoomableContainer" id="imgContainer1">
+                        <img id="imageFullScreen" class="img_huyet" src="/Content/img/lg.discuss-ellipsis-preloader.gif" />
+                        <div class="positionButtonDiv control1">
+
+                            Zoom :
+                            <span>
+                                <img id="zoomInButton" class="zoomButton" src="/Content/Plugin/e-smart-zoom/assets/zoomIn.png" title="zoom in" alt="zoom in" />
+                                <img id="zoomOutButton" class="zoomButton" src="/Content/Plugin/e-smart-zoom/assets/zoomOut.png" title="zoom out" alt="zoom out" />
+                            </span>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+           
+        </div>
+        
+            <div class="col-md-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Mặt cạnh</h3>
+                    </div>
+                    <div class="panel-body" style="padding:0;">
+
+                        <div class="imgContainer zoomableContainer2" id="imgContainer2">
+                            <img id="imageFullScreen2" class="img_huyet2" src="/Content/img/lg.discuss-ellipsis-preloader.gif" />
+                            <div class="positionButtonDiv control2">
+                                
+                                    Zoom :
+                                    <span>
+                                        <img id="zoomInButton" class="zoomButton" src="/Content/Plugin/e-smart-zoom/assets/zoomIn.png" title="zoom in" alt="zoom in" />
+                                        <img id="zoomOutButton" class="zoomButton" src="/Content/Plugin/e-smart-zoom/assets/zoomOut.png" title="zoom out" alt="zoom out" />
+                                    </span>
+                               
+                            
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+         
+            </div>
+      
+        @if (Model.huyet != -1)
+        {
+            <div class="col-md-@(Model.somat == 2 ? "12" : "12  wow slideInUp")">
+
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Mô tả tác dụng</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div id="mota">
+                            @if (!islog)
+                            {
+                                <h2 style="color:red;" class="text-center">Vui lòng <a href="javascript:void(0);" onclick="clsUser.showPopLogin('Đăng nhập','');">[đăng nhập]</a> để xem tác dụng huyệt!</h2>
+                            }
+                            else
+                            {
+                                if (isvip1)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(Model.mota))
+                                    {
+                                        @Html.Raw(Model.mota)
+                                    }
+                                    else
+                                    {
+                                        if (Model.huyet != -1)
+                                        {
+                                            <p>Không có mô tả cho huyệt @Model.huyet</p>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <h2 style="color:red;" class="text-center">Vui lòng <a href="@Url.Action("Profile","User")">[nâng cấp thành viên VIP]</a> để xem tác dụng huyệt!</h2>
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+
+
+@section JS{
+    <script src="~/Content/Plugin/e-smart-zoom/e-smart-zoom-jquery.min.js"></script>
+    <script>
+        $(".clearable").each(function() {
+
+            var $inp = $(this).find("input:text"),
+                $cle = $(this).find(".clearable__clear");
+
+            $inp.on("input", function(){
+                $cle.toggle(!!this.value);
+            });
+
+            $cle.on("touchstart click", function(e) {
+                e.preventDefault();
+                $inp.val("").trigger("input");
+            });
+
+        });
+        $(".clearable input").trigger("input");
+
+        var g_huyet = @(Model.huyet);
+        var g_grid = '@(Model.grid)' === '@true';
+        var g_loai = '@(Model.loai)';
+
+        if (g_huyet != -1) {
+            var g_somat = @(Model.somat);
+            var link_img = "/HuyetBQC/Test?huyet=" + g_huyet + "&grid=" + g_grid + "&loai=mt";
+            $(".img_huyet").attr("src", link_img);
+
+            var link_img2 = "/HuyetBQC/Test?huyet=" + g_huyet + "&grid=" + g_grid + "&loai=mc";
+            $(".img_huyet2").attr("src", link_img2);
+        } else {
+            $(".img_huyet").attr("src", "/HuyetBQC/Default?grid="+g_grid+"&loai=mt");
+            $(".img_huyet2").attr("src", "/HuyetBQC/Default?grid="+g_grid+"&loai=mc");
+        }
+
+        $("input[name=txtHuyet]").keyup(function (e) {
+            if (e.keyCode == 13) {
+                fnSearchHuyet();
+            }
+        });
+        $("input[name=txtHuyet]").on("click", function () {
+            $(this).select();
+        });
+        $('input[name=grid]').change(function () {
+            fnSearchHuyet();
+        });
+
+        function fnSearchHuyet(_loaimat) {
+            var _mat = "mt";
+            if (_loaimat != undefined) {
+                _mat = _loaimat;
+            }
+            var grid = $('input[name=grid]:checked').val() == 'set';
+            var huyet = $("input[name=txtHuyet]").val();
+            var sss = "/HuyetBQC/Index?huyet=" + huyet + "&grid=" + grid + "&loai="+_mat;
+            window.location.href = sss;
+        }
+        function fnLui() {
+            fnSearchHuyet("mt");
+        }
+        function fnTien() {
+            fnSearchHuyet("mc");
+        }
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <script>
+        $(document).ready(function () {
+            fnZoomMat();
+            fnZoomMat2();
+        });
+        function fnZoomMat() {
+            $('#imageFullScreen').smartZoom({ 'containerClass': 'zoomableContainer' });
+
+            
+
+            $('.control1 #zoomInButton,.control1 #zoomOutButton').bind("click", function(e) {
+                var scaleToAdd = 0.8;
+                if (e.target.id == 'zoomOutButton')
+                    scaleToAdd = -scaleToAdd;
+                $('#imageFullScreen').smartZoom('zoom', scaleToAdd);
+            });
+        }
+        function fnZoomMat2() {
+            $('#imageFullScreen2').smartZoom({ 'containerClass': 'zoomableContainer2' });
+            
+            $('.control2 #zoomInButton,.control2 #zoomOutButton').bind("click", function(e) {
+                var scaleToAdd = 0.8;
+                if (e.target.id == 'zoomOutButton')
+                    scaleToAdd = -scaleToAdd;
+                $('#imageFullScreen2').smartZoom('zoom', scaleToAdd);
+            });
+
+        }
+    </script>
+}

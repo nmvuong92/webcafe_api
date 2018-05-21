@@ -1,0 +1,613 @@
+﻿@using OfficeOpenXml.FormulaParsing.Utilities
+@{
+    var relog = Request.QueryString["relog"] != null;
+    int __ran = 10;
+}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico?v=@__ran" type="image/x-icon">
+    <title>@ViewBag.Title</title>
+
+    <meta property="og:url" content="@myUrl.GetSiteUrl(Request.RawUrl)" />
+
+    @RenderSection("META", required: false)
+   
+
+    @Styles.Render("~/bundles/css")
+
+   
+    @RenderSection("CSSTOP", required: false)
+
+   
+</head>
+<body>
+    <script type="text/javascript" src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/MyScripts/ajaxHelpers.js?v=@__ran"></script>
+    <script type="text/javascript" src="~/Content/hht/js/App-Auth.js?v=@__ran"></script>
+    <script src="~/Content/Plugin/jquery-ui/jquery-ui.min.js"></script>
+    <script>
+        $.widget.bridge('uitooltip', $.ui.tooltip);
+    </script>
+    <script type="text/javascript" src="~/Content/hht/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Content/hht/js/jquery.tinyscrollbar.js"></script>
+    <script type="text/javascript" src="~/Content/hht/js/jquery.flexisel.js"></script>
+    <script type="text/javascript" src="~/Content/Plugin/toastr/toastr.min.js"></script>
+    <script type="text/javascript" src="~/Content/hht/js/sample.js"></script>
+
+    <script src="~/Content/Plugin/OwlCarousel2-2.2.0/src/js/owl.carousel.js"></script>
+    <script src="~/Content/Plugin/OwlCarousel2-2.2.0/src/js/owl.autoplay.js"></script>
+    <script src="~/Content/css/summernote/dist/summernote.min.js"></script>
+    
+
+    @*@Scripts.Render("~/bundles/app-js")*@
+    @RenderSection("JSTOP", required: false)
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery-unobtrusive-ajax")
+
+    <script src="~/Content/gentelella/vendors/select2/dist/js/select2.min.js"></script>
+
+    <!-- InstanceBeginEditable name="EditRegion1" -->
+    <div id="main-menu-container">
+        @{Html.RenderAction("Header", "WebParts");}
+    </div>
+    <div class="clearfix"></div>
+    <div class="content">
+        @if (TempData["message"] != null)
+        {
+            string type = "alert-success";
+            if (TempData["message"].ToString().ToLower().Contains("error"))
+            {
+                type = " alert-danger";
+            }
+            <div id="hht-sys-message" class="alert @type alert-dismissible animated bounce text-center">
+                <button aria-hidden="true" data-dismiss="alert" class="close" type="button" onclick="$(this).parent().hide();">×</button>
+                <h4><i class="icon fa fa-info"></i> @mui.mui.message</h4>
+                <div class="message">
+                    @Html.Raw(TempData["message"])
+                </div>
+            </div>
+        }
+        @RenderBody()
+    </div>
+    <!-- InstanceEndEditable -->
+    <div id="goTop">
+        <a href="#">TOP</a>
+        <!--<img src="../~/Content/hht/images/top.png" width="60">-->
+    </div>
+    <!-- WALLET -->
+    <div class="modal fade bs-example-modal-lg" id="myModal_wallet" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">WALLET</h4>
+                </div>
+                <div class="modal-body text-center">
+                 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    @*<p><a href="#">Fogot password ?</a></p>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- WALLET -->
+    <div class="modal fade bs-example-modal-lg" id="myModal_Purchase" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Purchase Wallet</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    @*<p><a href="#">Fogot password ?</a></p>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--PAYMENT-->
+    <div class="modal fade bs-example-modal-lg" id="myModal_NOTIFICATION" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">NOTIFICATION</h4>
+                </div>
+                <div class="modal-body">
+                    <ul class="notifications">
+                        <li class="notification">
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="media-object">
+                                        <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="50x50" style="width: 50px; height: 50px;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2250%22%20height%3D%2250%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2050%2050%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_15a6e593f28%20text%20%7B%20fill%3A%23919191%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_15a6e593f28%22%3E%3Crect%20width%3D%2250%22%20height%3D%2250%22%20fill%3D%22%23cccccc%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%224.924999237060547%22%20y%3D%2229.8%22%3E50x50%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <strong class="notification-title"><a href="#">Dave Lister</a> commented on <a href="#">DWARF-13 - Maintenance</a></strong>
+                                    <p class="notification-desc">I totally don't wanna do it. Rimmer can do it.</p>
+                                    <div class="notification-meta">
+                                        <small class="timestamp">27. 11. 2015, 15:00</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="notification">
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="media-object">
+                                        <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="50x50" style="width: 50px; height: 50px;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2250%22%20height%3D%2250%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2050%2050%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_15a6e593f2b%20text%20%7B%20fill%3A%23919191%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_15a6e593f2b%22%3E%3Crect%20width%3D%2250%22%20height%3D%2250%22%20fill%3D%22%23cccccc%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%224.924999237060547%22%20y%3D%2229.8%22%3E50x50%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <strong class="notification-title"><a href="#">Nikola Tesla</a> resolved <a href="#">T-14 - Awesome stuff</a></strong>
+                                    <p class="notification-desc">Resolution: Fixed, Work log: 4h</p>
+                                    <div class="notification-meta">
+                                        <small class="timestamp">27. 10. 2015, 08:00</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="notification">
+                            <div class="media">
+                                <div class="media-left">
+                                    <div class="media-object">
+                                        <img data-src="holder.js/50x50?bg=cccccc" class="img-circle" alt="50x50" style="width: 50px; height: 50px;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2250%22%20height%3D%2250%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2050%2050%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_15a6e593f2d%20text%20%7B%20fill%3A%23919191%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A10pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_15a6e593f2d%22%3E%3Crect%20width%3D%2250%22%20height%3D%2250%22%20fill%3D%22%23cccccc%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%224.924999237060547%22%20y%3D%2229.8%22%3E50x50%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
+                                    </div>
+                                </div>
+                                <div class="media-body">
+                                    <strong class="notification-title"><a href="#">James Bond</a> resolved <a href="#">B-007 - Desolve Spectre organization</a></strong>
+                                    <div class="notification-meta">
+                                        <small class="timestamp">1. 9. 2015, 08:00</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    @*<p><a href="#">Fogot password ?</a></p>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--PAYMENT-->
+    <div class="modal fade bs-example-modal-lg" id="myModal_ThanhToanJob" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">PAYMENT JOB</h4>
+                </div>
+                <div class="modal-body">
+                    <h1>THANH TOAN JOB</h1>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    @*<p><a href="#">Fogot password ?</a></p>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Đăng nhập -->
+    <div class="modal fade bs-example-modal-lg" id="myModal_dnhap" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">@mui.mui.login</h4>
+                </div>
+                <div class="modal-body text-center">
+                 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Đăng ký -->
+    <div class="modal fade bs-example-modal-lg" id="myModal_dky" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">@mui.mui.register</h4>
+                </div>
+
+                <div class="modal-body text-center">
+                    <p class="slogan">@mui.mui.welcome</p>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="active"><a href="#candidate" role="tab" data-toggle="tab">@mui.mui.candidate</a></li>
+                        <li><a href="#employer" role="tab" data-toggle="tab">@mui.mui.login_employees_label</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="candidate">
+                          
+                        </div>
+                        <div class="tab-pane" id="employer">
+                          
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- config -->
+    <div class="modal fade" id="myModal_Config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg modal-config-content" role="document">
+        </div>
+    </div>
+    <div class="line_footer"></div>
+
+    <div class="boxFeedBack">
+        <a onclick="return feedBack();">
+            @mui.mui.feedback
+        </a>
+    </div>
+
+    <!--auto-->
+    <script src="~/Scripts/autoNumeric.js"></script>
+    <!--ck-->
+    <script src="~/Scripts/MyScripts/common.js"></script>
+    <script src="~/Scripts/MyScripts/ajaxHelpers.js"></script>
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <script src="~/ckfinder/ckfinder.js"></script>
+    <script src="~/Content/Plugin/lightbox/js/lightbox.min.js"></script>
+
+    <script src="~/Content/hht/js/App.js?rndstr=@__ran"></script>
+    @*<script src="~/Content/hht/js/App.js"></script>*@
+    @{Html.RenderAction("Footer", "WebParts");}
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $.ajaxSetup({
+                error: function (xhr, e, msg) {
+                    // var response = $.parseJSON(xhr.responseText);
+                    // toastr.error(response.err.message);
+                    //$GB_MODAL_DANGNHAP.modal('show');
+                    /*
+                    if (x.status == 0) {
+                        toastr.error('You are offline!!\n Please Check Your Network.');
+                    } else if (x.status == 404) {
+                        toastr.error('Requested URL not found.');
+
+                    } else if (x.status == 401) {
+
+                        toastr.error(x.statusText + VDConfig.__config.conf_err_401);
+                        $GB_MODAL_DANGNHAP.modal('show');
+
+                    } else if (x.status == 550) { // <----- THIS IS MY CUSTOM ERROR CODE
+                        toastr.error(x.responseText);
+                    } else if (x.status == 500) {
+                        toastr.error('Internel Server Error.');
+                    } else if (e == 'parsererror') {
+                        toastr.error('Error.\nParsing JSON Request failed.');
+                    } else if (e == 'timeout') {
+                        toastr.error('Request Time out.');
+                    } else {
+                        toastr.error('Unknow Error.\n' + x.responseText);
+                    }*/
+                }
+            });
+
+            var arr_animates = ["fadeInUp", "fadeIn"];
+            $(".partialContents").each(function (index, item) {
+                var self = $(this);
+                var url = $(item).data("url");
+                if (url && url.length > 0) {
+                    $(item).load(url, function () {
+                        var randomNumber = Math.floor(Math.random() * arr_animates.length);
+                        //self.addClass("animated " + arr_animates[randomNumber]);
+                    });
+                }
+            });
+            $('.hht-guide').each(function (index, item) {
+                var self = $(this);
+                var randomNumber = Math.floor(Math.random() * arr_animates.length);
+                self.addClass("animated " + arr_animates[randomNumber]);
+            });
+
+            $("select:not(.chosen)").select2({
+                theme: "bootstrap",
+
+            });
+
+            $("form").submit(function () {
+
+                //$(':input[type="submit"]').prop('disabled', true);
+                // $('.btn-submit').html("<i class='fa fa-circle-o-notch fa-spin fa-fw'></i> proccessing").prop('disabled', true);
+            });
+
+            $('.summernote').summernote({
+
+                height: 330,   //set editable area's height
+                codemirror: {
+                    // codemirror options
+                    theme: 'monokai'
+                },
+                toolbar: [
+                    // [groupName, [list of button]]
+                    ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']]
+                    //['media', ['video']]
+                ]
+            });
+            $('.summernoteSmall').summernote({
+
+                height: 100,   //set editable area's height
+                codemirror: {
+                    // codemirror options
+                    theme: 'monokai'
+                },
+                toolbar: [
+                    // [groupName, [list of button]]
+                    ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['height', ['height']]
+                    //['media', ['video']]
+                ]
+            });
+
+            $(function () {
+                $('form').submit(function () {
+                    var btnSubmit = $('.btn-submit');
+                    var init_btnSubmit = btnSubmit.html();
+                    btnSubmit.html("<i class='fa fa-circle-o-notch fa-spin fa-fw'></i> proccessing").prop('disabled', true);
+                    if ($(this).valid()) {
+                        // client validation passed successfully
+                        var data_confirm = $(this).data("confirm");
+                        if (data_confirm != undefined) {
+                            return confirm(data_confirm);
+                        } else {
+                            return true;
+                        }
+
+                    } else {
+                        btnSubmit.html(init_btnSubmit).removeAttr("disabled");
+                        toastr.warning('there was an error during client validation');
+
+                        /*
+                        $('html, body').animate({
+                            scrollTop: $(".show_err").offset().top
+                        }, 1500);*/
+
+                        // cancel the submission of the form
+                        return false;
+                    }
+                });
+            });
+        });
+
+        function feedBack() {
+            $('#modalFeedBack').remove();
+            $.ajax({
+                url: '@Url.Action("FeedBack","Contact")',
+                success: function(response) {
+                    $('body').append(response);
+                    $('#modalFeedBack').modal({
+                        keyboard: false,
+                        backdrop: 'static',
+                        show: true
+                    });
+
+                    $('#frmFeedback').submit(function() {
+                        var $btn = $('#modalFeedBack button[type="submit"]').button('loading');
+                        $.ajax({
+                            url: $(this).attr('action'),
+                            data: $(this).serialize(),
+                            type: 'POST',
+                            dataType: 'JSON',
+                            success: function(response) {
+                                $btn.button('reset');
+                                if (response.status) {
+                                    $('#modalFeedBack .modal-body').html(response.msg);
+                                } else {
+                                    toastr.warning(response.msg, "Message");
+                                }
+                            }
+                        });
+
+                        return false;
+                    });
+                }
+            });
+
+            return false;
+        }
+
+        function format_datepicker() {
+            $(".datepicker").datepicker({
+                dateFormat: culture_datetime,
+                changeMonth: true,
+                changeYear: true,
+                yearRange: gb_f1 + ':' + gb_f2,
+                beforeShow: function () {
+                    setTimeout(function () {
+                        $('.ui-datepicker').css('z-index', 99999999999999);
+                    }, 0);
+                }
+
+            });
+            /*
+             $(".datepicker").datepicker({
+                //comment the beforeShow handler if you want to see the ugly overlay
+                beforeShow: function () {
+                    setTimeout(function () {
+                        $('.ui-datepicker').css('z-index', 99999999999999);
+                    }, 0);
+                }
+            });*/
+        }
+
+        function format_autonumeric() {
+            $('.num_null').autoNumeric('init', { aSep: NumberGroupSeparator, aDec: NumberDecimalSeparator, aPad: false, vMin: '0', vMax: '99999999999' });
+            $('.int_num').autoNumeric('init', { aSep: '', aPad: false, vMin: '0', vMax: '99999999999' });
+            $('.num').autoNumeric('init', { aSep: NumberGroupSeparator, aDec: NumberDecimalSeparator, aPad: false, vMin: '0', vMax: '99999999999' });
+            $('.fnum_am').autoNumeric('init', { aSep: NumberGroupSeparator, aDec: NumberDecimalSeparator, aPad: false, vMin: '-99999999999.99', vMax: '99999999999.99' });
+            $('.fnum').autoNumeric('init', { aSep: NumberGroupSeparator, aDec: NumberDecimalSeparator, aPad: false, vMin: '0', vMax: '99999999999.99' });
+            $('.fnum_1').autoNumeric('init', { aSep: NumberGroupSeparator, aDec: NumberDecimalSeparator, aPad: false, vMin: '1', vMax: '99999999999.99' });
+            $('.num1den5').autoNumeric('init', { aSep: NumberGroupSeparator, aDec: NumberDecimalSeparator, aPad: false, vMin: '1', vMax: '5' });
+            $('.num_am').autoNumeric('init', { aSep: NumberGroupSeparator, aDec: NumberDecimalSeparator, aPad: false, vMin: '-9999999999999', vMax: '99999999999' });
+            $('.numlength2').autoNumeric('init', { aSep: NumberGroupSeparator, aDec: NumberDecimalSeparator, aPad: false, vMin: '0', vMax: '100' });
+        }
+
+        function fnInitImage(jqSelector) {
+            jqSelector.find('.img-ck').each(function () {
+                $(this).myCkfinderStart();
+            });
+        }
+
+        function fnInitEditor(jqSelector) {
+            jqSelector.find('.sEditor').each(function () {
+                CKEDITOR.replace($(this).attr('id'), {
+                    toolbar: [
+                        ['Source', 'Bold', 'Italic', 'Underline', 'StrikeThrough', 'FontSize'],
+                        ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+                        ['Image', 'Table', '-', 'Link', 'TextColor', 'BGColor', 'timestamp'],
+                        ['Maximize']
+                    ],
+                    height: "150px",
+                });
+            });
+        }
+
+        function fnConfigShowEditKey(_key) {
+
+            $.get("@Url.Action("Edit", "Config", new {area = "admin"})?key=" + _key, function (data) {
+                $('#myModal_Config').find('.modal-config-content').first().html(data);
+                $('#myModal_Config').modal('show');
+            });
+
+        }
+
+        function PurchaseWallet(id) {
+
+            $.ajax({
+                url: '@Url.Action("purchasewallet","ajax")?id='+id,
+                type: 'GET',
+                success: function (response) {
+                    $('#myModal_Purchase').find('.modal-body').html(response);
+                    $('#myModal_Purchase').modal('show');
+
+                    $('#myModal_Purchase #FeeServiceID').change(function () {
+                        var value = $(this).val();
+                        if (value > 0) {
+                            var el = $('#myModal_Purchase #FeeGateID');
+                            var elVal = el.val();
+                            el.find('option[value!=""]').remove();
+                            $.ajax({
+                                url: '@Url.Action("LoadFeeGate", "Ajax")',
+                                type: 'POST',
+                                data: { id: value },
+                                dataType: 'json',
+                                cache: false,
+                                success: function (data) {
+                                    $.each(data, function (index, item) {
+                                        el.append($('<option>').text(item.Text).val(item.Value));
+                                    });
+                                    if (elVal != null) {
+                                        el.val(elVal).change();
+                                    }
+                                }
+                            });
+
+                        }
+                    }).change();
+
+                    $('#myModal_Purchase #FeeGateID').change(function () {
+                        var value = $(this).val();
+                        if (value > 0) {
+                            var el = $('#myModal_Purchase #FeePriceDetailID');
+                            var elVal = el.val();
+                            el.find('option[value!=""]').remove();
+                            $.ajax({
+                                url: '@Url.Action("LoadFeePriceDetail", "Ajax")',
+                                type: 'POST',
+                                data: { id: value },
+                                dataType: 'json',
+                                cache: false,
+                                success: function (data) {
+                                    $.each(data, function (index, item) {
+                                        el.append($('<option>').text(item.Text).val(item.Value));
+                                    });
+                                    if (elVal != null) {
+                                        el.val(elVal).change();
+                                    }
+                                }
+                            });
+
+                        }
+                    });
+
+                    $('#myModal_Purchase #FeePriceDetailID').change(function () {
+                        var value = $(this).val();
+                        if (value > 0) {
+                            var el = $('#myModal_Purchase #FeePriceDetailID');
+                            $.ajax({
+                                url: '@Url.Action("FeePriceDetail", "Ajax")',
+                                type: 'POST',
+                                data: { id: value },
+                                cache: false,
+                                success: function (data) {
+                                    $('#lblFeePriceDetail').html(data);
+                                }
+                            });
+
+                        }
+                    });
+
+                    $('#frmEmployeePoint').submit(function () {
+                        $('#myModal_Purchase .show_err').empty();
+                        $.ajax({
+                            url: '@Url.Action("PurchaseWallet", "Ajax")',
+                            type: 'POST',
+                            data: $(this).serialize(),
+                            dataType: 'json',
+                            cache: false,
+                            success: function (data) {
+
+                                if (data.r) {
+                                    toastr.success(data.m, "Message");
+                                    $('#myModal_Purchase').modal('hide');
+                                } else {
+                                    $('#myModal_Purchase .show_err').html(data.m);
+                                    toastr.warning(data.m, "Message");
+                                }
+                            }
+                        });
+
+                        return false;
+                    });
+
+                }
+            });
+
+        }
+    </script>
+    @RenderSection("JS", required: false)
+
+</body>
+</html>

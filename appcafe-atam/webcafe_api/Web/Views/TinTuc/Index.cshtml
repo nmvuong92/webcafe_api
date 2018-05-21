@@ -1,0 +1,104 @@
+﻿@using PagedList.Mvc
+@model Web.ViewModels.MF.TinTucView
+@{
+    ViewBag.Title = mui.mui.news;
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+
+<div id="content">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <!-- Main Column -->
+            <div class="col-md-8">
+                <!-- Blog Post -->
+                <div class="blog-post padding-bottom-20">
+
+
+                    @foreach (var item in Model.List)
+                    {
+                        string url = Url.Action("Detail", "TinTuc", new { id = item.Id, seo_title = item.SEOTitle });
+
+                        <!-- Blog Item Header -->
+                        <div style="position: relative;">
+                            <div class="blog-item-header">
+                                <!-- Title -->
+                                <a href="@url">
+                                    @item.Title
+                                </a>
+
+                                <div class="clearfix"></div>
+                                <!-- End Title -->
+                                <!-- Date -->
+                                <!-- End Date -->
+                            </div>
+                           
+                                <p>@item.CreatedDate.XuatDateTime()</p>
+                            
+                        </div>
+                    <!-- End Blog Item Header -->
+                    <!-- Blog Item Body -->
+                        <div class="blog">
+                            <div class="clearfix"></div>
+                            <div class="blog-post-body row margin-top-15">
+                                <div class="col-md-5">
+                                    <img class="margin-bottom-20" src="@item.ImageThumbnail" alt="thumb1">
+                                </div>
+                                <div class="col-md-7">
+                                    <p>@Html.Raw(item.Description)</p>
+                                    <!-- Read More -->
+                                    <a href="@url" class="btn btn-warning">
+                                        Xem thêm
+                                        <i class="icon-chevron-right readmore-icon"></i>
+                                    </a>
+                                    <!-- End Read More -->
+                                </div>
+                            </div>
+                        </div>
+
+
+                    }
+                    <!-- End Blog Item Body -->
+                </div>
+                <div class="container text-center pagination">
+                    @Html.PagedListPager(Model.List, page => Url.Action("Index", new { page = page }))
+                </div>
+            </div>
+            <!-- End Main Column -->
+            <!-- Side Column -->
+            <div class="col-md-4">
+
+                <!-- Recent Posts -->
+                <div class="recent-posts">
+                    <h3>Bài viết xem nhiều</h3>
+                    <ul class="posts-list margin-top-10">
+                        
+                        @foreach (var item in Model.XemNhieu)
+                        {
+                            string url = Url.Action("Detail", "TinTuc", new { id = item.Id, seo_title = item.SEOTitle });
+                            <li>
+                                <div class="recent-post">
+                                    <a href="@url">
+                                        <img class="pull-left" src="@item.ImageThumbnail" alt="thumb1" style="width: 100px;">
+                                    </a>
+                                    <a href="@url" class="posts-list-title">@item.Title</a>
+                                    <br>
+                                    <span class="recent-post-date">
+                                        @item.CreatedDate.XuatDate()
+                                    </span>
+                                </div>
+                                <div class="clearfix"></div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <!-- End Recent Posts -->
+            </div>
+            <!-- End Side Column -->
+        </div>
+    </div>
+</div>
+
+
+
+

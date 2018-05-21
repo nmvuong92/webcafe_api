@@ -1,0 +1,105 @@
+﻿@using System.Globalization
+@using System.Web.UI.WebControls
+@using Web.Models
+@model Web.ViewModels.WebParts.FooterView
+@*<ul>
+        <li>HomNay: @Model.Statistic.HomNay</li>
+        <li>HomQua: @Model.Statistic.HomQua</li>
+        <li>ThangNay: @Model.Statistic.ThangNay</li>
+        <li>ThangTruoc: @Model.Statistic.ThangTruoc</li>
+        <li>TatCa: @Model.Statistic.TatCa</li>
+    </ul>*@
+
+@{
+
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+    VIEWSETTING __vs = ViewBag.__viewsetting;
+}
+@helper selected(string c, string culture)
+{
+    if (c.ToLower() == culture.ToLower())
+    {
+        @:checked="checked"
+    }
+}
+@{
+    var routeValues = this.ViewContext.RouteData.Values;
+    var controller = routeValues["controller"] as string;
+    var action = routeValues["action"] as string;
+    var ri = new RegionInfo(System.Threading.Thread.CurrentThread.CurrentUICulture.LCID);
+    CultureInfo[] cultureInfos = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
+}
+
+<div id="base">
+    <div class="container padding-vert-30">
+        <div class="row">
+            <!-- Disclaimer -->
+            <div class="col-md-4">
+                <h3 class="class margin-bottom-10">@__vs.__config.conf_website</h3>
+                <p>@__vs.__config.conf_address</p>
+                <p><span class="fa-phone"> Tel: @__vs.__config.conf_tel - Fax: 123456</span></p>
+                <p> <span class="fa-envelope">Email:</span> @__vs.__config.conf_email</p>
+            </div>
+            <!-- End Disclaimer -->
+            <!-- Contact Details -->
+            <div class="col-md-4 margin-bottom-20">
+                <h3 class="margin-bottom-10">Main products</h3>
+                <ul>
+                    @foreach (var item in Model.DanhMucSanPhamChinh)
+                    {
+                        var url = Url.Action("Index", "SanPham", new {catid = item.Id});
+                        <li><a href="@url">@item.Name</a></li>
+                    }
+                </ul>
+            </div>
+            <!-- End Contact Details -->
+            <!-- Sample Menu -->
+            <div class="col-md-4 margin-bottom-20">
+                <ul class="menu">
+                    @foreach (var item in Model.DsBaiVietFooter)
+                    {
+                        string url = Url.Action("Detail", "TinTuc", new { id = item.Id, seo_title = item.SEOTitle });
+                        <li>
+                            <a class="@item.FontAwesomeIcon" href="@url">@item.Title</a>
+                        </li>
+                    }
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <!-- End Sample Menu -->
+        </div>
+    </div>
+
+</div>
+<!-- Footer -->
+<div id="footer" class="background-gray-dark">
+    <div class="container">
+        <div class="row">
+            <!-- Footer Menu -->
+            <div id="footermenu" class="col-md-7">
+                <ul class="list-unstyled list-inline">
+                    <li>
+                        <a href="@Url.Action("Index","Home")" target="_blank">Trang chủ</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index","AboutUs")" target="_blank">Giới thiệu</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index","SanPham")" target="_blank">Sản phẩm</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index","TinTuc")" target="_blank">Tin tức</a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- End Footer Menu -->
+            <!-- Copyright -->
+            <div id="copyright" class="col-md-5">
+                <p class="pull-right">@__vs.__config.conf_copyright</p>
+            </div>
+            <!-- End Copyright -->
+        </div>
+    </div>
+</div>
+

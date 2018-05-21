@@ -1,0 +1,317 @@
+﻿@model VD.Data.Entity.User
+
+@{
+    ViewBag.Title = "Nhân viên";
+    ViewBag.Title2 = "LIST";
+    Layout = "~/Views/Shared/_md.cshtml";
+
+    List<VD.Data.Entity.Role> lstRole = ViewBag.lstRole;
+    IEnumerable<SelectListItem> ddlRole = lstRole.Select(s => new SelectListItem()
+    {
+        Text = s.Name,
+        Value = s.Id.ToString()
+    }).ToList();
+    IEnumerable<SelectListItem> ddlStatus = ViewBag.ddlStatus;
+
+}
+
+<div id="ViewTinTuc">
+    <div class="mailbox-controls row  m-b-20">
+        <!-- /.btn-group -->
+        <div class="col-md-6">
+            <div class="btn-group">
+                <button class="btn-create-new btn btn-success btn-sm" onclick="clsUsers.fnShowCreate();"><i class="fa fa-plus"></i> Thêm nhân viên</button>
+                <button onclick="clsUsers.fnReload();" class="btn btn-default btn-sm" type="button"><i class="fa fa-refresh"></i> Làm mới</button>
+                <button class="btnXoaMucChon btn btn-default btn-sm" onclick="clsUsers.fnDeletes();" type="button"><i class="fa fa-remove"></i> Xóa chọn</button>
+            </div>
+        </div>
+        <div class="col-md-6" style="text-align:right;">
+
+            <div class="btn-group">
+                <div class="btn-group">
+
+                    <input type="text" placeholder="search" style="width:120px; height:25px;" class="txt_search" data-col="full_text_search" />
+                    @Html.DropDownList("ddlRole", ddlRole, "--Chức vụ--", new { @data_filter = "roleid", @style = "width:150px;height:25px;" })
+                    @Html.DropDownList("ddlStatus", ddlStatus, "--Trạng thái--", new { @data_filter = "statusid", @style = "width:150px;height:25px;" })
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="tblData" style="width: 100%;">
+        <thead>
+            <tr>
+                <th style="width: 33px; text-align:center;">
+                    <a data-select-all=false id="btnSelectAll"><i class="fa fa-square-o"></i></a>
+                </th>
+                <th data-col="@Html.IdFor(m=>m.Id)" class="colOrder">ID</th>
+                <th data-col="@Html.IdFor(m => m.Fullname)" class="colOrder">@Html.DisplayNameFor(m => m.Fullname)</th>
+                <th data-col="@Html.IdFor(m => m.Username)" class="colOrder">@Html.DisplayNameFor(m => m.Username)</th>
+                <th data-col="@Html.IdFor(m => m.Image)" class="colOrder">@Html.DisplayNameFor(m => m.Image)</th>
+                <th data-col="@Html.IdFor(m => m.GioiTinh)" class="colOrder">@Html.DisplayNameFor(m => m.GioiTinh)</th>
+                <th data-col="@Html.IdFor(m => m.Phone)" class="colOrder">@Html.DisplayNameFor(m => m.Phone)</th>
+                <th data-col="@Html.IdFor(m => m.Address)" class="colOrder">@Html.DisplayNameFor(m => m.Address)</th>
+                <th data-col="@Html.IdFor(m => m.RoleId)" class="colOrder">@Html.DisplayNameFor(m => m.RoleId)</th>
+                <th data-col="@Html.IdFor(m => m.UserStatusId)" class="colOrder">@Html.DisplayNameFor(m => m.UserStatusId)</th>
+                <th>Nhân viên quán</th>
+                @*<th></th>*@
+            </tr>
+            @*<tr>
+                <th></th>
+                <th></th>
+                <th><input type="text" class="txt_search" data-col="@Html.IdFor(m => m.Username)" /></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+              
+   
+            </tr>*@
+        </thead>
+        <tbody class="view_data"></tbody>
+    </table>
+    <div class="ovl" style="display:none;"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade-scale" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document" id="myModal_content">
+
+    </div>
+</div>
+<script type="text/javascript">
+    var clsUsers = new function () {
+        var self = this;
+
+        self.modalCRUD = "#modalCRUD";
+
+        self.fnShowCreate = function () {
+            $.get('@Url.Action("Create", new { area="admin"})', function (data) {
+                $(self.modalCRUD).find(".main").html(data);
+                $(self.modalCRUD).modal('show');
+            });
+        }
+        self.fnReload = function () {
+            cls.fnReloadTable();
+        }
+
+
+        self.fnDelete = function (_id, that) {
+            if (confirm("Bạn có chắc xóa?") == true) {
+                var ajaxops = {
+                    url: "@Url.Action("Delete")",
+                    param: JSON.stringify({ id: _id }),
+                    fnSuccess: function (data) { //Success
+                        if (!data.r) {
+                            alert(data.m);
+                        } else {
+                            cls.fnReload();
+                        }
+                    }
+                };
+                fnAjax(ajaxops);
+            }
+        }
+
+        self.fnDeletes = function () {
+            var checkes = $(".cb_item:checked");
+            if (checkes.length != 0) {
+                if (confirm("Bạn có xóa " + checkes.length + " mục?") == true) {
+                    var _arr = [];
+                    checkes.each(function () {
+                        _arr.push(GetDefaultID($(this).val()));
+                    });
+                    var opts = {
+                        fnSuccess: function (data) { //Success
+                            cls.fnReload();
+                            if (data.r) {
+                                toastr.success(data.m);
+                                $("#btnSelectAll").data("select-all", false);
+                                $("#btnSelectAll").html("<i class='fa fa-square-o'></i>");
+                            } else {
+                                toastr.error(data.m);
+                            }
+                            cls.fnReload();
+                        },
+                        param: JSON.stringify({ arr: _arr }),
+                        url: "@Url.Action("xoachon", new { area = "Admin" })"
+                    };
+                    fnAjax(opts);
+                }
+            } else {
+                toastr.warning("Select items!", "Message");
+            }
+        }
+
+        self.fnShowEdit = function (_id) {
+            $.get("@Url.Action("Edit", new { area = "admin" })/" + _id, function (data) {
+                $(self.modalCRUD).find(".main").html(data);
+                $(self.modalCRUD).modal('show');
+            });
+        }
+    }
+
+
+    var paging_config = {
+        root: $("#ViewTinTuc"),
+        row_per_page: 20,
+        curpage: 1,
+        col_sort_default: "Id|desc",
+        fnjs: ['cls.fnPaging', 'cls.fnRpp'],
+        roleid: -1,
+        statusid: -1,
+        isvip: false
+    };
+    var cls = new clsPaging(paging_config);
+    cls.fnInit();
+
+
+
+    function clsPaging(_config) {
+        var self = this;
+        self.config = _config;
+        self.root = _config.root;
+        self.loadded = false;
+        self.fnInit = function () {
+            var col_sort_default = self.config.col_sort_default.split("|");
+            var key = col_sort_default[0];
+            var value = col_sort_default[1];
+            var searched = self.root.find(".colOrder[data-col='" + key + "']").first();
+            searched.data("sort", value).addClass(value);
+
+
+            //add event change cb_item
+            $(document).on('change', '.cb_item', function () {
+                if ($(this).is(":checked")) {
+                    $(this).parent().parent().addClass("selected");
+                } else {
+                    $(this).parent().parent().removeClass("selected");
+                }
+            });
+            for (var i = 0; i < self.root.find("select").length; i++) {
+                var searched2 = self.root.find("select").eq(i);
+                if (searched2.attr("data-filter")) {
+                    searched2.change(function () {
+                        var ikey = $(this).data("filter");
+                        self.config[ikey] = GetDefaultID($(this).val());
+                        self.config.curpage = 1;
+                        if (self.loadded) {
+                            self.fnReload();
+                        }
+                    }).trigger("change");
+                }
+            }
+            self.loadded = true;
+            self.fnReload();
+        }
+        self.fnReloadTable = function () {
+            self.fnReload();
+        }
+        self.root.on('click', 'a[data-pg]', function () {
+            var data_pg = $(this).attr("data-pg");
+            self.fnPaging(data_pg);
+        });
+        self.root.on('change', 'select.ddlrpp', function () {
+            var num = parseInt($(this).val());
+            self.config.row_per_page = num;
+            self.fnReload();
+        });
+
+
+
+        self.myVar = undefined;
+        self.curboloc = [];
+        self.param = {};
+        self.fnReload = function () {
+            self.fnPaging(self.config.curpage);
+        }
+
+
+        self.getSort = function () {
+            var rs = "|";
+            for (var i = 0; i < $(".colOrder").length; i++) {
+                var col = $(".colOrder").eq(i);
+                if (col.data("sort") == "asc" || col.data("sort") == "desc") {
+                    rs = col.data("col") + "|" + col.data("sort");
+                    break;
+                }
+            }
+            if (rs == "|") {
+                rs = self.config.col_sort_default;
+            }
+            return rs;
+        }
+        self.fnPaging = function (tranghientai) {
+            self.config.curpage = typeof tranghientai !== 'undefined' ? tranghientai : 1;
+            var get_sort = self.getSort();
+            self.param = {
+                tranghientai: self.config.curpage,
+                tongdongmottrang: self.config.row_per_page,
+                tentruongsort: get_sort.split("|")[0],
+                giatrisort: get_sort.split("|")[1],
+                bolocs: self.curboloc,
+                Fnjs: self.config.fnjs,
+                roleid: self.config.roleid,
+                statusid: self.config.statusid,
+                isvip: $("#cbIsVip").is(':checked')
+            };
+
+            var opts = {
+                url: "@Url.Action("ajax_paging")",
+                datareturn: "html",
+                fnSuccess: function (data) {
+                    self.root.find('.view_data').html(data);
+                    fnInit();
+                },
+                param: JSON.stringify({ paging: this.param }),
+            };
+            fnAjax(opts);
+        }
+        self.root.find("#btnSelectAll").first().click(function () {
+            var thiss = $(this);
+            var isSelectAll = thiss.data("select-all");
+            thiss.data("select-all", !isSelectAll);
+            if (!isSelectAll == true) { //show
+                self.root.find(".cb_item").each(function () {
+                    $(this).prop('checked', true);
+                });
+                thiss.html("<i class='fa fa-check-square'></i>");
+            } else {//hide
+                $(".cb_item").each(function () {
+                    $(this).prop('checked', false);
+                });
+                thiss.html("<i class='fa fa-square-o'></i>");
+            }
+            self.root.find(".cb_item").trigger("change");
+        });
+
+        //sortting
+        self.root.find(".colOrder").click(function () {
+            var thiss = $(this);
+            var cursortfield = thiss.data("col");
+            var cur_sort_data = thiss.data("sort");
+            (cur_sort_data == "asc") ? thiss.data("sort", "desc").addClass("desc").removeClass("asc") : thiss.data("sort", "asc").addClass("asc").removeClass("desc");
+            //remove all sort parameter class
+            self.root.find(".colOrder").not(thiss).data("sort", "").removeClass("asc").removeClass("desc");
+            self.fnReload();
+        });
+
+        //---search filter
+        self.root.find(".txt_search").keyup(function () {
+            var thiss = $(this);
+            thiss.addClass("txt_search_loading");
+            delay(function () {
+                self.curboloc = [];
+                self.curpage = 1; //set ve trang 1
+                for (var i = 0; i < self.root.find(".txt_search").length; i++) {
+                    var stim = self.root.find(".txt_search").eq(i);
+                    if (stim.val() != "") {
+                        self.curboloc.push({ tentruongloc: stim.data("col"), giatriloc: stim.val() });
+                    }
+                }
+                self.fnReload();
+                thiss.removeClass("txt_search_loading");
+            }, 500);
+        });
+    }
+</script>

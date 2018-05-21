@@ -1,0 +1,29 @@
+@charset "utf-8";
+/* CSS Document */
+.jssort13 .p {    POSITION: absolute;    WIDTH: 100px;    HEIGHT: 90px;    TOP: 5px;    LEFT: 0;    padding: 0px;}
+.jssort13 .w {    cursor: pointer;    position: absolute;    WIDTH: 98px;    HEIGHT: 89px;    top: 5px;    left: 0px;}
+.jssort13 .pav .w, .jssort13 .pdn .w {    border-right: 1px solid #fff;}
+.jssort13 .c {    width: 100%;    height: 100%;    position: absolute;    top: 0px;    left: 0;    line-height: 29px;    text-align: center;    color: #000;    font-size: 13.0px;}
+.jssort13 .p .c, .jssort13 .pav:hover .c {    background-color: #eee;}
+.jssort13 .pav .c, .jssort13 .p:hover .c {    background-color: #fff;}
+.c img
+{
+	width:100%;	
+}
+.slider
+{
+	position: relative; margin: 0 auto; top: 0px; left: 0px; width: 600px; height: 500px; overflow: hidden; visibility: hidden;	
+}
+.hinhlon
+{
+	position: absolute; top: 0px; left: 0px; width: 598px; height: 499px;	
+}
+.jssort13
+{
+	position:absolute;left:0px;top:157px;width:100px;height:150px;	
+}
+.thongtinsp .nav-tabs {
+  border-bottom: none !important;
+}
+
+.btn-warning a{ color:#fff; font-weight:900}

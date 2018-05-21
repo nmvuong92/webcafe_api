@@ -1,0 +1,1128 @@
+﻿@using VD.Data.Temp
+@model VD.Data.Entity.MF.DonHang
+
+@{
+    loginVM __auth = ViewBag.__auth;
+    bool isAdmin = (__auth.RoleId == 1 && __auth.Username == "admin");
+    ViewBag.Title = "Đơn hàng";
+    ViewBag.Title2 = "LIST";
+    Layout = "~/Views/Shared/_md.cshtml";
+
+}
+<script>var BaseUserId = @ViewBag.BaseUserId;</script>
+<style>
+    .selected {
+        color: red;
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    .info-box .content .number {
+        font-weight: normal;
+        font-size: 15px;
+        margin-top: -4px;
+        color: #555;
+    }
+</style>
+
+<div id="ViewTinTuc">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="info-box waves-effect hover-zoom-effect" style="display:none;" onclick="clsProduct.fnReload(); $(this).fadeOut(500);" id="tb_donhangmoi">
+                <div class="icon bg-red">
+                    <i class="material-icons">shopping_cart</i>
+                </div>
+                <div class="content">
+                    <div class="text">Có đơn hàng mới (bấm vào để tải lại)</div>
+                    <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">125</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="info-box waves-effect hover-zoom-effect" style="display:none;" onclick="clsProduct.fnReload(); $(this).fadeOut(500);" id="tb_goitinhtien">
+                <div class="icon bg-red">
+                    <i class="material-icons">add_alert</i>
+                </div>
+                <div class="content">
+                    <div class="text">Có khách gọi tính tiền (bấm vào để tải lại)</div>
+                    <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">125</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="info-box waves-effect hover-zoom-effect" style="display:none;" onclick="clsProduct.fnReload(); $(this).fadeOut(500);" id="tb_gopy">
+                <div class="icon bg-red">
+                    <i class="material-icons">comment</i>
+                </div>
+                <div class="content">
+                    <div class="text">Có khách hàng góp ý (bấm vào để tải lại)</div>
+                    <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">125</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <!-- /.btn-group -->
+        <div class="col-md-4">
+            <select v-model="QuanDefaultId" class="form-control" v-on:change="fnReloadTable();">
+                <option v-bind:value="item.Id" v-for="item of ddlQuan">{{item.TenQuan}}</option>
+            </select>
+            <select style="margin-top: 5px;" v-model="F_TrangThaiGiaoHangId" class="form-control" v-on:change="fnReloadTable();">
+                <option v-bind:value="item.Value" v-for="item of ddlTrangThaiGiaoHang">{{item.Text}}</option>
+            </select>
+            <select style="margin-top: 5px;" v-model="F_TrangThaiThanhToanId" class="form-control" v-on:change="fnReloadTable();">
+                <option v-bind:value="item.Value" v-for="item of ddlTrangThaiThanhToan">{{item.Text}}</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <div class="btn-group">
+                @if (!isAdmin)
+                {
+                    <button class="btn-create-new btn btn-success btn-sm waves-effect" v-on:click="showTaoDonHang();"><i class="fa fa-plus"></i> Tạo đơn hàng</button>
+                }
+
+                <button class="btn btn-default btn-sm waves-effect" onclick="clsProduct.fnReload();"><i class="fa fa-refresh"></i> Tải lại</button>
+                @if (!isAdmin)
+                {
+                    <button class="btnXoaMucChon btn btn-default btn-sm waves-effect" onclick="clsProduct.fnDeletes();" type="button"><i class="fa fa-remove"></i> Xóa chọn</button>
+                }
+            </div>
+            <input type="number" placeholder="Nhập mã đơn hàng" class="txt_search form-control" data-col="full_text_search" />
+        </div>
+        <div class="col-md-4">
+            <button v-for="item in getBan()" type="button" class="btn btn-default btn-circle-lg waves-effect waves-circle waves-float" style="margin-bottom: 5px;">
+                {{item}}
+            </button>
+        </div>
+    </div>
+    <div class="clearfix m-b-20"></div>
+    <div style="overflow-x:auto;">
+        <table class="tblData">
+            <thead>
+                <tr>
+                    <th style="width: 33px; text-align:center;" class="mobile_hid">
+                        <a data-select-all=false id="btnSelectAll"><i class="fa fa-square-o"></i></a>
+                    </th>
+                    <th style="width: 100px;" data-col="@Html.IdFor(m=>m.Id)" class="colOrder">#Mã ĐH</th>
+                    <th style="width: 70px;" data-col="@Html.IdFor(m => m.Ban)" class="colOrder">@Html.DisplayNameFor(m => m.Ban)</th>
+                    <th>THỰC ĐƠN</th>
+                    <th style="width: 90px;" data-col="@Html.IdFor(m => m.TongTienHang)" class="colOrder">@Html.DisplayNameFor(m => m.TongTienHang)</th>
+                    <th style="width: 100px;">Trạng thái</th>
+                    <th style="width: 100px;" data-col="@Html.IdFor(m => m.UserId)" class="colOrder mobile_hid">@Html.DisplayNameFor(m => m.UserId)/@Html.DisplayNameFor(m => m.QuanId)</th>
+                    <th style="width: 83px;" data-col="@Html.IdFor(m => m.CreatedDate)" class="colOrder">@Html.DisplayNameFor(m => m.CreatedDate)</th>
+                    <th style="width: 83px;">Gọi tính tiền?</th>
+                    <th style="width: 150px;" class="mobile_hid">Góp ý</th>
+                </tr>
+            </thead>
+            <tbody class="view_data">
+                <tr>
+                    <td colspan="100%">Đang nạp</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="ovl" style="display:none;"></div>
+
+
+    <!-- Modal -->
+    <div class="modal fade-scale" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document" id="myModal_content">
+
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="modal_tao_donhang" role="dialog">
+        <div class="modal-dialog modal-full">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">TẠO ĐƠN HÀNG</h4>
+                </div>
+                <div class="modal-body form-horizontal">
+                    <div class="text-center m-b-10">
+                        <div class="btn-group">
+                            <button class="btn waves-effect" v-bind:class="{'btn-success':mode==1}" v-on:click="changeMode(1);"> GIỎ HÀNG <span class="badge">{{giohang.length}}</span></button>
+                            <button class="btn waves-effect" v-bind:class="{'btn-success':mode==2}" v-on:click="changeMode(2);"> THỰC ĐƠN </button>
+                            <button v-if="modeCRUD==2" class="btn waves-effect" v-bind:class="{'btn-success':mode==3}" v-on:click="changeMode(3);"> GÓP Ý ({{DSGopYJson.length}}) </button>
+                        </div>
+                    </div>
+                    <div v-if="mode==1">
+
+                        <table class="table table-bordered table-striped table-fixed">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th>SẢN PHẨM</th>
+                                    <th>ĐƠN GIÁ</th>
+                                    <th>SỐ LƯỢNG</th>
+                                    <th>THÀNH TIỀN</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-if="giohang.length==0">
+                                    <td colspan="100%">
+                                        <div class="text-center">
+                                            <p>0 sản phẩm</p>
+                                            <button v-on:click="mode=2" class="btn waves-effect">Chọn thực đơn</button>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                <tr v-for="(item,index) of giohang">
+                                    <td>{{index+1}}</td>
+                                    <td>
+                                        <img v-bind:src="item.Product.ThumbnailImage" style="width: 100px;" />
+                                    </td>
+                                    <td>
+                                        <span v-bind:class="{selected:item.SoLuong>0}">
+                                            {{item.Product.ProductName}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <p class="font-bold">{{vmoney(item.Product.Price)}}</p>
+                                    </td>
+                                    <td>
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default btn-circle waves-effect waves-circle waves-float" type="button" v-on:click="selectThucDonCT(item,parseInt(item.SoLuong)-1,1);">-</button>
+                                            </span>
+                                            <input min="0" max="1000" style="height: 42px;" class="form-control" v-on:change="selectThucDonCT(item,item.SoLuong,1)" type="number" v-model="item.SoLuong" />
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default btn-circle waves-effect waves-circle waves-float" type="button" v-on:click="selectThucDonCT(item,parseInt(item.SoLuong)+1,1);">+</button>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {{vmoney(item.Product.Price*item.SoLuong)}}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger btn-lg" v-if="item.SoLuong>0" v-on:click="removeCart(item);">BỎ CHỌN</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="100%">
+                                        <div class="text-center font-bold font-20"><span class="col-red">{{vmoney(tongTienGioHang())}}</span></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Hình thức mua hàng</label>
+                            <div class="col-md-8">
+                                <select v-model="HinhThucMuaHangId" class="form-control">
+                                    <option v-for="item in ddl.ddlHinhThucMuaHang" v-bind:value="item.Value">
+                                        {{ item.Text }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div v-if="HinhThucMuaHangId==1" class="form-group">
+                            <label class="control-label col-md-4">Bàn</label>
+                            <div class="col-md-8">
+                                <input type="number" v-model="Ban" class="form-control" placeholder="Nhập số bàn" />
+                            </div>
+                        </div>
+                        <div v-if="HinhThucMuaHangId==3" class="form-group">
+                            <label class="control-label col-md-4">Số điện thoại khách hàng</label>
+                            <div class="col-md-8">
+                                <textarea v-model="SDT" class="form-control" placeholder="Nhập số điện thoại (*)"></textarea>
+                            </div>
+                        </div>
+                        <div v-if="HinhThucMuaHangId==3" class="form-group">
+                            <label class="control-label col-md-4">Địa chỉ giao hàng</label>
+                            <div class="col-md-8">
+                                <textarea v-model="DiaChiGiaoHang" class="form-control" placeholder="Nhập địa chỉ giao hàng (*)"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Yêu cầu của khách</label>
+                            <div class="col-md-8">
+                                <textarea v-model="YeuCauKhac" class="form-control" placeholder=""></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Trạng thái giao hàng</label>
+                            <div class="col-md-8">
+                                <select v-model="TrangThaiGiaoHangId" class="form-control">
+                                    <option v-for="item in ddl.TrangThaiGiaoHang" v-bind:value="item.Id">
+                                        {{ item.Ten }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Trạng thái thanh toán</label>
+                            <div class="col-md-8">
+                                <select v-model="TrangThaiThanhToanId" class="form-control">
+                                    <option v-for="item in ddl.TrangThaiThanhToan" v-bind:value="item.Id">
+                                        {{ item.Ten }}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-4">Ghi chú đơn hàng</label>
+                            <div class="col-md-8">
+                                <textarea v-model="GhiChu" class="form-control" placeholder="Ghi chú"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="m-b-20"></div>
+                        <div class="text-center">
+                            <button v-if="modeCRUD==1" type="button" class="btn btn-primary waves-effect btn-lg" v-on:click="taoDonHang();"><i class="fa fa-plus"></i> Tạo đơn hàng</button>
+                            <button v-if="modeCRUD==2" type="button" class="btn btn-success waves-effect btn-lg" v-on:click="suaDonHang();"><i class="fa fa-pencil"></i> Cập nhật đơn hàng</button>
+                        </div>
+                    </div>
+
+                    <div v-if="mode==2">
+                        <h1 v-if="thucdon.length==0">Chưa tạo thực đơn</h1>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="list-group">
+                                    <a v-on:click="chonThucDon(item);" class="list-group-item" v-bind:class="{active:thucdonchon!=null&&item.Id==thucdonchon.Id}" v-for="item of thucdon">{{item.STT}}.{{item.TenThucDon}}</a>
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <table class="table table-bordered table-striped" v-if="thucdonchon!=null">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th>SẢN PHẨM</th>
+                                            <th>ĐƠN GIÁ</th>
+                                            <th>SỐ LƯỢNG</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-if="thucdonchon.ThucDonCTSelectVM.length==0">
+                                            <td colspan="100%">
+                                                <div class="text-center animated fadeIn">0 sản phẩm</div>
+                                            </td>
+                                        </tr>
+                                        <tr v-for="(item,index) of thucdonchon.ThucDonCTSelectVM">
+                                            <td>{{index+1}}</td>
+                                            <td>
+                                                <img v-bind:src="item.Product.ThumbnailImage" style="width: 100px;" />
+                                            </td>
+                                            <td>
+                                                <span v-bind:class="{selected:item.SoLuong>0}">
+                                                    {{item.Product.ProductName}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <p class="font-bold">{{vmoney(item.Product.Price)}}</p>
+                                            </td>
+                                            <td>
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default btn-circle waves-effect waves-circle waves-float" type="button" v-on:click="selectThucDonCT(item,parseInt(item.SoLuong)-1,2);">-</button>
+                                                    </span>
+                                                    <input min="0" max="1000" style="height: 42px;" class="form-control" v-on:change="selectThucDonCT(item,item.SoLuong,2)" type="number" v-model="item.SoLuong" />
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default btn-circle waves-effect waves-circle waves-float" type="button" v-on:click="selectThucDonCT(item,parseInt(item.SoLuong)+1,2);">+</button>
+                                                    </span>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-danger btn-lg" disabled="item.SoLuong==0" v-on:click="selectThucDonCT(item,0,2);">BỎ CHỌN</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div v-if="mode==3">
+                        <div v-if="DSGopYJson!=null" v-for="(item,index) of DSGopYJson" class="media">
+
+                            <div class="media-left">
+                                <a href="javascript:void(0);">
+                                    <img class="media-object" src="http://placehold.it/64x64" width="64" height="64">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h4 class="media-heading">{{item.ThoiGian}}</h4> {{item.NoiDungGopY}}
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modal_nhap_soluong" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Chọn món</h4>
+                </div>
+                <div class="modal-body">
+                    <input class="form-control" type="number" name="name" v-model="soluong" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<audio id="jump_audio" src="@Url.Content("~/Content/jump.wav")" autostart="false"></audio>
+
+@section JS{
+    <script src="~/Scripts/jquery.signalR-1.2.2.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(function () {
+            function PlaySound() {
+                var sound = document.getElementById("jump_audio");
+                sound.play();
+            }
+            var notify_total = 0;
+            var notify_total2 = 0;
+            var notify_total3 = 0;
+            var usr = $.connection.usersOnLine;
+            $.connection.hub.start()
+                .done(function () {
+                    //connected
+                    console.log("hub connected");
+                });
+            usr.client.log = function (message) {
+                $('#message').append('<li>' + message + '</li>');
+            };
+            usr.client.showUsersOnLine = function (data) {
+                $("#total_online").html(data);
+            };
+            usr.client.showMsg = function (msg) {
+                $("#msg").html(msg);
+            };
+
+            usr.client.notify_new_donhang = function (_BaseUserId,msg) {
+                if (_BaseUserId == BaseUserId) {
+                    PlaySound();
+                    notify_total++;
+                    $("#tb_donhangmoi").find(".text").html(msg);
+                    $("#tb_donhangmoi").find(".number").first().countTo({ from: 0, to: notify_total });
+                    $("#tb_donhangmoi").show();
+                }
+            };
+            usr.client.notify_goitinhtien = function (_BaseUserId,msg) {
+                if (_BaseUserId == BaseUserId) {
+                    PlaySound();
+                    notify_total2++;
+
+                    $("#tb_goitinhtien").find(".text").html(msg);
+                    $("#tb_goitinhtien").find(".number").first().countTo({ from: 0, to: notify_total2 });
+                    $("#tb_goitinhtien").show();
+                }
+            };
+            usr.client.notify_gopy = function (_BaseUserId,msg) {
+                if (_BaseUserId == BaseUserId) {
+                    PlaySound();
+                    notify_total3++;
+                    $("#tb_gopy").find(".text").html(msg);
+                    $("#tb_gopy").find(".number").first().countTo({ from: 0, to: notify_total3 });
+                    $("#tb_gopy").show();
+                }
+            };
+            $("#btnTB").on("click", function () {
+                usr.server.showMsg($("#txtTB").val());
+            });
+            $("#tb_donhangmoi").click(function() {
+                notify_total = 0;
+                clsProduct.fnReload();
+                $(this).fadeOut(500);
+            });
+
+            $("#tb_goitinhtien").click(function() {
+                notify_total2 = 0;
+                clsProduct.fnReload();
+                $(this).fadeOut(500);
+            });
+            $("#tb_gopy").click(function() {
+                notify_total3 = 0;
+                clsProduct.fnReload();
+                $(this).fadeOut(500);
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        var vueDonHang = new Vue({
+            el: "#ViewTinTuc",
+            data: {
+                modeCRUD:1,//add.2: edit
+                mode: 2,
+                QuanDefaultId: -1,
+                ddlQuan: [],
+                ddlTrangThaiGiaoHang: [],
+                ddlTrangThaiThanhToan: [],
+                ddlHinhThucMuaHang: [],
+                donHangMoi: {
+                    ctdonhang: []
+                },
+                thucdonchon:null,
+                thucdon: [],
+
+                giohang: [],
+                soluong: 1,
+                GhiChu: "",
+                ddl: null,
+                TrangThaiThanhToanId: 1,
+                TrangThaiGiaoHangId: 1,
+                HinhThucMuaHangId:1,
+                Ban:"",
+                SDT:"",
+                YeuCauKhac:"",
+                DiaChiGiaoHang:"",
+                idedit:-1,
+
+                F_TrangThaiThanhToanId: 1,
+                F_TrangThaiGiaoHangId: -1,
+                DSGopYJson:[],
+            },
+            methods: {
+                initial: function () {
+                    $.getJSON("@Url.Action("ajax_auth_ddlquan","Roles")", function (    ) {
+                        data.unshift({
+                            Id: -1,
+                            TenQuan: "-Tất cả quán-",
+                        });
+                        vueDonHang.ddlQuan = data;
+                        $.getJSON("@Url.Action("ajax_lay_quan_mac_dinh","Roles")", function (idquanmacdinh) {
+                            var check=vueDonHang.ddlQuan.find(function(s){return s.Id==idquanmacdinh;});
+                            vueDonHang.QuanDefaultId = parseInt(check!=undefined?idquanmacdinh:-1);
+                            cls.fnInit();
+                        });
+                    });
+                    $.getJSON("@Url.Action("ajax_ddl_trangthaidonhang", "Roles")", function (data) {
+                        data.ddlTrangThaiGiaoHang.unshift({
+                            Value: "-1",
+                            Text: "-Trạng thái giao hàng-",
+                        });
+                        data.ddlTrangThaiThanhToan.unshift({
+                            Value: "-1",
+                            Text: "-Trạng thái thanh toán-",
+                        });
+                        data.ddlHinhThucMuaHang.unshift({
+                            Value: "-1",
+                            Text: "-Hình thức mua hàng-",
+                        });
+                        vueDonHang.ddlTrangThaiGiaoHang = data.ddlTrangThaiGiaoHang;
+                        vueDonHang.ddlTrangThaiThanhToan = data.ddlTrangThaiThanhToan;
+                        vueDonHang.ddlHinhThucMuaHang = data.ddlHinhThucMuaHang;
+                    });
+
+                    $.getJSON("@Url.Action("ajax_ddl")", function (data) {
+                        vueDonHang.ddl = data;
+                    });
+                },
+                reset:function() {
+                    this.idedit = -1;
+                    this.GhiChu = "";
+                    this.Ban = "";
+                    this.SDT = "";
+                    this.YeuCauKhac = "";
+                    this.DiaChiGiaoHang = "";
+                    this.giohang = [];
+                    this.thucdon = [];
+                    this.soluong = 1;
+                    this.DSGopYJson = [];
+                },
+                getBan:function() {
+                    var ban=[];
+                    if (this.QuanDefaultId != -1) {
+                        var findQuan = this.ddlQuan.find(function(s) {
+                            return s.Id = vueDonHang.QuanDefaultId;
+                        });
+                        if (findQuan != undefined) {
+                            console.log(findQuan);
+                            return ban;
+
+                            ban= $.map(findQuan.BanArr.text().split(','), function(value){
+                                return parseInt(value, 10);
+                                // or return +value; which handles float values as well
+                            });
+                        }
+                    }
+                    return ban;
+                },
+                showTaoDonHang: function () {
+                    this.reset();
+                    this.modeCRUD = 1;//add
+                    if (this.QuanDefaultId != -1) {
+                        $("#modal_tao_donhang").modal("show");
+                        this.getThucdon();
+                        //this.getBan();
+                    } else {
+                        swal("Chưa chọn quán");
+                    }
+                },
+                showDSGopY: function () {
+                    this.reset();
+                    this.mode = 3;//add
+                    $("#modal_tao_donhang").modal("show");
+                },
+                changeMode:function(_mode) {
+                    this.mode = _mode;
+                },
+                getThucdon:function(callback) {
+                    $.getJSON("@Url.Action("ajax_get_thucdon")?quanid=" + this.QuanDefaultId, function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            data[i].ThucDonCT = [];
+                            data[i].STT = i + 1;
+                        }
+                        vueDonHang.thucdon = data;
+                        if (vueDonHang.thucdon.length > 0) {
+                            vueDonHang.chonThucDon(vueDonHang.thucdon[0]);
+                        }
+                        if (callback != undefined) {
+                            callback();
+                        }
+                    });
+                },
+                chonThucDon: function (_thucdon) {
+                    vueDonHang.thucdonchon = _thucdon;
+                },
+                tongTienGioHang: function () {
+                    var total = 0;
+                    for (var i = 0; i < this.giohang.length; i++) {
+                        total += this.giohang[i].Product.Price * this.giohang[i].SoLuong;
+                    }
+                    return total;
+                },
+                removeCart:function(item) {
+                    for (var i = 0; i < this.giohang.length; i++) {
+                        if (this.giohang[i].Id == item.Id) {
+                            this.giohang.splice(i, 1);
+                            break;
+                        }
+                    }
+                    this.syncEdit();
+                },
+
+                selectThucDonCT: function (_thucdonct, _sl,_type) {
+                    _thucdonct.SoLuong = _sl;
+                    if (_sl == 0) { //remove
+                        for (var i = 0; i < this.giohang.length; i++) {
+                            if (this.giohang[i].Id == _thucdonct.Id) {
+                                this.giohang.splice(i, 1);
+                                break;
+                            }
+                        }
+                    } else {
+                        //check exists
+                        var exists = false;
+                        //update so luong
+                        for (var i = 0; i < this.giohang.length; i++) {
+                            if (this.giohang[i].Id == _thucdonct.Id) {
+                                this.giohang[i].SoLuong = _thucdonct.SoLuong;
+                                exists = true;
+                                break;
+                            }
+                        }
+                        if (!exists) {
+                            this.giohang.push(_thucdonct);
+                        }
+                    }
+                },
+                vmoney:function(x) {
+                    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "₫";
+                },
+                vdatestr:function(date) {
+                    return date;
+                },
+                taoDonHang:function() {
+                    if (this.giohang.length == 0) {
+                        swal("Giỏ hàng rỗng!");
+                        return;
+                    }
+                    var _model = {
+                        GioHang: [],
+                        Ban: this.Ban,
+                        GhiChu: this.GhiChu,
+                        QuanId: this.QuanDefaultId,
+                        TrangThaiGiaoHangId: this.TrangThaiGiaoHangId,
+                        TrangThaiThanhToanId: this.TrangThaiThanhToanId,
+                        HinhThucMuaHangId:this.HinhThucMuaHangId,
+                        SDT:this.SDT,
+                        YeuCauKhac:this.YeuCauKhac,
+                        DiaChiGiaoHang:this.DiaChiGiaoHang,
+
+                    };
+
+                    for (var i = 0; i < this.giohang.length; i++) {
+                        _model.GioHang.push({
+                            ProductId: this.giohang[i].Product.Id,
+                            Price: this.giohang[i].Product.Price,
+                            SoLuong: this.giohang[i].SoLuong,
+                            ThucDonId: this.giohang[i].ThucDonId
+                        });
+                    }
+                    var ajaxops = {
+                        url: "@Url.Action("ajax_dathang")",
+                        param: JSON.stringify({ model: _model }),
+                        fnSuccess: function (data) { //Success
+
+                            if (data.r) {
+                                vueDonHang.giohang = [];
+                                cls.fnReload();
+                                $("#modal_tao_donhang").modal("hide");
+                            } else {
+                                swal(data.m);
+                            }
+                        }
+                    };
+                    fnAjax(ajaxops);
+                },
+                fnReloadTable:function() {
+                    clsProduct.fnReload();
+                },
+                changeSL: function (item, sl) {
+                    if (item.SoLuong+sl>=0) {
+                        item.SoLuong = item.SoLuong + sl;
+                    }
+                },
+
+                syncEdit:function() {
+
+                    for (var i = 0; i < this.thucdon.length; i++) {
+                        for (var j = 0; j < this.thucdon[i].ThucDonCTSelectVM.length; j++) {
+                            var _timthucdonid = this.thucdon[i].ThucDonCTSelectVM[j].Id;
+
+                            var findx = this.giohang.find(function(s) {
+                                return s.ThucDonId == _timthucdonid;
+                            });
+
+                            if (findx != undefined) {
+                                this.thucdon[i].ThucDonCTSelectVM[j].SoLuong = findx.SoLuong;
+                            } else {
+                                this.thucdon[i].ThucDonCTSelectVM[j].SoLuong = 0;
+                            }
+                        }
+                    }
+                },
+
+                showEdit:function(_id,_quanid,_showgopy) {
+                    this.reset();
+                    this.idedit = _id;
+                    this.QuanDefaultId = _quanid;
+                    this.modeCRUD = 2;//edit
+                    this.mode = 1;//gio hang
+
+                    if (_showgopy) {
+                        this.mode = 3;
+                    }
+                    this.getThucdon(function() {
+
+                        $("#modal_tao_donhang").modal("show");
+                        /*var _model = {
+                            GioHang: [],
+                            Ban: this.Ban,
+                            GhiChu: this.GhiChu,
+                            QuanId: this.QuanDefaultId,
+                            TrangThaiGiaoHangId: this.TrangThaiGiaoHangId,
+                            TrangThaiThanhToanId: this.TrangThaiThanhToanId,
+                        };*/
+                        $.getJSON("@Url.Action("ajax_get_edit")?id="+_id+"&quanid="+_quanid,function(data) {
+                            vueDonHang.TrangThaiGiaoHangId = data.TrangThaiGiaoHangId;
+                            vueDonHang.TrangThaiThanhToanId = data.TrangThaiThanhToanId;
+                            vueDonHang.Ban = data.Ban;
+                            vueDonHang.GhiChu = data.GhiChuDonHang;
+                            vueDonHang.giohang = data.ThucDonVMs;
+                            vueDonHang.SDT = data.SDT;
+                            vueDonHang.YeuCauKhac = data.YeuCauKhac;
+                            vueDonHang.DiaChiGiaoHang = data.DiaChiGiaoHang;
+                            vueDonHang.DSGopYJson = data.DSGopYJson;
+                            //
+                            vueDonHang.syncEdit();
+
+                        });
+                    });
+                },
+                suaDonHang:function() {
+                    if (this.giohang.length == 0) {
+                        swal("Giỏ hàng rỗng!");
+                        return;
+                    }
+                    var _model = {
+                        DonHangId:this.idedit,
+                        GioHang: [],
+                        Ban: this.Ban,
+                        GhiChu: this.GhiChu,
+                        QuanId: this.QuanDefaultId,
+                        TrangThaiGiaoHangId: this.TrangThaiGiaoHangId,
+                        TrangThaiThanhToanId: this.TrangThaiThanhToanId,
+                        HinhThucMuaHangId:this.HinhThucMuaHangId,
+                        SDT:this.SDT,
+                        YeuCauKhac:this.YeuCauKhac,
+                        DiaChiGiaoHang:this.DiaChiGiaoHang,
+                    };
+
+                    for (var i = 0; i < this.giohang.length; i++) {
+                        _model.GioHang.push({
+                            ProductId: this.giohang[i].Product.Id,
+                            Price: this.giohang[i].Product.Price,
+                            SoLuong: this.giohang[i].SoLuong,
+                            ThucDonId: this.giohang[i].ThucDonId
+                        });
+                    }
+                    var ajaxops = {
+                        url: "@Url.Action("ajax_edit_dathang")",
+                        param: JSON.stringify({ model: _model }),
+                        fnSuccess: function (data) { //Success
+                            if (data.r) {
+                                cls.fnReload();
+                                $("#modal_tao_donhang").modal("hide");
+                            } else {
+                                swal(data.m);
+                            }
+                        }
+                    };
+                    fnAjax(ajaxops);
+                }
+            }
+        });
+        vueDonHang.initial();
+
+        var clsProduct = new function () {
+            var self = this;
+            self.modalCRUD = "#modalCRUD";
+            self.fnShowCreate = function () {
+                $.get('@Url.Action("Create", "DonHang", new { area = "admin" })', function (data) {
+                    $(self.modalCRUD).find(".main").html(data);
+                    $(self.modalCRUD).modal('show');
+                });
+            }
+            self.showDSGopY = function() {
+                vueDonHang.showDSGopY();
+            }
+
+            self.fnReload = function () {
+                cls.fnReloadTable();
+            }
+
+            $("#ddlProductCat").change(function () {
+                cls.fnReload();
+            });
+
+            $("#ddlProductCat2").change(function () {
+                cls.fnReload();
+            });
+            self.print = function (id) {
+                window.open("DonHang/Print?id=" + id, '_blank', 'location=yes,height=1000,width=1000,scrollbars=yes,status=yes');
+            }
+            self.fnDelete = function (_id, that) {
+                if (confirm("Bạn có chắc xóa?") == true) {
+                    var ajaxops = {
+                        url: "@Url.Action("Delete", "DonHang")",
+                        param: JSON.stringify({ id: _id }),
+                        fnSuccess: function (data) { //Success
+                            if (!data.r) {
+                                alert(data.m);
+                            } else {
+                                cls.fnReload();
+                            }
+                        }
+                    };
+                    fnAjax(ajaxops);
+                }
+            }
+            self.fnDeletes = function () {
+                var checkes = $(".cb_item:checked");
+                if (checkes.length != 0) {
+                    if (confirm("Bạn có xóa " + checkes.length + " mục?") == true) {
+                        var _arr = [];
+                        checkes.each(function () {
+                            _arr.push(GetDefaultID($(this).val()));
+                        });
+                        var opts = {
+                            fnSuccess: function (data) { //Success
+                                cls.fnReload();
+                                if (data.r) {
+                                    toastr.success(data.m);
+                                    $("#btnSelectAll").data("select-all", false);
+                                    $("#btnSelectAll").html("<i class='fa fa-square-o'></i>");
+                                } else {
+                                    toastr.error(data.m);
+                                }
+                                cls.fnReload();
+                            },
+                            param: JSON.stringify({ arr: _arr }),
+                            url: "@Url.Action("xoachon", "DonHang", new { area = "Admin" })"
+                        };
+                        fnAjax(opts);
+                    }
+                } else {
+                    toastr.warning("Select items!", "Message");
+                }
+            }
+
+            self.fnShowEdit = function (_id,_quanid,_showykien) {
+                vueDonHang.showEdit(_id,_quanid,_showykien);
+                @*$.get("@Url.Action("Edit", "DonHang", new { area = "admin" })/" + _id, function (data) {
+                    $(self.modalCRUD).find(".main").html(data);
+                    $(self.modalCRUD).modal('show');
+                });*@
+            }
+            self.fnDanhDauDaXemGopY=function(_id,that) {
+                var ajaxops = {
+                    url: "@Url.Action("DanhDauXemGopY", "DonHang")",
+                    param: JSON.stringify({ id: _id }),
+                    fnSuccess: function (data) { //Success
+                        if (!data.r) {
+                            alert(data.m);
+                        } else {
+                            cls.fnReload();
+                        }
+                    }
+                };
+                fnAjax(ajaxops);
+            }
+            self.fnThayDoiTrangThaiThanhToan=function(_id,_idtrangthai) {
+                var ajaxops = {
+                    url: "@Url.Action("ThayDoiTrangThaiThanhToan", "DonHang")",
+                    param: JSON.stringify({ id: _id,idtrangthai:_idtrangthai }),
+                    fnSuccess: function (data) { //Success
+                        if (!data.r) {
+                            alert(data.m);
+                        } else {
+                            cls.fnReload();
+                        }
+                    }
+                };
+                fnAjax(ajaxops);
+            }
+            self.fnThayDoiTrangThaiGiaoHang=function(_id,_idtrangthai) {
+                var ajaxops = {
+                    url: "@Url.Action("ThayDoiTrangThaiGiaoHang", "DonHang")",
+                    param: JSON.stringify({ id: _id,idtrangthai:_idtrangthai }),
+                    fnSuccess: function (data) { //Success
+                        if (!data.r) {
+                            alert(data.m);
+                        } else {
+                            cls.fnReload();
+                        }
+                    }
+                };
+                fnAjax(ajaxops);
+            }
+            self.fnToggleHetHang = function (_id) {
+                var ajaxops = {
+                    url: "@Url.Action("toggleHetHang")",
+                    param: JSON.stringify({ id: _id }),
+                    fnSuccess: function (data) { //Success
+                        if (data.r) {
+                            toastr.success(data.m);
+                        } else {
+                            toastr.error(data.m);
+                        }
+                    }
+                };
+                fnAjax(ajaxops);
+            }
+            self.fnChangeSL = function (_id, that) {
+
+                var _newsl = that.val();
+                var ajaxops = {
+                    url: "@Url.Action("editSLSP")",
+                    param: JSON.stringify({ ctid: _id, sl: _newsl }),
+                    fnSuccess: function (data) { //Success
+                        if (data.r) {
+                            that.closest("tr").find(".col_item_thanh_tien").html(data.v.ThanhTien);
+                            $("#col_item_tong_tien").html(data.v.TongTien);
+                            toastr.success(data.m);
+                        } else {
+                            toastr.error(data.m);
+                        }
+                    }
+                };
+                fnAjax(ajaxops);
+            }
+        }
+
+
+        var paging_config = {
+            root: $("#ViewTinTuc"),
+            row_per_page: 20,
+            curpage: 1,
+            col_sort_default: "Id|desc",
+            fnjs: ['cls.fnPaging', 'cls.fnRpp'],
+            roleid: -1,
+            statusid: -1,
+            isvip: false,
+            catid: -1,
+            quanid: vueDonHang.QuanDefaultId,
+            trangthaigiaohangid:vueDonHang.F_TrangThaiGiaoHangId,
+            trangthaithanhtoanid:vueDonHang.F_TrangThaiThanhToanId
+        };
+        var cls = new clsPaging(paging_config);
+
+
+        function clsPaging(_config) {
+            var self = this;
+            self.config = _config;
+            self.root = _config.root;
+            self.loadded = false;
+            self.fnInit = function () {
+                var col_sort_default = self.config.col_sort_default.split("|");
+                var key = col_sort_default[0];
+                var value = col_sort_default[1];
+                var searched = self.root.find(".colOrder[data-col='" + key + "']").first();
+                searched.data("sort", value).addClass(value);
+
+
+                //add event change cb_item
+                $(document).on('change', '.cb_item', function () {
+                    if ($(this).is(":checked")) {
+                        $(this).parent().parent().addClass("selected");
+                    } else {
+                        $(this).parent().parent().removeClass("selected");
+                    }
+                });
+                for (var i = 0; i < self.root.find("select").length; i++) {
+                    var searched2 = self.root.find("select").eq(i);
+                    if (searched2.attr("data-filter")) {
+                        searched2.change(function () {
+                            var ikey = $(this).data("filter");
+                            self.config[ikey] = GetDefaultID($(this).val());
+                            self.config.curpage = 1;
+                            if (self.loadded) {
+                                self.fnReload();
+                            }
+                        }).trigger("change");
+                    }
+                }
+                self.loadded = true;
+                self.fnReload();
+            }
+            self.fnReloadTable = function () {
+                self.fnReload();
+            }
+            self.root.on('click', 'a[data-pg]', function () {
+                var data_pg = $(this).attr("data-pg");
+                self.fnPaging(data_pg);
+            });
+            self.root.on('change', 'select.ddlrpp', function () {
+                var num = parseInt($(this).val());
+                self.config.row_per_page = num;
+                self.fnReload();
+            });
+
+
+
+            self.myVar = undefined;
+            self.curboloc = [];
+            self.param = {};
+            self.fnReload = function () {
+                self.fnPaging(self.config.curpage);
+            }
+
+
+            self.getSort = function () {
+                var rs = "|";
+                for (var i = 0; i < $(".colOrder").length; i++) {
+                    var col = $(".colOrder").eq(i);
+                    if (col.data("sort") == "asc" || col.data("sort") == "desc") {
+                        rs = col.data("col") + "|" + col.data("sort");
+                        break;
+                    }
+                }
+                if (rs == "|") {
+                    rs = self.config.col_sort_default;
+                }
+                return rs;
+            }
+            self.fnPaging = function (tranghientai) {
+                self.config.curpage = typeof tranghientai !== 'undefined' ? tranghientai : 1;
+                var get_sort = self.getSort();
+                self.param = {
+                    tranghientai: self.config.curpage,
+                    tongdongmottrang: self.config.row_per_page,
+                    tentruongsort: get_sort.split("|")[0],
+                    giatrisort: get_sort.split("|")[1],
+                    bolocs: self.curboloc,
+                    Fnjs: self.config.fnjs,
+                    quanid: vueDonHang.QuanDefaultId,
+                    trangthaigiaohangid:vueDonHang.F_TrangThaiGiaoHangId,
+                    trangthaithanhtoanid:vueDonHang.F_TrangThaiThanhToanId
+
+                };
+
+                var opts = {
+                    url: "@Url.Action("ajax_paging")",
+                    datareturn: "html",
+                    fnSuccess: function (data) {
+                        self.root.find('.view_data').html(data);
+                        fnInit();
+                    },
+                    param: JSON.stringify({ paging: this.param }),
+                };
+                fnAjax(opts);
+            }
+            self.root.find("#btnSelectAll").first().click(function () {
+                var thiss = $(this);
+                var isSelectAll = thiss.data("select-all");
+                thiss.data("select-all", !isSelectAll);
+                if (!isSelectAll == true) { //show
+                    self.root.find(".cb_item").each(function () {
+                        $(this).prop('checked', true);
+                    });
+                    thiss.html("<i class='fa fa-check-square'></i>");
+                } else {//hide
+                    $(".cb_item").each(function () {
+                        $(this).prop('checked', false);
+                    });
+                    thiss.html("<i class='fa fa-square-o'></i>");
+                }
+                self.root.find(".cb_item").trigger("change");
+            });
+
+            //sortting
+            self.root.find(".colOrder").click(function () {
+                var thiss = $(this);
+                var cursortfield = thiss.data("col");
+                var cur_sort_data = thiss.data("sort");
+                (cur_sort_data == "asc") ? thiss.data("sort", "desc").addClass("desc").removeClass("asc") : thiss.data("sort", "asc").addClass("asc").removeClass("desc");
+                //remove all sort parameter class
+                self.root.find(".colOrder").not(thiss).data("sort", "").removeClass("asc").removeClass("desc");
+                self.fnReload();
+            });
+
+            //---search filter
+            self.root.find(".txt_search").keyup(function () {
+                var thiss = $(this);
+                thiss.addClass("txt_search_loading");
+                delay(function () {
+                    self.curboloc = [];
+                    self.curpage = 1; //set ve trang 1
+                    for (var i = 0; i < self.root.find(".txt_search").length; i++) {
+                        var stim = self.root.find(".txt_search").eq(i);
+                        if (stim.val() != "") {
+                            self.curboloc.push({ tentruongloc: stim.data("col"), giatriloc: stim.val() });
+                        }
+                    }
+                    self.fnReload();
+                    thiss.removeClass("txt_search_loading");
+                }, 500);
+            });
+        }
+    </script>
+}

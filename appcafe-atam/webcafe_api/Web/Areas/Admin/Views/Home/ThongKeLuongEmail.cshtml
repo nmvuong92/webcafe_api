@@ -1,0 +1,20 @@
+﻿
+@using VD.Data.Entity
+@model IQueryable<VD.Data.Entity.Contact>
+           @{
+               List<ContactStatus> status = ViewBag.status;
+           }
+
+<table class="table table-striped table-bordered">
+    @foreach (var item in status)
+    {
+        <tr>
+            <td>@Html.Raw(item.NameHtml)</td>
+            <td>@Model.Count(w=>w.ContactStatusId==item.Id)</td>
+        </tr>
+    }
+    <tr style="background-color:#fffaf0;">
+        <td>Tổng email</td>
+        <td>@Model.Count()</td>
+    </tr>
+</table>

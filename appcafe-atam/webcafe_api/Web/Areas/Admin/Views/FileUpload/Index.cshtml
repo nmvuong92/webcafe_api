@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+
+
+
+<div id="progress" style="background-color: blue;width:100%">
+    <div class="bar" style="background-color: red;width:0px;"></div>
+</div>
+<div id="info"></div>
+<div class="imgs">
+    
+</div>
+<script>
+    var $form = null;
+    $(function () {
+
+        $form = $('#fileupload').fileupload({
+            autoUpload: true,
+            add: function (e, data) {
+                $('#info').append('<p class="upl">Uploading...</p>');
+                data.submit();
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progress .bar').css(
+                    'width',
+                    progress + '%'
+                );
+            },
+            dataType: 'json',
+            sequentialUploads: true,
+            formData: { id: 1233 },
+            fail: function (e, data) {
+                alert('Fail!');
+            },
+            done: function (e, data) {
+                $('.upl').remove();
+                var result = jQuery.parseJSON(data.jqXHR.responseText);
+                console.log(result.files);
+                $.each(result.files, function (index, file) {
+                    /**/
+                    $(".imgs").append("<img src='" + file.url + "'/>");
+                });
+            }
+           
+        });
+
+    });
+    $('#fileupload').addClass('fileupload-processing');
+
+</script>
+@Html.Partial("_Files")
+@Scripts.Render("~/bundles/jQuery-File-Upload")

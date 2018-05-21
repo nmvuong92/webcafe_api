@@ -1,0 +1,36 @@
+﻿@model Web.Areas.Admin.ViewModels.SettingSmtpVM
+@{
+    ViewBag.Title = "Setting";
+    ViewBag.Title2= "SMTP";
+    Layout = "~/Views/Shared/_md.cshtml";
+}
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.smpt_enable_ssl)
+                @Html.CheckBoxFor(m => m.smpt_enable_ssl)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.smpt_use_default_credentials)
+                @Html.CheckBoxFor(m => m.smpt_use_default_credentials)
+            </div>
+
+
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.LabelFor(m => m.smpt_host)
+                @Html.TextBoxFor(m => m.smpt_host, new { @class = "form-control",@placeholder="ex: smtp.abc.com" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.smpt_port)
+                @Html.TextBoxFor(m => m.smpt_port, new { @class = "form-control num" })
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update setting</button>
+}

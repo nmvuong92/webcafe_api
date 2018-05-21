@@ -1,0 +1,51 @@
+﻿@model IEnumerable<VD.Data.Entity.MF.Ban>
+@{
+    Layout = null;
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>In bàn QR</title>
+    <style>
+        table tr td {
+            text-align: center;
+        }
+        table tr th {
+            text-align: center;
+        }
+    </style>
+</head>
+    <body>
+        <table style="width: 100%">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Mã bàn</th>
+                    <th>Tên bàn</th>
+                    <th>QR</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int stt = 0;
+                }
+                @foreach (var item in Model)
+                {
+                    stt++;
+                    var qr_json = "{\"quan\":\"" + item.QuanId + "\",\"ban\":\"" + item.Id + "\",\"tenban\":\"" + item.TenBan + "\",\"maban\":\"" + item.MaBan + "\"}";
+                    var qr = Utils.getGoogleQRImageLink(200, 200, qr_json);
+                    <tr>
+                        <td>@stt</td>
+                        <td>@item.MaBan</td>
+                        <td>@item.TenBan</td>
+                        <td>
+                            <img src="@qr" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <script>
+            window.print();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,43 @@
+﻿@model VD.Data.Entity.User
+           @{
+    ViewBag.Title = " Profile";
+    Layout = "~/Views/Shared/_md.cshtml";
+}
+
+<section class="single-about-detail" id="service">
+
+        <div class="row border-bottom">
+
+            <div class="col-md-8">
+                <h2 style="color:red;" onclick="$(this).hide();">@TempData["message"]</h2>
+
+                <table class="table table-bordered">
+                   
+                    <tr>
+                        <td><a href="@Url.Action("EditProfile", "Auth")"><i class="fa fa-edit"></i> thay đổi thông tin cá nhân</a></td>
+                    </tr>
+                    <tr>
+                       
+                        <td><a href="@Url.Action("ChangePassword", "Auth",new{area=""})"><i class="fa fa-key"></i> đổi mật khẩu</a></td>
+                    </tr>
+                </table>
+            </div>
+            @*<div class="col-md-4">
+                <h4 class="text-center progress"> Hỗ trợ trực tuyến </h4>
+                <ul>
+                    <li><i class="fa fa-skype"></i> Thành (0982730445)</li>
+                    <li><i class="fa fa-skype"></i> Trang (0908843169)</li>
+                    <li><i class="fa fa-skype"></i> PKD (+84-8-54462360)</li>
+                    <li><i class="fa fa-skype"></i> Mr. Hoàng - PKD (+84-986541935)</li>
+                    <li><i class="fa fa-skype"></i> Tư vấn kỹ thuật (+84-8-54015297)</li>
+                </ul>
+
+                <h4 class="text-center progress"> Google Adsense </h4>
+                <div class="text-center">
+                    Code Google Adsense
+                </div>
+            </div>*@
+        </div>
+   
+</section><!-- end of service section -->
+

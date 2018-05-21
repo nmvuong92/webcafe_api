@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewBag.Title = "Tạo mã QR";
+    ViewBag.Title2 = "QR creator";
+    Layout = "~/Views/Shared/_md.cshtml";
+}
+<style>
+    #qrcode {
+      width:160px;
+      height:160px;
+      margin-top:15px;
+        margin-bottom: 300px;
+    }
+</style>
+<script src="//cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+<div>
+    <div class="form-group">
+        <label class="control-label">Bàn</label>
+        <input id="txtBan" type="text" class="form-control"/>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Tên shop</label>
+        <input id="txtShop" type="text" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label class="control-label">Địa chỉ</label>
+        <input id="txtDiaChi" type="text" class="form-control" />
+    </div>
+    <div class="text-center">
+        <button id="btnTaoMaQR" class="btn btn-primary" onclick="makeCode();">Tạo mã QR</button>
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <div id="qrcode"></div>
+            </div>
+            <div class="col-md-6">
+                <div id="qrinfo"></div>
+            </div>
+        </div>
+        <div style="margin-bottom: 300px;"></div>
+    </div>
+    
+</div>
+<script>
+    var qrcode = new QRCode("qrcode");
+    function makeCode() {
+        var _ban = document.getElementById("txtBan").value;
+        var _shop = document.getElementById("txtShop").value;
+        var _diachi = document.getElementById("txtDiaChi").value;
+        if (_ban != "" && _shop != "" && _diachi != "") {
+            var qrjson = {
+                ban: _ban,
+                shop: _shop,
+                diachi: _diachi
+            };
+            qrcode.makeCode(JSON.stringify(qrjson));
+            $("#qrinfo").html("<h2>Bàn: " + _ban + " <h2><h2>Shop: " + _shop + " <h2><h2>Địa chỉ: " + _diachi + " <h2>");
+        } else {
+            alert("Vui lòng điền đầy đủ!");
+        }
+    }
+</script>

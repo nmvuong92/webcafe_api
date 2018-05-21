@@ -1,0 +1,190 @@
+﻿
+@{
+    ViewBag.Title = "Phí vận chuyển";
+    Layout = "~/Views/Shared/_md.cshtml";
+}
+<style>
+    td {
+        position: relative;
+        padding: 10px !important;
+    }
+     td a {
+        position:absolute;top:0px;left:0px;width:100%;height:100%;
+     }
+     td a:hover {
+         background-color: yellow;
+     }
+     tr.selected {
+         background-color: yellow;
+     }
+
+     /*.none input {
+         display: none;
+     }*/
+</style>
+<div id="VuePhiVC">
+    <div class="container">
+        <div class="col-md-4">
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="text-center">
+                        <th colspan="2"><h3>Tỉnh</h3></th>
+                    </tr>
+                    <tr class="text-center">
+                        <th colspan="2">
+                            <input type="text" v-model="SearchTinh" class="form-control" />
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>TÊN</th>
+                        <th>Giá Ship</th>
+                    </tr>
+                </thead> 
+                <tbody>
+                    <tr v-for="item in TinhThanhData" v-bind:class="getSelectedTinhThanhClass(item)">
+                        <td><a v-on:click="fnSelectHuyen(item)">{{item.Name}}</a></td>
+                        <td style="width: 50%"><input class="form-control" v-model="item.GiaShip" placeholder="Giá ship" v-on:change="onChangeGiaShipTinhThanh(item)" /></td>
+                    </tr>
+                </tbody>
+               
+               
+            </table> 
+        </div>
+        <div class="col-md-4">
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="text-center">
+                        <td colspan="2">
+                            <h3>Quận Huyện</h3>
+                            <h4 v-if="TinhThanhChon!=null">{{TinhThanhChon.Name}}</h4>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th>TÊN</th>
+                        <th>Giá Ship</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  
+                    <tr v-for="item in QuanHuyen" v-bind:class="getSelectedQuanHuyenClass(item)">
+                        <td><a v-on:click="fnSelectPhuongXa(item)">{{item.Name}}</a></td>
+                        <td style="width: 50%"><input class="form-control" v-bind:value="item.GiaShip" placeholder="Giá ship" /></td>
+                    </tr>
+                </tbody>
+               
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table class="table table-bordered">
+                <tr class="text-center">
+                    <td>
+                        <h3>Phường Xã</h3>
+                        <h4 v-if="QuanHuyenChon!=null">{{QuanHuyenChon.Name}}</h4>
+                    </td>
+                </tr>
+              
+                <tr v-for="item in PhuongXa">
+                    <td><a>{{item.Name}}</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+@section JS{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.8/vue.min.js"></script>
+    <script type="text/javascript">
+        var vuePVC = new Vue({
+            el: "#VuePhiVC",
+            data: {
+                SearchTinh: "",
+                TinhThanhChon:null,
+                TinhThanh: [],
+                QuanHuyen: [],
+                QuanHuyenChon:null,
+                PhuongXa: [],
+                PhuongXaChon: null,
+            },
+            methods: {
+                onChangeGiaShipTinhThanh:function(item) {
+                    if (confirm("Cập nhật Giá Ship Tỉnh thành và Quận huyện?")) {
+                        $.ajax({
+                            url: "@Url.Action("updateGiaShipTinhThanh")",
+                            method:"post",
+                            data: {
+                                Id: item.Id,
+                                GiaShip:item.GiaShip
+                            },
+                            success:function(data) {
+                                toastr.success(data.m);
+                                vuePVC.fnSelectHuyen(vuePVC.TinhThanhChon);
+                            }
+                        });
+                    }
+                },
+                getSelectedQuanHuyenClass: function (item) {
+                    if (this.QuanHuyenChon != null && item.Id == this.QuanHuyenChon.Id) {
+                        return "selected";
+                    }
+                    return "";
+                },
+                getSelectedTinhThanhClass:function(item) {
+                    if (this.TinhThanhChon != null && item.Id == this.TinhThanhChon.Id) {
+                        return "selected";
+                    }
+                    return "none";
+                },
+                loadTinhThanh:function() {
+                    $.getJSON("@Url.Action("loadTinhThanh")", function(data) {
+                        vuePVC.TinhThanh = data;
+                    });
+                },
+                fnSelectHuyen: function (item) {
+                    if (item != null) {
+                        this.TinhThanhChon = item;
+                        this.QuanHuyen = [];
+                        $.getJSON("@Url.Action("loadQuanHuyen")?tinh_id="+item.Id, function(data) {
+                            vuePVC.QuanHuyen = data;
+                        });
+                    }
+                },
+                fnSelectPhuongXa: function (item) {
+                    this.QuanHuyenChon = item;
+                    this.PhuongXa    = [];
+                    $.getJSON("@Url.Action("loadPhuongXa")?quan_huyen_id="+item.Id, function(data) {
+                        vuePVC.PhuongXa = data;
+                    });
+                }
+            },
+            computed: {
+                TinhThanhData: function () {
+                   
+                    var filterKey = this.SearchTinh!="" && this.SearchTinh.toLowerCase();
+                  
+                    if (filterKey) {
+                       return vsearch(this.TinhThanh, this.SearchTinh);
+                    }
+                    return this.TinhThanh;
+
+                }
+            },
+        });
+
+        function vsearch(arr,term) {
+            var items = [];
+            for (var i = 0; i < arr.length; i++) {
+                var item = arr[i];
+                for (var prop in item) {
+                    var detail = item[prop].toString().toLowerCase();
+                    if (detail.indexOf(term) > -1) {
+                        items.push(item);
+                        break;
+                    }
+                }
+            }
+            return items;
+        }
+
+        vuePVC.loadTinhThanh();
+    </script>
+}

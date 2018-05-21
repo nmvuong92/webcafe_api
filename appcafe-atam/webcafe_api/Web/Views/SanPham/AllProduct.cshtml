@@ -1,0 +1,25 @@
+﻿@model List<Web.ViewModels.MF.AjaxPartialProductByCatView>
+@{
+    ViewBag.Title = "ALL PRODUCT";
+}
+    <!-- === BEGIN CONTENT === -->
+<div id="container" class="margin-30">
+    <div id="center_column"></div>
+</div>
+
+@section JS{
+    <script type="text/javascript">
+        $.getJSON("/SanPham/AjaxGetCatShow", function (data) {
+            $("#center_column").append("<div class='text-center'><img class='img-loading' id='vloading' src='/content/loading.gif' /></div>");
+            for (var i = 0; i < data.length; i++) {
+                $.get("/SanPham/AjaxPartialProductByCat?catid=" + data[i].Id, function (data2) {
+                    setTimeout(function() {
+                        $("#center_column").append(data2);
+                        $("#center_column").append("<div class='clearfix'></div>");
+                        $(".img-loading").hide();
+                    }, 500);
+                });
+            }
+        });
+    </script>
+}

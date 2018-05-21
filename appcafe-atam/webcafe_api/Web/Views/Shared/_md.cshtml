@@ -1,0 +1,536 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>@ViewBag.Title | @ViewBag.Title2</title>
+    <!-- Favicon-->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+    <!-- <link rel="stylesheet" href="build/css/app.min.css"> -->
+    <!-- Bootstrap Core Css -->
+    <link href="~/Content/material/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Waves Effect Css -->
+    <link href="~/Content/material/plugins/node-waves/waves.css" rel="stylesheet" />
+    <!-- Animation Css -->
+    <link href="~/Content/material/plugins/animate-css/animate.css" rel="stylesheet" />
+    <!-- Morris Chart Css-->
+    <link href="~/Content/material/plugins/morrisjs/morris.css" rel="stylesheet" />
+    <!-- Custom Css -->
+    <link href="~/Content/material/css/style.css?v=2" rel="stylesheet">
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="~/Content/material/css/themes/all-themes.css" rel="stylesheet" />
+    
+    
+    <!-- Font Awesome -->
+    <link href="~/Content/gentelella/vendors/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    
+
+    <!-- Jquery Core Js -->
+    <script src="~/Content/material/plugins/jquery/jquery.min.js"></script>
+
+    
+    <!--qua-->
+    <link href="~/Content/gentelella/aqua/style.css?v=3" rel="stylesheet" />
+    <link href="~/Content/gentelella/aqua/forms.css" rel="stylesheet" />
+    <link href="~/Content/Plugin/pace/pace.css" rel="stylesheet" />
+    
+    <!--waiting me-->
+    <link href="~/Content/material/plugins/waitme/waitMe.min.css" rel="stylesheet" />
+    <!--swett alet-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <!---ck-->
+    <script src="~/Scripts/MyScripts/common.js"></script>
+    <script src="~/Scripts/MyScripts/ajaxHelpers.js"></script>
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <script src="~/ckfinder/ckfinder.js"></script>
+    <script src="~/Content/Plugin/lightbox/js/lightbox.min.js"></script>
+    <script src="~/Content/Plugin/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/Content/Plugin/chosen_v1.4.2/chosen.jquery.min.js"></script>
+    <script src="~/Content/Plugin/datepicker-vi.js"></script>
+    <script src="~/Scripts/autoNumeric.js"></script>
+
+    <script src="~/Scripts/lib/jquery.cookie.js"></script>
+    
+    <!--toastr-->
+    <script src="~/Content/Plugin/toastr/toastr.min.js"></script>
+    <script src="~/Content/Plugin/pace/pace.min.js"></script>
+    <link href="~/Content/gentelella/vendors/starrr/dist/starrr.css" rel="stylesheet" />
+    <script src="~/Content/gentelella/vendors/starrr/dist/starrr.js"></script>
+    
+    <link href="~/Content/Plugin/Magnific-Popup/dist/magnific-popup.css" rel="stylesheet" />
+    <script src="~/Content/Plugin/Magnific-Popup/dist/jquery.magnific-popup.min.js"></script>
+
+
+    
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery-unobtrusive-ajax")
+
+
+
+    <!-- blueimp File Upload & Gallery styles -->
+    @Styles.Render("~/Content/jQuery-File-Upload")
+    @Scripts.Render("~/bundles/jQuery-File-Upload")
+    @Scripts.Render("~/bundles/Blueimp-Gallerry2")
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/vi.js"></script>
+    <!-- Include Date Range Picker -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+    <!-- Include Required Prerequisites -->
+  
+    <link href="~/Content/material/css/responsive.css" rel="stylesheet" />
+   
+</head>
+    <body class="theme-red">
+        
+
+        <!-- Page Loader -->
+        <div class="page-loader-wrapper">
+            <div class="loader">
+                <div class="preloader">
+                    <div class="spinner-layer pl-red">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                            <div class="circle"></div>
+                        </div>
+                    </div>
+                </div>
+                <p>Đang tải...</p>
+            </div>
+        </div>
+        <!-- #END# Page Loader -->
+        <!-- Overlay For Sidebars -->
+        <div class="overlay"></div>
+        <!-- #END# Overlay For Sidebars -->
+        <!-- Search Bar -->
+        <div class="search-bar">
+            <div class="search-icon">
+                <i class="material-icons">search</i>
+            </div>
+            <input type="text" placeholder="START TYPING...">
+            <div class="close-search">
+                <i class="material-icons">close</i>
+            </div>
+        </div>
+        <!-- #END# Search Bar -->
+        <!-- Top Bar -->
+        @{Html.RenderAction("Header","aWebParts",new{area="Admin"});}
+        <!-- #Top Bar -->
+        <section>
+            <!-- Left Sidebar -->
+            @{Html.RenderAction("LeftNav", "aWebParts", new { area = "Admin" });}
+            <!-- #END# Left Sidebar -->
+            <!-- Right Sidebar -->
+            <aside id="rightsidebar" class="right-sidebar">
+                <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                    <li role="presentation" class="active"><a href="#skins" data-toggle="tab">SKINS</a></li>
+                    <li role="presentation"><a href="#settings" data-toggle="tab">SETTINGS</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active in active" id="skins">
+                        <ul class="demo-choose-skin">
+                            <li data-theme="red" class="active">
+                                <div class="red"></div>
+                                <span>Red</span>
+                            </li>
+                            <li data-theme="pink">
+                                <div class="pink"></div>
+                                <span>Pink</span>
+                            </li>
+                            <li data-theme="purple">
+                                <div class="purple"></div>
+                                <span>Purple</span>
+                            </li>
+                            <li data-theme="deep-purple">
+                                <div class="deep-purple"></div>
+                                <span>Deep Purple</span>
+                            </li>
+                            <li data-theme="indigo">
+                                <div class="indigo"></div>
+                                <span>Indigo</span>
+                            </li>
+                            <li data-theme="blue">
+                                <div class="blue"></div>
+                                <span>Blue</span>
+                            </li>
+                            <li data-theme="light-blue">
+                                <div class="light-blue"></div>
+                                <span>Light Blue</span>
+                            </li>
+                            <li data-theme="cyan">
+                                <div class="cyan"></div>
+                                <span>Cyan</span>
+                            </li>
+                            <li data-theme="teal">
+                                <div class="teal"></div>
+                                <span>Teal</span>
+                            </li>
+                            <li data-theme="green">
+                                <div class="green"></div>
+                                <span>Green</span>
+                            </li>
+                            <li data-theme="light-green">
+                                <div class="light-green"></div>
+                                <span>Light Green</span>
+                            </li>
+                            <li data-theme="lime">
+                                <div class="lime"></div>
+                                <span>Lime</span>
+                            </li>
+                            <li data-theme="yellow">
+                                <div class="yellow"></div>
+                                <span>Yellow</span>
+                            </li>
+                            <li data-theme="amber">
+                                <div class="amber"></div>
+                                <span>Amber</span>
+                            </li>
+                            <li data-theme="orange">
+                                <div class="orange"></div>
+                                <span>Orange</span>
+                            </li>
+                            <li data-theme="deep-orange">
+                                <div class="deep-orange"></div>
+                                <span>Deep Orange</span>
+                            </li>
+                            <li data-theme="brown">
+                                <div class="brown"></div>
+                                <span>Brown</span>
+                            </li>
+                            <li data-theme="grey">
+                                <div class="grey"></div>
+                                <span>Grey</span>
+                            </li>
+                            <li data-theme="blue-grey">
+                                <div class="blue-grey"></div>
+                                <span>Blue Grey</span>
+                            </li>
+                            <li data-theme="black">
+                                <div class="black"></div>
+                                <span>Black</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="settings">
+                        <div class="demo-settings">
+                            <p>GENERAL SETTINGS</p>
+                            <ul class="setting-list">
+                                <li>
+                                    <span>Report Panel Usage</span>
+                                    <div class="switch">
+                                        <label><input type="checkbox" checked><span class="lever"></span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span>Email Redirect</span>
+                                    <div class="switch">
+                                        <label><input type="checkbox"><span class="lever"></span></label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <p>SYSTEM SETTINGS</p>
+                            <ul class="setting-list">
+                                <li>
+                                    <span>Notifications</span>
+                                    <div class="switch">
+                                        <label><input type="checkbox" checked><span class="lever"></span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span>Auto Updates</span>
+                                    <div class="switch">
+                                        <label><input type="checkbox" checked><span class="lever"></span></label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <p>ACCOUNT SETTINGS</p>
+                            <ul class="setting-list">
+                                <li>
+                                    <span>Offline</span>
+                                    <div class="switch">
+                                        <label><input type="checkbox"><span class="lever"></span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span>Location Permission</span>
+                                    <div class="switch">
+                                        <label><input type="checkbox" checked><span class="lever"></span></label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <!-- #END# Right Sidebar -->
+        </section>
+        <section class="content">
+         
+                <div class="block-header">
+                    <h2>@ViewBag.Title <small>@ViewBag.Title2</small></h2>
+                    @if (TempData["message"] != null)
+                    {
+                        string type = "alert-success";
+                        if (TempData["message"].ToString().ToLower().Contains("error"))
+                        {
+                            type = " alert-error";
+                        }
+                        <div class="alert @type animated fadeIn">
+                            <button aria-hidden="true" data-dismiss="alert" class="close" type="button" onclick="$(this).parent().hide();">×</button>
+                            <h4><i class="icon fa fa-info"></i> Thông điệp!</h4>
+                            @TempData["message"]
+                        </div>
+                    }
+                </div>
+                <!-- Widgets -->
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                      
+                        @RenderBody()
+                   
+                    </div>
+                   
+                </div>
+      
+        </section>
+        
+        <!-- Modal -->
+        <div class="modal fade-scale" id="modalCRUD" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg main" role="document" id="myModal_content"> <!--modal-full-->
+
+            </div>
+        </div>
+        
+ 
+
+        <script src="~/Content/material/plugins/vue2/vue.min.js"></script>
+        <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+ 
+        <!-- <script src="build/js/app.min.js"></script> -->
+     
+        <!-- Bootstrap Core Js -->
+        <script src="~/Content/material/plugins/bootstrap/js/bootstrap.js"></script>
+    
+        <!-- Slimscroll Plugin Js -->
+        <script src="~/Content/material/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+        <!-- Waves Effect Plugin Js -->
+        <script src="~/Content/material/plugins/node-waves/waves.js"></script>
+        <!-- Jquery CountTo Plugin Js -->
+        <script src="~/Content/material/plugins/jquery-countto/jquery.countTo.js"></script>
+        <!-- Morris Plugin Js -->
+        <script src="~/Content/material/plugins/raphael/raphael.min.js"></script>
+        <script src="~/Content/material/plugins/morrisjs/morris.js"></script>
+        <!-- ChartJs -->
+        <script src="~/Content/material/plugins/chartjs/Chart.bundle.js"></script>
+        <!-- Flot Charts Plugin Js -->
+        <script src="~/Content/material/plugins/flot-charts/jquery.flot.js"></script>
+        <script src="~/Content/material/plugins/flot-charts/jquery.flot.resize.js"></script>
+        <script src="~/Content/material/plugins/flot-charts/jquery.flot.pie.js"></script>
+        <script src="~/Content/material/plugins/flot-charts/jquery.flot.categories.js"></script>
+        <script src="~/Content/material/plugins/flot-charts/jquery.flot.time.js"></script>
+        <!-- Sparkline Chart Plugin Js -->
+        <script src="~/Content/material/plugins/jquery-sparkline/jquery.sparkline.js"></script>
+        <!-- Custom Js -->
+        <script src="~/Content/material/js/admin.js?v=3"></script>
+        <script src="~/Content/material/js/pages/index.js"></script>
+        <!-- Demo Js -->
+        <script src="~/Content/material/js/demo.js"></script>
+        <script src="~/Content/material/plugins/waitme/waitMe.min.js"></script>
+      
+        <!--toastr-->
+        <link href="~/Content/Plugin/toastr/toastr.min.css" rel="stylesheet" />
+        <!--toastr-->
+        <script src="~/Content/Plugin/toastr/toastr.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Sly/1.6.1/sly.min.js"></script>
+      
+        <script src="~/Content/Plugin/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+
+        <link href="~/Content/Plugin/bootstrap-tagsinput/dist/bootstrap-tagsinput.css" rel="stylesheet" />
+        
+        
+        @RenderSection("JS", required: false)
+        <!--render scripts pariatl-->
+        
+        <script src="~/Scripts/MyScripts/ck-helpers.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $(document).ajaxStart(function () {
+                    $('.tblData').waitMe({
+                        effect: 'facebook',
+                        text : '',
+                        bg : 'rgba(255,255,255,0.7)',
+                        color : '#000',
+                        maxSize : '',
+                        waitTime : -1,
+                        textPos : 'vertical',
+                        fontSize : '',
+                        source : '',
+                        onClose : function() {}
+                    });
+                });
+                $(document).ajaxStop(function () {
+                    $('.tblData').waitMe("hide");
+                });
+            });
+            var NumberGroupSeparator = '@(System.Threading.Thread.CurrentThread.CurrentCulture.NumberFormat.NumberGroupSeparator)';
+            var NumberDecimalSeparator = '@(System.Threading.Thread.CurrentThread.CurrentCulture.NumberFormat.NumberDecimalSeparator)';
+
+            var gb_f1 = new Date().getFullYear() - 20;
+            var gb_f2 = new Date().getFullYear() + 1;
+
+            var culture_datetime = '@JQEXT.GetJavascriptShortDatePattern(System.Threading.Thread.CurrentThread.CurrentUICulture.DateTimeFormat)';
+
+            function format_datepicker() {
+                $(".datepicker").datepicker({
+                    dateFormat: culture_datetime,
+                    changeMonth: true,
+                    changeYear: true, yearRange: gb_f1 + ':' + gb_f2,
+                    beforeShow: function () {
+                        setTimeout(function () {
+                            $('.ui-datepicker').css('z-index', 99999999999999);
+                        }, 0);
+                    }
+
+                });
+                /*
+                 $(".datepicker").datepicker({
+                    //comment the beforeShow handler if you want to see the ugly overlay
+                    beforeShow: function () {
+                        setTimeout(function () {
+                            $('.ui-datepicker').css('z-index', 99999999999999);
+                        }, 0);
+                    }
+                });*/
+            }
+
+            function format_autonumeric() {
+                $('.num_null').autoNumeric('init', { aSep: NumberGroupSeparator, aDec: NumberDecimalSeparator, aPad: false, vMin: '0', vMax: '99999999999' });
+                $('.int_num').autoNumeric('init', { aSep: '', aPad: false, vMin: '0', vMax: '99999999999' });
+                $('.num').autoNumeric('init', { aSep: NumberGroupSeparator, aDec: NumberDecimalSeparator, aPad: false, vMin: '0', vMax: '99999999999' });
+                $('.fnum_am').autoNumeric('init', { aSep: NumberGroupSeparator, aDec: NumberDecimalSeparator, aPad: false, vMin: '-99999999999.99', vMax: '99999999999.99' });
+                $('.fnum').autoNumeric('init', { aSep: NumberGroupSeparator, aDec: NumberDecimalSeparator, aPad: false, vMin: '0', vMax: '99999999999.99' });
+                $('.fnum_1').autoNumeric('init', { aSep: NumberGroupSeparator, aDec: NumberDecimalSeparator, aPad: false, vMin: '1', vMax: '99999999999.99' });
+                $('.num1den5').autoNumeric('init', { aSep: NumberGroupSeparator, aDec: NumberDecimalSeparator, aPad: false, vMin: '1', vMax: '5' });
+                $('.num_am').autoNumeric('init', { aSep: NumberGroupSeparator, aDec: NumberDecimalSeparator, aPad: false, vMin: '-9999999999999', vMax: '99999999999' });
+                $('.numlength2').autoNumeric('init', { aSep: NumberGroupSeparator, aDec: NumberDecimalSeparator, aPad: false, vMin: '0', vMax: '100' });
+            }
+            format_autonumeric();
+            format_datepicker();
+            $(".ddlChosen").chosen();
+            $(".img-ck").myCkfinderStart();
+            function fnInitImage(jqSelector) {
+                jqSelector.find('.img-ck').each(function () {
+                    $(this).myCkfinderStart();
+                });
+            }
+
+            function fnInitEditor(jqSelector) {
+                jqSelector.find('.fEditor').each(function () {
+                    CKEDITOR.replace($(this).attr('id'), {
+                        toolbar: [
+                            ['Source', '-', 'Templates', '-', 'Find', 'Replace'],
+                            ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'],
+                            ['Undo', 'Redo', '-', 'SelectAll', 'RemoveFormat', '-', 'Maximize', 'ShowBlocks'],
+                            '/',
+                            ['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', 'Superscript'],
+                            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'NumberedList', 'BulletedList'],
+                            ['Outdent', 'Indent', 'Blockquote', 'CreateDiv', 'PageBreak'],
+                            ['Link', 'Unlink', 'Anchor'],
+                            '/',
+                            ['Styles', 'Format', 'Font', 'FontSize'],
+                            ['TextColor', 'BGColor'],
+                            ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar']
+                        ],
+                        height: "150px",
+                    });
+                });
+                jqSelector.find('.sEditor').each(function () {
+                    CKEDITOR.replace($(this).attr('id'), {
+                        toolbar: [
+                            ['Source', 'Bold', 'Italic', 'Underline', 'StrikeThrough', 'FontSize'],
+                            ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+                            ['Image', 'Table', '-', 'Link', 'TextColor', 'BGColor', 'timestamp'],
+                            ['Maximize']
+                        ],
+                        height: "150px",
+                    });
+                });
+            }
+            $(function () {
+                $('form').submit(function () {
+                    if ($(this).valid()) {
+                        // client validation passed successfully
+                        var data_confirm = $(this).data("confirm");
+                        if (data_confirm != undefined) {
+                            return confirm(data_confirm);
+                        } else {
+                            return true;
+                        }
+
+                    } else {
+
+                        alert('there was an error during client validation');
+
+                        /*
+                        $('html, body').animate({
+                            scrollTop: $(".show_err").offset().top
+                        }, 1500);*/
+
+                        // cancel the submission of the form
+                        return false;
+                    }
+                });
+            });
+            $(".partialContents").each(function (index, item) {
+                var url = $(item).data("url");
+                if (url && url.length > 0) {
+                    $(item).load(url);
+                }
+            });
+
+
+            $(".table-template-data tbody th").attr("title", "Bấm vào để copy");
+            $(".table-template-data tbody th").click(function () {
+                toastr.clear();
+                copyToClipboard($(this));
+                toastr.success($(this).html(), "coppied");
+
+            });
+            function copyToClipboard(element) {
+                var $temp = $("<input>");
+                $("body").append($temp);
+                $temp.val($(element).text()).select();
+                document.execCommand("copy");
+                $temp.remove();
+            }
+
+            $('.img-popup').magnificPopup({
+                type: 'image'
+                // other options
+            });
+            //fix ckeditor
+            $.fn.modal.Constructor.prototype.enforceFocus = function () {
+                var $modalElement = this.$element;
+                $(document).on('focusin.modal', function (e) {
+                    var $parent = $(e.target.parentNode);
+                    if ($modalElement[0] !== e.target && !$modalElement.has(e.target).length
+                        // add whatever conditions you need here:
+                        &&
+                        !$parent.hasClass('cke_dialog_ui_input_select') && !$parent.hasClass('cke_dialog_ui_input_text')) {
+                        $modalElement.focus();
+                    }
+                });
+            };
+        </script>
+      
+    </body>
+</html>

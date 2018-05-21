@@ -1,0 +1,289 @@
+﻿
+.select2-selection__rendered {
+    font-size: 12px !important;
+}
+
+.select2 {
+    margin: 5px 0px;
+    width: 100% !important;
+}
+
+.partialContents:empty {
+    width: 100%;
+    min-height: 100px;
+    position: relative;
+    background: url('/Content/img/hht-loading.gif') center no-repeat;
+}
+
+
+.glyphicon {
+    margin-right: 10px;
+}
+
+.panel-body {
+    padding: 0px;
+}
+
+    .panel-body table tr td {
+        padding-left: 15px;
+    }
+
+    .panel-body .table {
+        margin-bottom: 0px;
+    }
+
+
+
+
+/*MY-UPLOAD*/
+input.hidden {
+    position: absolute;
+    left: -9999px;
+}
+
+#profile-image1 {
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    border: 2px solid #03b1ce;
+}
+
+.tital {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.bot-border {
+    border-bottom: 1px #f8f8f8 solid;
+    margin: 5px 0 5px 0;
+}
+
+
+
+/**/
+img.active {
+    outline: 2px yellow solid;
+}
+/* CSS used here will be applied after bootstrap.css */
+.badge-notify {
+    background: red;
+    position: relative;
+    top: -15px;
+    left: -40px;
+}
+
+
+tr.text-uppercase td {
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.text-bold {
+    font-weight: 700;
+}
+
+/**/
+.notifications {
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+}
+
+.notification {
+    border-bottom-color: #eeeeee;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    color: #333333;
+    display: block;
+    padding-bottom: 9.6px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 9.6px;
+    text-decoration-color: -moz-use-text-color;
+    text-decoration-line: none;
+    text-decoration-style: solid;
+}
+
+    .notification:last-child {
+        border-bottom-color: -moz-use-text-color;
+        border-bottom-style: none;
+        border-bottom-width: 0;
+    }
+
+    .notification:hover, .notification.active:hover {
+        background-color: #f9f9f9;
+    }
+
+    .notification.active {
+        background-color: #f4f4f4;
+    }
+
+.notification-title {
+    font-size: 15px;
+    margin-bottom: 0;
+}
+
+.notification-desc {
+    margin-bottom: 0;
+}
+
+.notification-meta {
+    color: #777777;
+}
+
+a.notification:hover {
+    text-decoration-color: -moz-use-text-color;
+    text-decoration-line: none;
+    text-decoration-style: solid;
+}
+
+.media-left, .media-right, .media-body {
+    display: table-cell;
+    vertical-align: top;
+}
+
+.media-left, .media > .pull-left {
+    padding-right: 10px;
+}
+
+.media-body {
+    width: 10000px;
+}
+
+.media, .media-body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+
+.navbar-inverse .navbar-nav > li > a {
+    text-transform: uppercase;
+    padding: 10px 15px;
+}
+
+    .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+        padding: 10px 15px;
+    }
+
+
+.content-inside fieldset {
+    margin: 5px auto 15px !important;
+}
+
+fieldset legend.title {
+    margin: 15px 0;
+}
+
+    fieldset legend.title strong {
+        background: #fff;
+        display: inline-block;
+        padding: 3px 5px;
+        color: #ff8504;
+        font-size: 9pt;
+        margin-bottom: -11px;
+    }
+
+fieldset ul {
+    margin: 5px 0;
+    list-style: none;
+    padding: 0;
+}
+
+
+.boxFeedBack {
+    position: fixed;
+    right: -35px;
+    top: 50%;
+    margin-top: -40px;
+    height: 40px;
+    width: 100px;
+}
+
+    .boxFeedBack a {
+        cursor: pointer;
+        border-radius: 5px;
+        background: #0c4da2;
+        color: #fff;
+        padding: 5px 15px;
+        line-height: 30px;
+        display: block;
+        text-align: center;
+        /* Safari */
+        -webkit-transform: rotate(-90deg);
+        /* Firefox */
+        -moz-transform: rotate(-90deg);
+        /* IE */
+        -ms-transform: rotate(-90deg);
+        /* Opera */
+        -o-transform: rotate(-90deg);
+        /* Internet Explorer */
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+    }
+
+        .boxFeedBack a:hover {
+            color: #ff8504;
+        }
+
+
+
+/*29/08/2017*/
+
+.os-title .l1 {
+    width: 50%;
+    background-color: #fc9903;
+    border-radius: 0px 6px 0px 0px;
+    padding: 7px 15px 2px 15px;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 1.5em;
+}
+
+.os-title .l2 {
+    height: 5px;
+    background-color: #fc9903;
+}
+
+.title-service {
+    background-color: #f2f2f2;
+    padding: 10px 5px;
+    color: #fc9903;
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+
+
+
+
+.hightlight {
+    color: #fc9903;
+   
+    font-weight: bold;
+    border-radius: 3px;
+}
+
+.root .search input {
+    width: 100%;
+}
+
+#root .results > ul {
+    margin-left: -30px;
+}
+
+    #root .results > ul > li {
+        font-weight: bold;
+    }
+
+#root .results {
+    max-height: 300px;
+    overflow: auto;
+}
+
+#root0 .results {
+    max-height: 150px;
+    overflow: auto;
+}

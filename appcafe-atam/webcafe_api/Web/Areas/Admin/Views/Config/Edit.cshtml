@@ -1,0 +1,114 @@
+﻿@model Web.Areas.Admin.ViewModels.ConfigOneCRUDView
+@{
+    ViewBag.Title = Model.Description;
+    Layout = "~/Views/Shared/_bootstrap_modal.cshtml";
+}
+
+<div class="modal-body">
+    @using (Ajax.BeginForm("Edit", "Config", FormMethod.Post, new AjaxOptions { OnSuccess = "clsConfigEditOneEdit.fnOnSuccess" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+        <div class="show_err" style="color:red;">
+            @Html.ValidationSummary(false)
+        </div>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <span>@Model.Description</span>
+
+        if (Model.IsImg)
+        {
+            <div class="form-group group-img-ck">
+                <table style="width:100%;  ">
+                    <tr>
+                        <td>Image</td>
+                    </tr>
+                    <tr>
+
+                        <td>
+                            <img onclick="$(this).parent().find('input').first().trigger('click');" class="view-image img-responsive" alt="User Pic" src="@myImage.GetImg(Model.Content)">
+                            <input class="hidden" type="file" data-model="Image" onchange="fnUploadImageAjax($(this))">
+                            @Html.HiddenFor(m => m.Content)
+                            <a onclick="fnRemoveImg($(this))"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.Content)
+                @Html.TextAreaFor(m => m.Content, new { @class = "form-control" + (Model.IsHtmlEditor ? " sEditor" : "") })
+            </div>
+        }
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">@mui.mui.cancel</button>
+            <button type="submit" class="btn btn-primary">@mui.mui.save</button>
+        </div>
+    }
+</div>
+<script>
+    fnInitImage($("#myModal_Config"));
+    fnInitEditor($("#myModal_Config"));
+    var clsConfigEditOneEdit = new function () {
+        var self = this;
+        self.fnOnSuccess = function (data) {
+            $('#modalCRUD').modal('hide');
+            if (data.r) {
+                toastr.success("Update successfully!");
+            }
+            try {
+                cls.fnReload();
+            }
+            catch (err) {
+                window.location.reload();
+                //if (confirm("System update content successfully, Reload page?")) {
+                //    window.location.reload();
+                //}
+            }
+        }
+    }
+    var loadding_img = "http://www.votable.com/images/assets/preload1.gif";
+    var empty_img = "http://findicons.com/files/icons/1714/dropline_neu/128/empty.png";
+    function fnRemoveImg(that) {
+        that.parent().find("img").first().attr("src", empty_img);
+        that.parent().find("input[type=hidden]").first().val("");
+    }
+    function fnUploadImageAjax(thiss) {
+        var __id_up = thiss.data("model");
+        var __jqview = thiss.parent().find("img").first();
+        __jqview.attr("src", loadding_img);
+        var formData = new FormData();
+        var totalFiles = thiss.get(0).files.length;
+        for (var i = 0; i < totalFiles; i++) {
+            var file = thiss.get(0).files[i];
+            formData.append("up-" + __id_up, file);
+        }
+        formData.append("pathAppSettings", "path_img_setting");
+        formData.append("sw", 500);
+        formData.append("sh", 500);
+        formData.append("reducePercent",100);
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("UploadImg","Ajax")',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.r) {
+                    setTimeout(function () {
+                        __jqview.attr("src", response.v);
+                        __jqview.parent().find("input[type=hidden]").first().val(response.v);
+                    }, 1000);
+                } else {
+                    toastr.error(response.m);
+                }
+            },
+            error: function (error) {
+                alert("errror");
+            }
+        });
+    }
+</script>

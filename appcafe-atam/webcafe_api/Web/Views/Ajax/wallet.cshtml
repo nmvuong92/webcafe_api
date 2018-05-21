@@ -1,0 +1,139 @@
+﻿@using VD.Data.Entity
+@using Web.Models
+@model walletView
+          @{
+              VIEWSETTING _vs = ViewBag.__viewsetting;
+          }
+@if (Model.candidate != null)
+{
+    <h1>Candidates wallet</h1>
+    <div>
+
+
+    </div>
+}
+else if (Model.Employee != null)
+{
+    
+    @*<h2>@VD.Data.MySsAuthEmployees.GetAuth().Username</h2>*@
+    <div>
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab"><i class="fa fa-google-wallet"></i> @mui.mui.employer_wallet</a></li>
+            <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-usd"></i> @mui.mui.fee_service</a></li>
+            <li role="presentation"><a href="#fee_label" aria-controls="profile" role="tab" data-toggle="tab"><i class="fa fa-usd"></i> @mui.mui.fee_label</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="home">
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>@mui.mui.score_post_recruitment</th>
+                        <th>@mui.mui.score_filter_profile</th>
+                        <th>@mui.mui.score_advertisement</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="hh-coin">
+                                <span>@Model.Employee.ScorePostRecruitment.ToString("n0")</span>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="hh-coin">
+                                <span>@Model.Employee.ScoreFilterprofile.ToString("n0")</span>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="hh-coin">
+                                <span>@Model.Employee.ScoreAdvertisement.ToString("n0")</span>
+                            </span>
+                        </td>
+                    </tr>
+
+                </table>
+                @if (Model.Employee.ScorePostRecruitment == 0)
+                {
+                    <div class="hht-msg-zero-scores animated bounce">
+                        @Html.Raw(_vs.__config.msg_scores_empty)
+                        @if (_vs._is_admin)
+                        {
+                            <button class="btn btn-xs" title="System edit" onclick="fnConfigShowEditKey('msg_scores_empty')">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        }
+                    </div>
+                    
+                    <div class="text-center" style="padding:15px;">
+                        <p class="text-danger">
+                            @mui.mui.btn_purchase_wallet_note
+                        </p>
+                        <button onclick="return PurchaseWallet();" type="button" class="btn btn-danger" style="padding: 10px 15px !important;">
+                            @mui.mui.btn_purchase_wallet
+                        </button>
+                    </div>
+                }
+            </div>
+            <div role="tabpanel" class="tab-pane" id="profile">
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>@mui.mui.fee_score_filter_profile</th>
+                        <th>@mui.mui.fee_score_post_recruitment</th>
+                    </tr>
+                    <tr>
+                       
+                        <td>
+                            <div class="hh-price">
+                                <span>@Model.setting.fee_score_filter_profile.ToString("n0")</span>
+                            </div>
+                        </td>
+                       
+                        <td>
+                            <div class="hh-price">
+                                <span>@Model.setting.fee_score_post_recruitment.ToString("n0")</span>
+                            </div>
+                        </td>
+                        
+                    </tr>
+                </table>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="fee_label">
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>@mui.mui.fee_score_label_hot</th>
+                        <th>@mui.mui.fee_score_label_new</th>
+                        <th>@mui.mui.fee_score_label_top</th>
+                        <th>@mui.mui.fee_score_label_urgent</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="hh-price">
+                                <span>@Model.setting.fee_score_label_hot.ToString("n0")</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="hh-price">
+                                <span>@Model.setting.fee_score_label_new.ToString("n0")</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="hh-price">
+                                <span>@Model.setting.fee_score_label_top.ToString("n0")</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="hh-price">
+                                <span>@Model.setting.fee_score_label_urgent.ToString("n0")</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+}
+

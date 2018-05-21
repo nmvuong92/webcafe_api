@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<!-- === BEGIN HEADER === -->
+
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+    <!--<![endif]-->
+    <head>
+        <!-- Title -->
+        <!-- TemplateBeginEditable name="doctitle" -->
+        <title>Diện Chẩn Bùi Quốc Châu</title>
+        <!-- TemplateEndEditable -->
+        <!-- Meta -->
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <!-- Favicon -->
+        <link href="../favicon.ico" rel="shortcut icon">
+        <!-- Bootstrap Core CSS -->
+        <link rel="stylesheet" href="../assets/css/bootstrap.css">
+        <!-- Template CSS -->
+        <link rel="stylesheet" href="../assets/css/animate.css">
+        <link rel="stylesheet" href="../assets/css/font-awesome.css">
+        <link rel="stylesheet" href="../assets/css/nexus.css">
+        <link rel="stylesheet" href="../assets/css/responsive.css">
+        <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="../slider_chitietsp/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../slider_chitietsp/css/style.css">
+    <script src="../slider_chitietsp/js/jssor.slider-21.1.6.min.js" type="text/javascript"></script>
+    <script src="../slider_chitietsp/js/jquery.min.js"></script>
+    <script src="../slider_chitietsp/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        jssor_1_slider_init = function() {
+
+            var jssor_1_options = {
+              $AutoPlay: true,
+              $DragOrientation: 2,
+              $PlayOrientation: 2,
+              $ThumbnailNavigatorOptions: {
+                $Class: $JssorThumbnailNavigator$,
+                $Cols: 9,
+                $Orientation: 2,
+                $Align: 0,
+                $NoDrag: true
+              }
+            };
+
+            var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+
+            /*responsive code begin*/
+            /*you can remove responsive code if you don't want the slider scales while window resizing*/
+            function ScaleSlider() {
+                var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+                if (refSize) {
+                    refSize = Math.min(refSize, 700);
+                    jssor_1_slider.$ScaleWidth(refSize);
+                }
+                else {
+                    window.setTimeout(ScaleSlider, 30);
+                }
+            }
+            ScaleSlider();
+            $Jssor$.$AddEvent(window, "load", ScaleSlider);
+            $Jssor$.$AddEvent(window, "resize", ScaleSlider);
+            $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
+            /*responsive code end*/
+        };
+		
+		jssor_2_slider_init = function() {
+
+            var jssor_1_options = {
+              $AutoPlay: true,
+              $DragOrientation: 2,
+              $PlayOrientation: 2,
+              $ThumbnailNavigatorOptions: {
+                $Class: $JssorThumbnailNavigator$,
+                $Cols: 9,
+                $Orientation: 2,
+                $Align: 0,
+                $NoDrag: true
+              }
+            };
+
+            var jssor_1_slider = new $JssorSlider$("jssor_2", jssor_1_options);
+
+            /*responsive code begin*/
+            /*you can remove responsive code if you don't want the slider scales while window resizing*/
+            function ScaleSlider() {
+                var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+                if (refSize) {
+                    refSize = Math.min(refSize, 700);
+                    jssor_1_slider.$ScaleWidth(refSize);
+                }
+                else {
+                    window.setTimeout(ScaleSlider, 30);
+                }
+            }
+            ScaleSlider();
+            $Jssor$.$AddEvent(window, "load", ScaleSlider);
+            $Jssor$.$AddEvent(window, "resize", ScaleSlider);
+            $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
+            /*responsive code end*/
+        };
+		
+		
+    </script>
+        <!-- TemplateBeginEditable name="head" -->
+        <!-- TemplateEndEditable -->
+    </head>
+    <body>
+        <div id="body-bg">
+
+            <!-- Header -->
+            <div id="header">
+                <div class="container">
+                    <div class="row">
+                    	<div class="col-sm-4 fa-1x">
+                            <strong><i class="fa fa-phone"></i></strong>&nbsp;1-800-123-4567<br>
+                            <strong><i class="fa fa-envelope"></i></strong>&nbsp;dienchanbqc@gmail.com
+                        </div>
+                        <!-- Logo -->
+                        <div class="col-sm-4">
+                            <a href="../index.html" title="">
+                                <img src="../assets/img/dienchanlieuphap.jpg"/>
+                            </a>
+                        </div>
+                        <div class="col-sm-4 text-right fa-1x">
+                            <div class="row"><strong><i class="fa fa-shopping-cart"> [0]</i></strong>&nbsp;Tài khoản của tôi</div>
+                            <div class="row no-padding">
+                            <ul class="social-icons pull-right">
+
+                                <li class="social-twitter">
+                                    <a href="#" target="_blank" title="Twitter"></a>
+                                </li>
+                                <li class="social-facebook">
+                                    <a href="#" target="_blank" title="Facebook"></a>
+                                </li>
+                                <li class="social-googleplus">
+                                    <a href="#" target="_blank" title="Google+"></a>
+                                </li>
+                            </ul>
+                        </div>
+                      </div>
+                        <!-- End Logo -->
+                    </div>
+                </div>
+            </div>
+            <!-- End Header -->
+            <!-- Top Menu -->
+            <div id="hornav" class="background-green">
+                <div class="no-padding border-bottom">
+                    <div class="row text-center">
+                    	<!-- Logo -->
+                        <div class="col-sm-2 logo text-right">
+                            <a href="../index.html" title="">
+                                <img src="../assets/img/logo.png" alt="Logo" />
+                            </a>
+                        </div>
+                        <div class="col-md-10 no-padding">
+                            <div class="visible-lg">
+                                <ul id="hornavmenu" class="nav navbar-nav">
+                                    <li>
+                                        <a href="../index.html" class="fa-home active">Home</a>
+                                    </li>
+                                    <li>
+                                        <span class="fa-gears "><a href="../gioi-thieu.html">Giới thiệu</a></span>
+                                        <ul>
+                                            <li class="parent">
+                                                <span>Giới thiệu chung</span>
+                                                <ul>
+                                                    <li>
+                                                        <a href="../gioi-thieu.html">Lịch sử hình thành</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="../gioi-thieu.html">Hệ thống cửa hàng</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+
+
+                                        </ul>
+                                    </li>
+
+                                    <li>
+                                        <span class="fa-th "><a href="../san-pham.html">Sản phẩm</a></span>
+                                        <ul>
+                                            <li>
+                                                <a href="../san-pham.html">Sản phẩm khuyến mãi</a>
+                                            </li>
+                                            <li>
+                                                <a href="../san-pham.html">Sản phẩm</a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <span class="fa-font ">Tin tức</span>
+                                        <ul>
+                                            <li>
+                                                <a href="../tin-tuc.html">Khuyến mãi</a>
+                                            </li>
+                                            <li>
+                                                <a href="../tin-tuc.html">Tin sức khỏe</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="../lien-he.html" class="fa-comment ">Liên hệ</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- End Top Menu -->
+            <!-- === END HEADER === --><!-- TemplateBeginEditable name="EditRegion1" -->
+            <!-- === BEGIN CONTENT === -->
+            <div id="slideshow">
+              <div class="no-padding background-white">
+                <div class="row">
+                  <!-- Carousel Slideshow -->
+                  <div id="carousel-example" class="carousel slide padding-bottom-40" data-ride="carousel">
+                    <!-- Carousel Indicators -->
+                    <ol class="carousel-indicators">
+                      <li data-target="#carousel-example" data-slide-to="0" class="active"></li>
+                      <li data-target="#carousel-example" data-slide-to="1"></li>
+                      <li data-target="#carousel-example" data-slide-to="2"></li>
+                    </ol>
+                    <div class="clearfix"></div>
+                    <!-- End Carousel Indicators -->
+                    <!-- Carousel Images -->
+                    <div class="carousel-inner">
+                      <div class="item active"> <img src="../assets/img/slide1.jpg" alt=""> </div>
+                      <div class="item"> <img src="../assets/img/slide2.jpg" alt=""> </div>
+                      <div class="item"> <img src="../assets/img/slide3.jpg" alt=""> </div>
+                      <div class="item"> <img src="../assets/img/slide4.jpg" alt=""> </div>
+                    </div>
+                    <!-- End Carousel Images -->
+                    <!-- Carousel Controls -->
+                    <a class="left carousel-control" href="#carousel-example" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> </a> <a class="right carousel-control" href="#carousel-example" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span> </a>
+                    <!-- End Carousel Controls -->
+                  </div>
+                  <!-- End Carousel Slideshow -->
+                </div>
+              </div>
+            </div>
+            <div id="icons">
+              <div class="container">
+                <div class="col-xs-12 caption-product pad-0">
+                  <div class="text-center">
+                    <div class="content-title">
+                      <h2 class="title"> Sản phẩm bán chạy </h2>
+                      <p class="info-title"> Có thể bạn thích </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <!-- Icons -->
+                  <div class="col-md-6 text-center"> <img src="../assets/img/2.jpg" alt="">
+                    <h4 class="padding-top-10 animate fadeIn"><a href="">Dress with High Neckline</a></h4>
+                    <h5 class="price"> $255 </h5>
+                    <!--<span class="sticker-discount sprite sprite-productlist-sticker-discount"> -30% </span>-->
+                    <p class="link small">Xem chi tiết <i class="fa fa-angle-double-right"></i></p>
+                  </div>
+                  <div class="col-md-6 text-center"> <img src="../assets/img/15.jpg" alt="">
+                    <h4 class="padding-top-10 animate fadeIn"><a href="">Short Sleeves Light Pleats Dress</a></h4>
+                    <h5 class="price"> $255 </h5>
+                    <!--<span class="sticker-discount sprite sprite-productlist-sticker-discount"> -30% </span>-->
+                    <p class="link small">Xem chi tiết <i class="fa fa-angle-double-right"></i></p>
+                  </div>
+                  <div class="col-md-6 text-center"> <img src="../assets/img/4.jpg" alt="">
+                    <h4 class="padding-top-10 animate fadeIn"><a href="">Dress with Square Neckline and Seam Bodice</a></h4>
+                    <h5 class="price"> $255 </h5>
+                    <!--<span class="sticker-discount sprite sprite-productlist-sticker-discount"> -30% </span>-->
+                    <p class="link small">Xem chi tiết <i class="fa fa-angle-double-right"></i></p>
+                  </div>
+                  <div class="col-md-6 text-center"> <img src="../assets/img/11.jpg" alt="">
+                    <h4 class="padding-top-10 animate fadeIn"><a href="">Dress with High Neckline</a></h4>
+                    <h5 class="price"> $255 </h5>
+                    <!--<span class="sticker-discount sprite sprite-productlist-sticker-discount"> -30% </span>-->
+                    <p class="link small">Xem chi tiết <i class="fa fa-angle-double-right"></i></p>
+                  </div>
+                  <!-- End Icons -->
+                </div>
+              </div>
+            </div>
+            <div id="content" class="background-white">
+              <div class="col-xs-12 caption-product pad-0">
+                <div class="text-center">
+                  <div class="content-title">
+                    <h2 class="title"> About Us </h2>
+                    <p class="info-title"> Coco Fashion </p>
+                  </div>
+                </div>
+              </div>
+              <div class="row margin-vert-30 m">
+                <!-- Main Text -->
+                <div class="col-md-6 padding-horiz-50">
+                  <h2>Welcome to Co&amp;Co</h2>
+                  <div id="lead-index">
+                    <p>Coco fashion is unique in the sense that it allows you to   explore your unique style statement. We offer the finest European   fashion clothing for both, men and women that meet any budget. Our   collections are really diverse, ranging from elegant dresses, to   office-wear clothing, to street-style clothing. We also have trendy   bodysuits, shirts, blouses, jackets, and coats.</p>
+                    <p>Our accessories like bags and shoes are just as trendy and elegant as   our clothing range. You will be spoiled for choice with our Daily New   additions to our collections. With our fluid design concepts, you can   mix and match different pieces and express your style statement. So, why   not reveal your style statement with Coco Fashion, where you can find   endless options from European fashion clothing as well as Asian fashion   clothing?<br>
+                      So, whether you are looking for a prom dress or a street-style   jacket- Coco fashion has just the right item for you. Register today, to   stay updated with our offers, discounts and new arrivals!</p>
+                    <!--<span class="sticker-discount sprite sprite-productlist-sticker-discount"> -30% </span>-->
+                    <button type="submit" class="btn btn-warning">Xem chi tiết</button>
+                  </div>
+                  <p>&nbsp;</p>
+                </div>
+                <!-- End Main Text -->
+                <div class="col-md-6"> <img class="img-responsive" src="../assets/img/img_adv_4.jpg" alt=""> </div>
+              </div>
+            </div>
+            <!-- News -->
+            <div class="row">
+              <div class="blog-post padding-bottom-20">
+                <!-- Blog Item Body -->
+                <div class="blog">
+                  <div class="clearfix"></div>
+                  <div class="row margin-top-15">
+                    <div class="col-md-6"> <img class="margin-bottom-20" src="../assets/img/Banner-7.jpg" alt="thumb1"> </div>
+                    <div class="col-md-6 padding-horiz-50">
+                      <h2> <a href="#">Xu hướng thời trang 2017</a> </h2>
+                      <p>Chuyện diện đồ như nào đến công ty thời nay không còn bị bó hẹp quá   nhiều như trước đây, cô gái có thể thoải mái chọn những bộ đồ yêu thích   của mình, tuy nhiên vẫn còn một số điều nên tránh nếu như không muốn bị   mất điểm trước mặt mọi người. Nếu bạn vẫn còn đang mơ hồ về chuyện áo   quần đi làm, hãy lưu ý vào điểm &ldquo;nhỏ&rdquo; và &ldquo;to&rdquo; dưới đây nhé!</p>
+                      <!-- Read More -->
+                      <a href="#" class="btn btn-warning"> Read More <i class="icon-chevron-right readmore-icon"></i> </a>
+                      <!-- End Read More -->
+                    </div>
+                  </div>
+                </div>
+                <!-- End Blog Item Body -->
+              </div>
+            </div>
+            <!-- End News -->
+            <!-- === END CONTENT === -->
+            <!-- TemplateEndEditable --><!-- === BEGIN FOOTER === -->
+            <div id="base">
+                <div class="container padding-vert-30">
+                    <div class="row">
+                        <!-- Disclaimer -->
+                        <div class="col-md-4">
+                            <h3 class="class margin-bottom-10">DIỆN CHẨN BÙI QUỐC CHÂU</h3>
+                            <p>16 Ký con, P.7, Q.Phú Nhuận, Tp.HCM ( bên hông trái nhà thờ Phú Hạnh số 121 đường Phan Đăng Lưu, P.7, Q. Phú Nhuận, Tp.HCM ) </p>
+                            <p><span class="fa-phone"> Tel: 0123456789 - Fax: 123456</span></p>
+                            <p> <span class="fa-envelope">Email:</span> dienchanbqc@gmail.com</p>
+                        </div>
+                        <!-- End Disclaimer -->
+                        <!-- Contact Details -->
+                        <div class="col-md-4 margin-bottom-20">
+                            <h3 class="margin-bottom-10">Main products</h3>
+
+                            <p>Dụng cụ,
+                                <br>Sách,
+                                <br>
+                                App Mobile
+                                <br></p>
+                        </div>
+                        <!-- End Contact Details -->
+                        <!-- Sample Menu -->
+                        <div class="col-md-4 margin-bottom-20">
+                            <ul class="menu">
+                                <li>
+                                    <a class="fa-tasks" href="#">Chính sách mua hàng</a>
+                                </li>
+                                <li>
+                                    <a class="fa-users" href="#">Chính sách đổi trả</a>
+                                </li>
+                                <li>
+                                    <a class="fa-signal" href="#">Hướng dẫn mua hàng</a>
+                                </li>
+                                <li>
+                                    <a class="fa-coffee" href="#">Qui định chung</a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <!-- End Sample Menu -->
+                    </div>
+                </div>
+                
+            </div>
+            <!-- Footer -->
+            <div id="footer" class="background-gray-dark">
+                <div class="container">
+                    <div class="row">
+                        <!-- Footer Menu -->
+                        <div id="footermenu" class="col-md-7">
+                            <ul class="list-unstyled list-inline">
+                                <li>
+                                    <a href="#" target="_blank">Trang chủ</a>
+                                </li>
+                                <li>
+                                    <a href="#" target="_blank">Giới thiệu</a>
+                                </li>
+                                <li>
+                                    <a href="#" target="_blank">Sản phẩm</a>
+                                </li>
+                                <li>
+                                    <a href="#" target="_blank">Tin tức</a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                        <!-- End Footer Menu -->
+                        <!-- Copyright -->
+                        <div id="copyright" class="col-md-5">
+                            <p class="pull-right">(c) 2017 Diện Chẩn Bùi Quốc Châu. Designed by www.thietkevuondao.com</p>
+                        </div>
+                        <!-- End Copyright -->
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+            <!-- End Footer -->
+            <!-- JS -->
+            <script type="text/javascript" src="../assets/js/jquery.min.js"></script>
+            <script type="text/javascript" src="../assets/js/bootstrap.min.js"></script>
+            <script type="text/javascript" src="../assets/js/scripts.js"></script>
+            <!-- Isotope - Portfolio Sorting -->
+            <script type="text/javascript" src="../assets/js/jquery.isotope.js"></script>
+            <!-- Mobile Menu - Slicknav -->
+            <script type="text/javascript" src="../assets/js/jquery.slicknav.js" ></script>
+            <!-- Animate on Scroll-->
+            <script type="text/javascript" src="../assets/js/jquery.visible.js" charset="utf-8"></script>
+            <!-- Sticky Div -->
+            <script type="text/javascript" src="../assets/js/jquery.sticky.js" charset="utf-8"></script>
+            <!-- Slimbox2-->
+            <script type="text/javascript" src="../assets/js/slimbox2.js" charset="utf-8"></script>
+            <!-- Modernizr -->
+            <script src="../assets/js/modernizr.custom.js" type="text/javascript"></script>
+            
+            
+            
+            <!-- End JS -->
+    </body>
+</html>
+<!-- === END FOOTER === -->

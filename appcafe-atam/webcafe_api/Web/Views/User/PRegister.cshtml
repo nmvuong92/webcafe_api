@@ -1,0 +1,101 @@
+﻿@model Web.ViewModels.User.RegisterVM
+@{
+    ViewBag.Title = "Đăng ký tài khoản thành viên BQC";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<div class="container">
+    @using (Html.BeginForm("PRegister", "User",FormMethod.Post, new { id = "register-form", role = "form", style = "display: block;" }))
+    {
+        <div style="color: red">
+            @Html.ValidationSummary(false)
+        </div>
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "Tài khoản email" })
+        </div>
+
+        <div class="form-group">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Mật khẩu" })
+
+        </div>
+        <div class="form-group">
+            @Html.PasswordFor(m => m.CfPassword, new { @class = "form-control", @placeholder = "Xác nhận mật khẩu" })
+
+        </div>
+
+        <div class="form-group">
+            <div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(m => m.Ho, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Ho) })
+                    </div>
+                    <div class="col-sm-6">
+                        @Html.TextBoxFor(m => m.Ten, new { @class = "form-control", placeholder = HttpUtility.HtmlDecode((Html.DisplayNameFor(m => m.Ten)).ToHtmlString()) })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", @placeholder = "Số điện thoại" })
+        </div>
+
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.ProvinceId, Model.ddlProvince, "--" + HttpUtility.HtmlDecode((Html.DisplayNameFor(m => m.ProvinceId)).ToHtmlString()) + "--", new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.DistrictId) })
+        </div>
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.DistrictId, new List<SelectListItem>(), "--" + HttpUtility.HtmlDecode((Html.DisplayNameFor(m => m.DistrictId)).ToHtmlString()) + "--", new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.DistrictId) })
+        </div>
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.WardId, new List<SelectListItem>(), "--" + HttpUtility.HtmlDecode((Html.DisplayNameFor(m => m.WardId)).ToHtmlString()) + "--", new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.WardId) })
+        </div>
+        
+        
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @placeholder = "Địa chỉ" })
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-success" value="Đăng ký">
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section JS{
+    <script type="text/javascript">
+        $("#ProvinceId").change(function () {
+            var id = $(this).val();
+            console.log(id);
+            if (id != "") {
+
+                $.getJSON("/Donhang/ddlDistrict?province_id=" + id, function (data) {
+                    var _ops = "<option value=''>--Chọn quận/huyện--</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        _ops += "<option value='" + data[i].Id + "'>" + data[i].Name + "</option>";
+                    }
+                    $("#DistrictId").html(_ops);
+                });
+            }
+        });
+        $("#DistrictId").change(function () {
+            var id = $(this).val();
+            console.log(id);
+            if (id != "") {
+
+                $.getJSON("/Donhang/ddlWard?district_id=" + id, function (data) {
+                    var _ops = "<option value=''>--Chọn phường/xã--</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        _ops += "<option value='" + data[i].Id + "'>" + data[i].Name + "</option>";
+                    }
+                    $("#WardId").html(_ops);
+                });
+
+            }
+
+        });
+    </script>
+}

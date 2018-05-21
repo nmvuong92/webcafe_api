@@ -1,0 +1,31 @@
+﻿
+
+/* Clearable text inputs */
+.clearable{
+  position: relative;
+  display: block;
+}
+.clearable input[type=text]{
+  padding-right: 24px;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.clearable input::-ms-clear {  /* Remove IE default X */
+  display: none;
+}
+
+
+#s{
+	/* The search text box. */
+	
+	
+	color:#888888;
+	
+	font-size:15px;
+	height:36px;
+	line-height:36px;
+	text-shadow:1px 1px 0 white;
+    padding: 10px;
+	
+}

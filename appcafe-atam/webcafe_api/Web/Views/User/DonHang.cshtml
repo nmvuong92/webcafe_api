@@ -1,0 +1,104 @@
+﻿
+@using Web.Models
+@model IEnumerable<VD.Data.Entity.MF.DonHang>
+
+@{
+    ViewBag.Title = "Đơn hàng";
+    Layout = "~/Views/Shared/_layout.cshtml";
+    VIEWSETTING __viewsetting = ViewBag.__viewsetting;
+    bool islog = __viewsetting.__login != null;
+    bool isvip = islog && __viewsetting.__login.IsVip1 == true;
+}
+
+<link href="~/Content/css/profile.css?v=2" rel="stylesheet" />
+
+<div id="user-profile-2" class="user-profile vcontainer">
+    <div class="tabbable">
+        <ul class="nav nav-tabs padding-18">
+
+            <li>
+                <a href="@Url.Action("Profile","User")">
+                    <i class="green ace-icon fa fa-user bigger-120"></i>
+                    Tiểu sử
+                </a>
+            </li>
+
+            <li class="active">
+                <a href="@Url.Action("DonHang","User")">
+                    <i class="blue fa fa-folder bigger-120"></i>
+                    Đơn hàng
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("LichSuGiaoDich","User")">
+                    <i class="orange ace-icon fa fa-clock-o bigger-120"></i>
+                    Lịch sử giao dịch
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("LichSuNapThe","User")">
+                    <i class="blue ace-icon fa fa-users bigger-120"></i>
+                    Lịch sử nạp thẻ
+                </a>
+            </li>
+
+        </ul>
+        
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>#Mã đơn hàng</th>
+                    <th>Ngày đặt hàng</th>
+                    <th>Họ và tên</th>
+                    <th>Địa chỉ</th>
+                    <th>Số lượng sản phẩm</th>
+                    <th>Tiền hàng</th>
+                    <th>Tiền Vat</th>
+                    <th>Tiền Ship</th>
+                    <th>Tổng tiền</th>
+                    <th>Hình thức TT</th>
+                    <th>Trạng thái giao hàng</th>
+                    <th>Trạng thái thanh toán</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr class="animated bounceIn text-center">
+                        <td colspan="100%">0 Đơn hàng</td>
+                    </tr>
+                }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <a style="text-decoration: underline; font-weight: bold;" href="@Url.Action("CTDonHang","User",new{item.Id})">DCCC@(item.Id) <i class="fa fa-eye"></i></a>
+                        </td>
+                        
+                        <td>@item.CreatedDate.XuatDateTime()</td>
+                        <td>@item.Ho @item.Ten</td>
+                        <td>@item.DiaChi, @item.Province.Name, @item.District.Name, @item.Ward.Name</td>
+                        <td>@item.SoLuongSanPham</td>
+                        <td>@item.TongTienHang.ToMoneyStr()</td>
+                        <td>@item.TienVat.ToMoneyStr() (@item.PTVat%)</td>
+                        <td>@item.GiaShip.ToMoneyStr()</td>
+                        <td>@item.ThanhTien.ToMoneyStr()</td>
+                        <td>@item.HTTT.Ten</td>
+                        <td><span class="@item.TrangThaiGiaoHang.CssLabel">@item.TrangThaiGiaoHang.Ten</span></td>
+                        <td>
+                            <span class="@item.TrangThaiThanhToan.CssLabel">@item.TrangThaiThanhToan.Ten</span>
+                            @if (item.HTTTID == 2)
+                            {
+                                <a target="_blank" href="https://www.nganluong.vn/button_payment.php?receiver=jayleefac@gmail.com&product_name=@(item.Id)&price=@(item.TongTienHang)&return_url=http://dungcudienchan.com/User/DonHang&comments=Thanh toán"><img src="https://www.nganluong.vn/css/newhome/img/button/safe-pay-2.png" border="0" /></a>
+                            }
+                        </td>
+                    </tr>
+                    
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

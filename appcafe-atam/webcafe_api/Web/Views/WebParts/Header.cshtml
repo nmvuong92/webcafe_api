@@ -1,0 +1,229 @@
+﻿@using VD.Data
+@model Web.ViewModels.WebParts.HeaderView
+@{
+
+    string con = ViewContext.ParentActionViewContext.RouteData.Values["controller"].ToString().ToLower();
+    string ac = ViewContext.ParentActionViewContext.RouteData.Values["action"].ToString().ToLower();
+    var ocurid = ViewContext.ParentActionViewContext.RouteData.Values["id"];
+    string curid = ocurid != null ? ocurid.ToString().ToLower() : "";
+
+    string active_home = (new string[] { "home" }).Contains(con) ? "active" : "";
+    string active_about_us = (new string[] { "aboutus" }).Contains(con) ? "active" : "";
+    string active_contact = (new string[] { "contact" }).Contains(con) ? "active" : "";
+    string active_4emp = (new string[] { "employees", "employeesvip" }).Contains(con) && ac.ToLower() != "feeservice" ? "active" : "";
+    string active_4can = (new string[] { "candidates", "job" }).Contains(con) ? "active" : "";
+    string active_industryfocus = (new string[] { "industryfocus" }).Contains(con) ? "active" : "";
+    string ac_dichvucuachungtoi = (new string[] { "employeesvip" }).Contains(con) && ac.ToLower()=="feeservice" ? "active" : "";
+    SysConfigVM __config = ViewBag.__config;
+    Web.Models.VIEWSETTING __vs = ViewBag.__viewsetting;
+    Layout = null;
+}
+<!-- Header -->
+<style>
+    #account ul li {
+        list-style-type: none;
+        text-align: right;
+        display: inline-block;
+        margin-right: 5px;
+    }
+</style>
+<div id="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 fa-1x">
+                <strong><i class="fa fa-phone"></i></strong>&nbsp;@__vs.__config.conf_hotline<br>
+                <strong><i class="fa fa-envelope"></i></strong>&nbsp;@__vs.__config.conf_email
+            </div>
+            <!-- Logo -->
+            <div class="col-sm-4">
+                <a href="@Url.Action("Index","Home")" title="">
+                    <img src="@__vs.__config.website_logo" />
+                </a>
+            </div>
+            <div class="col-sm-4 text-right fa-1x">
+                <div class="row">
+                   
+                        <a href="@Url.Action("Index","DonHang")">
+                            <i class="fa fa-shopping-cart"> Giỏ hàng [<span id="SLSPGH">@Model.SLSPGioHang</span>]</i>
+                        </a>
+                        @if (__vs.__login != null)
+                        {
+                            <strong>
+                                <a href="@Url.Action("Profile", "User")"><i class="fa fa-user"></i>&nbsp;@__vs.__login.Username</a>
+                            </strong>
+                        }
+                        else
+                        {
+                                <a href="javascript:void(0);" onclick=" clsUser.showPopLogin('Đăng nhập'); "><i class="fa fa-sign-in"></i> Đăng nhập</a>
+                                <a href="@Url.Action("PRegister", "User")"><i class="fa fa-plus"></i> Đăng ký</a>
+                        }
+                          
+                </div>
+                <div class="row no-padding">
+                    <ul class="social-icons pull-right">
+
+                        @*<li class="social-twitter">
+                        <a href="@__vs.__config.link_facebook" target=" _blank" title="Twitter"></a>
+                    </li>*@
+                        <li class="social-facebook">
+                            <a href="@__vs.__config.link_facebook" target="_blank" title="Facebook"></a>
+                        </li>
+                        @*<li class="social-googleplus">
+                        <a href="@__vs.__config.conf_google_map" target="_blank" title="Google+"></a>
+                    </li>*@
+                    </ul>
+                </div>
+            </div>
+
+            <!-- End Logo -->
+        </div>
+    </div>
+</div>
+<!-- End Header -->
+
+   <!-- Top Menu -->
+<div id="hornav" class="background-green">
+    <div class="no-padding border-bottom">
+        <div class="container" style="background-color: transparent;box-shadow:none;">
+            <div class="row text-center">
+                <!-- Logo -->
+                <div class="col-sm-2 logo text-left">
+                    <a href="@Url.Action("Index","Home")" title="">
+                        <img src="@__vs.__config.website_logo2" alt="Logo" />
+                    </a>
+                </div>
+                <div class="col-md-10 no-padding">
+                    <div class="visible-lg text-right">
+                        <ul id="hornavmenu" class="nav navbar-nav">
+                            <li>
+                                <a href="@Url.Action("Index","Home")" class="fa-home active">Trang chủ</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","AboutUs")" class="fa-home active">Giới thiệu</a>
+                            </li>
+                            @*<li>
+                                <span class="fa-gears "><a href="gioi-thieu.html">Giới thiệu</a></span>
+                                <ul>
+                                    <li class="parent">
+                                        <span>Giới thiệu chung</span>
+                                        <ul>
+                                            <li>
+                                                <a href="gioi-thieu.html">Lịch sử hình thành</a>
+                                            </li>
+                                            <li>
+                                                <a href="gioi-thieu.html">Hệ thống cửa hàng</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+
+                                </ul>
+                            </li>*@
+                            <li>
+                                <span class="fa-th "><a href="@Url.Action("Index", "SanPham", new { id = string.Empty })">Sản phẩm <span class="caret"></span></a></span>
+                                @{Html.RenderAction("PMenuDeQuy", "ProductCat");}
+                            </li>
+                            @*<li>
+                                <span class="fa-th "><a href="san-pham.html">Sản phẩm</a></span>
+                                <ul>
+                                    <li>
+                                        <a href="san-pham.html">Sản phẩm khuyến mãi</a>
+                                    </li>
+                                    <li>
+                                        <a href="san-pham.html">Sản phẩm</a>
+                                    </li>
+
+                                </ul>
+                            </li>*@
+                            <li>
+                                <a href="@Url.Action("Index","TinTuc")" class="fa-font">Tin tức</a>
+                            </li>
+                            @*<li>
+                                <span class="fa-font ">Tin tức</span>
+                                <ul>
+                                    <li>
+                                        <a href="tin-tuc.html">Khuyến mãi</a>
+                                    </li>
+                                    <li>
+                                        <a href="tin-tuc.html">Tin sức khỏe</a>
+                                    </li>
+                                </ul>
+                            </li>*@
+                            <li>
+                                <a href="@Url.Action("Index","Contact")" class="fa-comment">Liên hệ</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Top Menu -->
+
+
+@*<div id="header" class="header">
+
+    <!--/.top-header -->
+    <!-- MAIN HEADER -->
+    <div class="container main-header">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-2 col-xs-4 logo">
+                <a title="" href="@Url.Action("Index","Home")">
+                    <img alt="Logo" src="@__vs.__config.website_logo">
+                </a>
+            </div>
+
+
+            <div class="col-lg-1 col-md-1 col-sm-2 col-xs-4 block-language">
+                <div class="language-content">
+                    <a href="javascript:void(0);" href="" onclick="fnChangeLang('en-US');"><img alt="English" src="/content/layout/images/en.png" /></a>
+                    <a href="javascript:void(0);" onclick="fnChangeLang('vi-VN');"><img alt="Vietnam" src="/content/layout/images/vn.png" /></a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4 hotline text-center">
+                <div class="content-hotline">
+                    <span class="label-hotline">Hotline</span>
+                    <span class="re-hotline">@__vs.__config.conf_hotline</span>
+                </div>
+            </div>
+
+        </div>
+    </div>    <!-- END MANIN HEADER -->
+    <!-- Navbar menu -->
+    <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <!--<a class="navbar-brand" href="index.html">Trang chủ</a>-->
+            </div>
+            <div class="navbar-collapse collapse pull-right radius-t">
+                <ul class="nav navbar-nav">
+                    <li><a href="@Url.Action("Index","Home")">@mui.mui.Home</a></li>
+                    <li><a href="@Url.Action("Index","AboutUs")">@mui.mui.about_us</a></li>
+                    <li>
+                        <a href="@Url.Action("Index", "SanPham", new { id = string.Empty })">@mui.mui.product <span class="caret"></span></a>
+                        @{Html.RenderAction("PMenuDeQuy", "ProductCat");}
+                    </li>
+                    <li><a href="@Url.Action("Index","Catalog")">Catalog</a></li>
+                    <li><a href="@Url.Action("Index","TinTuc")">@mui.mui.news</a></li>
+                    <li><a href="@Url.Action("Index","Contact")">@mui.mui.contact</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div><!--/.container -->
+    </div>
+
+</div>
+<script>
+    function fnChangeLang(_code) {
+        $.getJSON("@Url.Action("SetCulture", "Home")?culture=" + _code, function (data) {
+            window.location.reload(false);
+        });
+    }
+</script>*@

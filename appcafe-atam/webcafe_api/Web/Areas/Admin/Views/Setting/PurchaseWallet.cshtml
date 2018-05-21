@@ -1,0 +1,53 @@
+﻿@model Web.Areas.Admin.ViewModels.SettingPurchaseWalletVM
+@{
+    ViewBag.Title = "Setting Purchase Wallet Email";
+    ViewBag.Title2 = "Paging row per page";
+    Layout = "~/Views/Shared/_md.cshtml";
+}
+@using (Html.BeginForm())
+{
+    <table class="table table-bordered table-template-data">
+        <thead>
+            <tr>
+                <th style="width:30%;">Input key</th>
+                <th>explanation</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>{company}</th>
+                <td>Công ty</td>
+            </tr>
+            <tr>
+                <th>{phone_number}</th>
+                <td>Số điện thoại</td>
+            </tr>
+            <tr>
+                <th>{email}</th>
+                <td>Email</td>
+            </tr>
+            <tr>
+                <th>{fee_service}</th>
+                <td>Dịch vụ</td>
+            </tr>
+            <tr>
+                <th>{fee_gate}</th>
+                <td>Loại</td>
+            </tr>
+            <tr>
+                <th>{fee_price}</th>
+                <td>Gói</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="form-group">
+        @Html.LabelFor(m => m.etmp_reply_purchase_wallet_title)
+        @Html.TextAreaFor(m => m.etmp_reply_purchase_wallet_title, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.etmp_reply_purchase_wallet_content)
+        @Html.TextAreaFor(m => m.etmp_reply_purchase_wallet_content, new { @class = "form-control sEditor" })
+    </div>
+    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update setting</button>
+}

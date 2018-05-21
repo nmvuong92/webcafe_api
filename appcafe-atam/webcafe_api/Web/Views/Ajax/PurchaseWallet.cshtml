@@ -1,0 +1,61 @@
+﻿@model VD.Data.Entity.EmployeePointHistory
+
+@using (Html.BeginForm("PurchaseWallet", "Ajax", FormMethod.Post, new { id = "frmEmployeePoint" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="show_err" style="color:red;">
+        @Html.ValidationSummary(false)
+    </div>
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.EmployeeID)
+    @Html.HiddenFor(model => model.Date)
+    @Html.HiddenFor(model => model.CreatedDate)
+    @Html.HiddenFor(model => model.ModifiedDate)
+
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            <label class="control-label col-md-2">
+                @mui.mui.company_name
+            </label>
+            <div class="col-md-10 form-control-static">
+                @(Model.Employee != null ? Model.Employee.Company : "")
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">@mui.mui.service</label>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.FeeServiceID, null, "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.FeeServiceID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">@mui.mui.fee_gate</label>
+            <div class="col-md-10">
+                <select id="FeeGateID" name="FeeGateID" class="form-control">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">@mui.mui.package</label>
+            <div class="col-md-10">
+                <select id="FeePriceDetailID" name="FeePriceDetailID" class="form-control">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10 col-md-offset-2 form-control-static">
+                <div id="lblFeePriceDetail"></div>
+            </div>
+        </div>
+        <div style="text-align: center;">
+            <button type="submit" class="btn btn-primary" style="padding:10px 15px;">@mui.mui.btn_send</button>
+        </div>
+    </div>
+}
+<div class="clearfix"></div>

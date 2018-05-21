@@ -1,0 +1,288 @@
+
+.red{ color:Red}
+
+.tdError span{
+        color:red;
+}
+.tblData {
+    width: 100%;
+}
+.tblData tbody {
+    min-height: 400px;
+  
+}
+
+/*TABLE DATA*/
+.tblData,tblOldData,.tblForm {   
+    margin: 0px auto;
+  
+}
+.tblData .trfooter {
+    background-color: #e2edf5;
+}
+.tblData thead {
+    /*background-color: #DBEBFF;*/
+}
+.tblData td,.tblData thead tr:first-child th{
+    vertical-align: central;
+    border: 1px #BED6F6 solid;
+}
+.tblData td{
+    padding: 2px 4px;
+}
+.centered {
+    text-align: center;
+}
+.tblData>tbody>tr:hover {
+    background-color: aliceblue;
+}
+.tblData>thead>tr:nth-child(2){
+  
+}
+.tblData input {
+   height:20px;
+   border: none;
+   width: 100%;
+}
+.tblData>tbody tr:nth-child(odd) {
+    background-color: #fbf9f9;
+}
+.tblData tr.selected{
+    background-color:#f5ff00 !important;
+}
+.tblData input:focus {
+   outline:1px #8bdfff solid;
+  
+}
+.tblData>thead tr:first-child {
+    /*background: url(mItemBack.gif) repeat-x;*/
+    cursor: pointer;
+
+background: rgba(252,234,187,1);
+background: -moz-linear-gradient(top, rgba(252,234,187,1) 0%, rgba(252,205,77,1) 50%, rgba(248,181,0,1) 51%, rgba(251,223,147,1) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(252,234,187,1)), color-stop(50%, rgba(252,205,77,1)), color-stop(51%, rgba(248,181,0,1)), color-stop(100%, rgba(251,223,147,1)));
+background: -webkit-linear-gradient(top, rgba(252,234,187,1) 0%, rgba(252,205,77,1) 50%, rgba(248,181,0,1) 51%, rgba(251,223,147,1) 100%);
+background: -o-linear-gradient(top, rgba(252,234,187,1) 0%, rgba(252,205,77,1) 50%, rgba(248,181,0,1) 51%, rgba(251,223,147,1) 100%);
+background: -ms-linear-gradient(top, rgba(252,234,187,1) 0%, rgba(252,205,77,1) 50%, rgba(248,181,0,1) 51%, rgba(251,223,147,1) 100%);254,254,254,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=0 );
+}
+.tblData .empty{
+    text-align:center;
+    color:red;
+}
+.tblData>thead tr:first-child th{
+     font: 9pt Tahoma;
+     padding-left:5px;
+     line-height:25px;
+}
+.tblData>thead tr:last-child th{
+    border: 1px #BED6F6 solid;
+}
+
+.colOrder:hover {
+    color: red;
+}
+
+
+td.num {
+    text-align: right;
+}
+td.date {
+    text-align: center;
+}
+td.command {
+    text-align: center;
+    
+}
+th.colOrder {
+
+    background-position: right center;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    
+}
+th.desc {
+    background-image: url("desc.gif");
+}
+th.asc {
+    background-image: url("asc.gif");
+}
+
+.trfooter {
+    background-color: #ffffff;
+    /*background-image: url("gvPagerBottomPanelBackground.gif");*/
+    /*background-repeat: repeat-x;*/
+    /*padding-bottom: 4px;
+    padding-top: 4px;
+    padding: 10px;*/
+
+background: rgba(252,234,187,1);
+background: -moz-linear-gradient(top, rgba(252,234,187,1) 0%, rgba(252,205,77,1) 50%, rgba(248,181,0,1) 51%, rgba(251,223,147,1) 100%);
+background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(252,234,187,1)), color-stop(50%, rgba(252,205,77,1)), color-stop(51%, rgba(248,181,0,1)), color-stop(100%, rgba(251,223,147,1)));
+background: -webkit-linear-gradient(top, rgba(252,234,187,1) 0%, rgba(252,205,77,1) 50%, rgba(248,181,0,1) 51%, rgba(251,223,147,1) 100%);
+background: -o-linear-gradient(top, rgba(252,234,187,1) 0%, rgba(252,205,77,1) 50%, rgba(248,181,0,1) 51%, rgba(251,223,147,1) 100%);
+background: -ms-linear-gradient(top, rgba(252,234,187,1) 0%, rgba(252,205,77,1) 50%, rgba(248,181,0,1) 51%, rgba(251,223,147,1) 100%);
+}
+.trfooter a {
+    margin: 0px 5px;
+}
+.trfooter .fl {
+    float: left;
+}
+.trfooter .fr {
+    float: right;
+    color: #191970;
+}
+/*TABLE OLD DATA*/
+.tblOldData thead{
+    background-color:#c5c5c5;
+}
+.tblOldData td,.tblOldData th{
+    border:1px #808080 solid;
+    padding:2px 5px;
+}
+.tblOldData{
+    
+    background-color:#ffffff;
+}
+.divErrs {
+    text-align: left;
+    font-style: italic;
+    color: red;
+    font-family: arial;
+    font-style: 0.8em;
+   
+}
+.tblForm {
+    border-collapse: collapse;
+}
+
+
+.tblForm input[type='text'],.tblForm input[type='password']{
+    width:400px;
+    height: 25px;
+    border: 1px solid #c5c5c5;
+    padding-left: 5px;
+}
+.tblForm input:focus,.tblForm select:focus {
+    outline: 1px #8bdfff solid;
+   
+}
+.w195,.w195 option {
+    width: 195px !important;
+}
+.w380,.w380 option {
+    width: 380px !important;
+}
+.tblForm .w400 {
+    width: 400px !important;
+}
+.red {
+    color: red;
+}
+#divloading {
+    display: none;
+    position: fixed;top:50%;left:50%; 
+    width: 108px;
+    height: 62px;
+    margin-left: -108px;
+    margin-top: -62px;
+}
+.trTotal {
+    background-color: #EEF3FF;
+    font-weight: bold;
+}
+.required {
+    color: red;
+    
+}
+.Errs {
+    width: 100%;
+    opacity: 0.8;
+    color: red;
+}
+.nodata{
+    height:199px; text-align:center; background-color:#ededed; line-height:199px;
+}
+.tblForm td {
+    padding: 3px 0px;
+}
+
+
+/**/
+
+
+
+
+
+.txt_search {
+    border: none;
+    outline: none;
+    background: url(search.gif) no-repeat;
+    padding-left: 18px;
+    border:1px solid #ccc;
+}
+.txt_search_loading {
+    border: none;
+    outline: none;
+    background: url(loading.gif) no-repeat !important;
+    padding-left: 18px;
+    border:1px solid #ccc;
+}
+
+  .ovl{
+        position:absolute;
+        top:0px;
+        left:0px;
+        width:100%;
+        height:100%;
+        opacity:0.3;
+        background:url("loading2.gif") center no-repeat;
+        background-color:#ffffff;
+    }
+
+
+
+  .clearable{
+  background: #fff url(http://i.stack.imgur.com/mJotv.gif) no-repeat right -10px center;
+  border: 1px solid #999;
+  padding: 3px 18px 3px 4px;     /* Use the same right padding (18) in jQ! */
+  border-radius: 3px;
+  transition: background 0.4s;
+}
+.clearable.x  { background-position: right 5px center; } /* (jQ) Show icon */
+.clearable.onX{ cursor: pointer; }              /* (jQ) hover cursor style */
+.clearable::-ms-clear {display: none; width:0; height:0;} /* Remove IE default X */
+
+
+/*custom bootstrap modal*/
+
+.fade-scale {
+  transform: scale(0);
+  opacity: 0;
+  -webkit-transition: all .25s linear;
+  -o-transition: all .25s linear;
+  transition: all .25s linear;
+}
+
+.fade-scale.in {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+.modal-header {
+   
+}
+.modal-header h4 {
+    
+}
+.modal-header  button {
+   
+}
+.modal-body {
+  
+}
+.modal-footer {
+ 
+}

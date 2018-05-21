@@ -1,0 +1,591 @@
+<!-- Source code from http://vandon.com.vn -->
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/font-awesome.css">
+        <!-- Banner -->
+    <link rel="stylesheet" type="text/css" href="../css/slider.css">
+    <!-- Our Hot Jobs -->
+    <link rel="stylesheet" type="text/css" href="../css/slider_flexisel.css">
+      <!-- Scroll -->
+     <link rel="stylesheet" type="text/css" href="../css/tinyscrollbar.css" media="screen">
+     <!-- Soan thao VB -->
+
+	 <link rel="stylesheet" href="../css/neo.css">
+<!-- TemplateBeginEditable name="doctitle" -->
+    <title>Head Hunter</title>
+    <!-- TemplateEndEditable -->
+    <!-- TemplateBeginEditable name="head" -->
+    <!-- TemplateEndEditable -->
+</head>
+<body onload="Captcha();">
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+ <!-- Editor -->
+ <script src="../ckeditor.js"></script>
+ <script src="../js/sample.js"></script>
+<!-- Readmore -->
+<script src="../js/jquery-latest.js"></script>
+<script>
+		$(document).ready(function() {
+	var showChar = 500;
+	var ellipsestext = "...";
+	var moretext = "Read more";
+	var lesstext = "Less";
+	$('.more').each(function() {
+		var content = $(this).html();
+
+		if(content.length > showChar) {
+
+			var c = content.substr(0, showChar);
+			var h = content.substr(showChar-1, content.length - showChar);
+
+			var html = c + '<span class="moreelipses">'+ellipsestext+'</span>&nbsp;<span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="" class="morelink">'+moretext+'</a></span>';
+
+			$(this).html(html);
+		}
+
+	});
+
+	$(".morelink").click(function(){
+		if($(this).hasClass("less")) {
+			$(this).removeClass("less");
+			$(this).html(moretext);
+		} else {
+			$(this).addClass("less");
+			$(this).html(lesstext);
+		}
+		$(this).parent().prev().toggle();
+		$(this).prev().toggle();
+		return false;
+	});
+});
+</script>
+<!-- Check all -->
+<script type="text/javascript">
+
+    function do_this(){
+
+        var checkboxes = document.getElementsByName('approve[]');
+        var button = document.getElementById('toggle');
+
+        if(button.value == 'select'){
+            for (var i in checkboxes){
+                checkboxes[i].checked = 'FALSE';
+            }
+            button.value = 'deselect'
+        }else{
+            for (var i in checkboxes){
+                checkboxes[i].checked = '';
+            }
+            button.value = 'select';
+        }
+    }
+</script>
+<style>
+	
+.comment {
+	width: 100%;
+	margin: 10px;
+	line-height:25px;
+}
+a.morelink {
+	text-decoration:none;
+	outline: none;
+}
+.morecontent span {
+	display: none;
+
+}
+		
+	</style>
+<!-- Scroll -->
+<script src="../js/jquery-latest.min.js"></script>
+<script src="../js/jquery.tinyscrollbar.js"></script>
+
+ <script type="text/javascript">
+	$(document).ready(function()
+	{
+		var $scrollbar = $("#scrollbar1");
+
+		$scrollbar.tinyscrollbar();
+	});
+</script>
+	
+<script>
+$(document).ready(function(){
+    $('.slider').hover(function(){
+        $('.slider .nbs-flexisel-nav-left').css('color','#333');
+		$('.slider .nbs-flexisel-nav-left').css('border','#0056A0 1px solid');
+		$('.slider .nbs-flexisel-nav-right').css('color','#333');
+		$('.slider .nbs-flexisel-nav-right').css('border','#0056A0 1px solid');
+    },function(){
+         $('.slider .nbs-flexisel-nav-left').css('color','#fff');
+		$('.slider .nbs-flexisel-nav-left').css('border','#fff 0px solid');
+		$('.slider .nbs-flexisel-nav-right').css('color','#fff');
+		$('.slider .nbs-flexisel-nav-right').css('border','#fff 0px solid');
+});
+});
+
+$(document).ready(function(){
+    $('.slider2').hover(function(){
+        $('.slider2 .nbs-flexisel-nav-left').css('color','#333');
+		$('.slider2 .nbs-flexisel-nav-left').css('border','#0056A0 1px solid');
+		$('.slider2 .nbs-flexisel-nav-right').css('color','#333');
+		$('.slider2 .nbs-flexisel-nav-right').css('border','#0056A0 1px solid');
+    },function(){
+         $('.slider2 .nbs-flexisel-nav-left').css('color','#fff');
+		$('.slider2 .nbs-flexisel-nav-left').css('border','#fff 0px solid');
+		$('.slider2 .nbs-flexisel-nav-right').css('color','#fff');
+		$('.slider2 .nbs-flexisel-nav-right').css('border','#fff 0px solid');
+});
+});
+
+
+$(document).ready(function(){
+    $('.nemxam').hover(function(){
+        $('.nemxam .nbs-flexisel-nav-left').css('color','#333');
+		$('.nemxam .nbs-flexisel-nav-left').css('border','#0056A0 1px solid');
+		$('.nemxam .nbs-flexisel-nav-right').css('color','#333');
+		$('.nemxam .nbs-flexisel-nav-right').css('border','#0056A0 1px solid');
+		$('.nemxam .nbs-flexisel-nav-left').css('opacity','1');
+		$('.nemxam .nbs-flexisel-nav-right').css('opacity','1');
+    },function(){
+         $('.nemxam .nbs-flexisel-nav-left').css('color','#fff');
+		$('.nemxam .nbs-flexisel-nav-left').css('border','#fff 0px solid');
+		$('.nemxam .nbs-flexisel-nav-right').css('color','#fff');
+		$('.nemxam .nbs-flexisel-nav-right').css('border','#fff 0px solid');
+		$('.nemxam .nbs-flexisel-nav-left').css('opacity','0');
+		$('.nemxam .nbs-flexisel-nav-right').css('opacity','0');
+});
+});
+</script>
+
+<!---Go Top---->
+<script type="text/javascript">
+$(function(){
+$(window).scroll(function () {
+if ($(this).scrollTop() > 100) $('#goTop').fadeIn();
+else $('#goTop').fadeOut();
+});
+$('#goTop').click(function () {
+$('body,html').animate({scrollTop: 0}, 'slow');
+});
+});
+</script>
+<!-- Banner -->
+<script src="../js/jssor.slider-21.1.6.min.js"></script>
+<script type="text/javascript">
+        jQuery(document).ready(function ($) {
+
+            var jssor_1_SlideoTransitions = [
+              [{b:-1,d:1,o:-1},{b:0,d:1000,o:1}],
+              [{b:1900,d:2000,x:-379,e:{x:7}}],
+              [{b:1900,d:2000,x:-379,e:{x:7}}],
+              [{b:-1,d:1,o:-1,r:288,sX:9,sY:9},{b:1000,d:900,x:-1400,y:-660,o:1,r:-288,sX:-9,sY:-9,e:{r:6}},{b:1900,d:1600,x:-200,o:-1,e:{x:16}}]
+            ];
+
+            var jssor_1_options = {
+              $AutoPlay: true,
+              $SlideDuration: 800,
+              $SlideEasing: $Jease$.$OutQuint,
+              $CaptionSliderOptions: {
+                $Class: $JssorCaptionSlideo$,
+                $Transitions: jssor_1_SlideoTransitions
+              },
+              $ArrowNavigatorOptions: {
+                $Class: $JssorArrowNavigator$
+              },
+              $BulletNavigatorOptions: {
+                $Class: $JssorBulletNavigator$
+              }
+            };
+
+            var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+
+            /*responsive code begin*/
+            /*you can remove responsive code if you don't want the slider scales while window resizing*/
+            function ScaleSlider() {
+                var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+                if (refSize) {
+                    refSize = Math.min(refSize, 1920);
+                    jssor_1_slider.$ScaleWidth(refSize);
+                }
+                else {
+                    window.setTimeout(ScaleSlider, 30);
+                }
+            }
+            ScaleSlider();
+            $(window).bind("load", ScaleSlider);
+            $(window).bind("resize", ScaleSlider);
+            $(window).bind("orientationchange", ScaleSlider);
+            /*responsive code end*/
+        });
+    </script>
+ <!-- --------------- --> 
+ <!-- Our Hot Jobs -->
+ <script src="../js/jquery.flexisel.js"></script>
+<script type="text/javascript">
+$(window).load(function() {
+   
+    $("#flexiselDemo3").flexisel({
+        visibleItems: 3,
+        itemsToScroll: 1,         
+        autoPlay: {
+            enable: true,
+            interval: 5000,
+            pauseOnHover: true
+        }        
+    });
+ 
+});
+</script>
+<!-- KOREAN CANDIDATES-->
+<script type="text/javascript">
+$(window).load(function() {
+   
+    $("#flexiselDemo2").flexisel({
+        visibleItems: 3,
+        itemsToScroll: 1,         
+        autoPlay: {
+            enable: true,
+            interval: 5000,
+            pauseOnHover: true
+        }        
+    });
+ 
+});
+</script>
+<!-- Our Clients -->
+ <script type="text/javascript">
+$(window).load(function() {
+   
+    $("#flexiselDemo4").flexisel({
+        visibleItems: 8,
+        itemsToScroll: 1,         
+        autoPlay: {
+            enable: true,
+            interval: 5000,
+            pauseOnHover: true
+        }        
+    });
+ 
+});
+</script>
+
+<!---CAPTCHAR---------->
+<script type="text/javascript">
+	 function Captcha(){
+		 var alpha = new Array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z');
+		 var i;
+		 for (i=0;i<6;i++){
+		   var a = alpha[Math.floor(Math.random() * alpha.length)];
+		   var b = alpha[Math.floor(Math.random() * alpha.length)];
+		   var c = alpha[Math.floor(Math.random() * alpha.length)];
+		   var d = alpha[Math.floor(Math.random() * alpha.length)];
+		   var e = alpha[Math.floor(Math.random() * alpha.length)];
+		   var f = alpha[Math.floor(Math.random() * alpha.length)];
+		   var g = alpha[Math.floor(Math.random() * alpha.length)];
+		  }
+		var code = a + ' ' + b + ' ' + ' ' + c + ' ' + d + ' ' + e + ' '+ f + ' ' + g;
+		document.getElementById("mainCaptcha").value = code;
+		return code;
+	  }
+	  function Captcha1(code) 
+	  {
+			document.getElementById("id_div").innerHTML=code;
+	  }
+	  function ValidCaptcha1(id_div, value_2)
+	  {
+			 var string1 = removeSpaces(document.getElementById("id_div").innerHTML);
+			 var string2 = removeSpaces(document.getElementById("value_2").value);
+			 if (string1 == string2)
+			 {
+		     	return true;
+			 }
+			 else
+			 {        
+				return false;
+			 } 
+	  }
+	  function ValidCaptcha(code){
+		  var string1 = removeSpaces(document.getElementById('mainCaptcha').value);
+		  var string2 = removeSpaces(document.getElementById('txtInput').value);
+		  if (string1 == string2){
+			return true;
+		  }
+		  else{        
+			return false;
+		  }
+	  }
+	  function removeSpaces(string){
+		return string.split(' ').join('');
+	  }
+ </script>
+ 
+
+<!-- TemplateBeginEditable name="EditRegion1" -->EditRegion1<!-- TemplateEndEditable -->
+<div id="goTop">
+<a href="#">TOP</a>
+<!--<img src="../images/top.png" width="60">-->
+</div>
+<!-- Đăng nhập -->
+<div class="modal fade bs-example-modal-lg" id="myModal_dnhap" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">LOGIN</h4>
+      </div>
+     
+      <div class="modal-body text-center"> 
+            <p class="slogan">Welcome to Best HR Solution !</p>
+            <label style="margin-right:25px;"><input type="radio" name="0" checked> Candidate</label>
+            <label style="margin-right:25px;"><input type="radio" name="0"> Employer</label>
+            <label><input type="radio" name="0"> @mui.mui.headhunting_service</label>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left">
+         			   <form role="form">
+                        <div  class="form-group">   
+                        	 <div class="col-lg-2"><label>Email</label></div>
+                             <div class="col-lg-10">                  
+                             	<input type="text" class="form-control" id="hoten" placeholder=" "/>
+                             </div>
+                       </div>
+                       <div class="form-group">
+                       		<div class="col-lg-2"><label>Password</label></div>
+                            <div class="col-lg-10">                                          
+                            	<input type="password" class="form-control" id="email" placeholder=" "/>
+                            </div>
+                       </div>
+                       <div class="form-group text-center">
+                       		<!--<button type="submit" class="btn-default btn bg-orange btn_gui"><i class="fa fa-sign-in"></i> Login</button>-->
+                            <a href="../Admin_login.html" class="btn-default btn bg-orange btn_gui"><i class="fa fa-sign-in"></i> Login Candidate</a>
+                            <a href="../Admin_employers.html" class="btn-default btn bg-orange btn_gui"><i class="fa fa-sign-in"></i> Login Employer</a>
+                            <a href="../Admin_headhunter.html" class="btn-default btn bg-orange btn_gui"><i class="fa fa-sign-in"></i>  @mui.mui.headhunting_service</a>
+                       </div>
+      			     </form>
+            </div>
+            <div class="clearfix"></div> 
+      </div>
+      <div class="modal-footer">
+        <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+        <p><a href="#">Fogot password ?</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Đăng ký -->
+<div class="modal fade bs-example-modal-lg" id="myModal_dky" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-lg">
+   	 <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">REGISTER</h4>
+          </div>
+         
+          <div class="modal-body text-center"> 
+                <p class="slogan">Welcome to  Best HR Solution !</p>
+              
+                <ul class="nav nav-tabs" role="tablist">
+                  <li class="active"><a href="#candidate" role="tab" data-toggle="tab">Candidate</a></li>
+                  <li><a href="#employer" role="tab" data-toggle="tab">Employer</a></li>
+                </ul>
+              
+                <div class="tab-content">
+                  <div class="tab-pane active" id="candidate">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left">
+                            <form role="form">
+                            <div  class="form-group">   
+                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label>Email</label></div>
+                                 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">                  
+                                    <input type="text" class="form-control" id=""/>
+                                 </div>
+                           </div>
+                           <div class="form-group">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label>Password</label></div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">                                          
+                                    <input type="password" class="form-control" id=""/>
+                                </div>
+                           </div>
+                            <div class="form-group">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label>Confirm password</label></div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">                                          
+                                    <input type="password" class="form-control" id=""/>
+                                </div>
+                           </div> 
+               
+                            <div class="form-group">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label>Phone number</label></div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">                                          
+                                    <input type="text" class="form-control" id=""/>
+                                </div>
+                           </div>
+                           <div class="form-group">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 "><label>Gender</label></div>
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">                                          
+                                    <select class="form-control">
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 province"><label>Province</label></div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">                                          
+                                    <select class="form-control">
+                                        <option>TP.HCM</option>
+                                        <option>Long An</option>
+                                        <option>Hà Nội</option>
+                                        <option>Cần Thơ</option>
+                                    </select>
+                                </div>
+                               
+                           </div>
+                            <div class="form-group">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label>Address</label></div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">                                          
+                                    <input type="text" class="form-control" id=""/>
+                                </div>
+                           </div>
+                           <div class="form-group text-center">
+                                <button type="submit" class="btn-default btn btn-danger btn_gui"><i class="fa fa-registered"></i> Register</button>
+                           </div>
+             		    </form>
+               			</div> 
+                        <div class="clearfix"></div>
+                  </div>
+                  <div class="tab-pane" id="employer">
+                       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-left">
+                            <form role="form">
+                            <div  class="form-group">   
+                                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label>Email</label></div>
+                                 <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">                  
+                                    <input type="text" class="form-control" id=""/>
+                                 </div>
+                           </div>
+                           <div class="form-group">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label>Password</label></div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">                                          
+                                    <input type="password" class="form-control" id=""/>
+                                </div>
+                           </div>
+                            <div class="form-group">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label>Confirm password</label></div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">                                          
+                                    <input type="password" class="form-control" id=""/>
+                                </div>
+                           </div> 
+
+                            <div class="form-group">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label>Company</label></div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">                                          
+                                    <input type="text" class="form-control" id=""/>
+                                </div>
+                           </div>
+                            <div class="form-group">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label>Phone number</label></div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">                                          
+                                    <input type="text" class="form-control" id=""/>
+                                </div>
+                           </div>
+                           
+                           <div class="form-group">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 "><label>About company </label></div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">                                          
+                                   <textarea class="form-control"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">    
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label>Website</label></div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">                                          
+                                    <input type="text" class="form-control" id=""/>
+                                </div>
+                           </div>
+                           
+                            <div class="form-group">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label>Address</label></div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">                                          
+                                    <input type="text" class="form-control" id=""/>
+                                </div>
+                           </div>
+                           
+                            <div class="form-group">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 "><label>Contact person </label></div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">                                          
+                                   <textarea class="form-control"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 "><label>Service </label></div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">                                          
+                                   <label class="radio-inline">
+                                      <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked> @mui.mui.headhunting_service  
+                                    </label>
+                                    <label class="radio-inline">
+                                      <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> @mui.mui.post_job_find_talents
+                                    </label>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"><label>Code</label></div>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">                                          
+                                   <input type="text" readonly id="mainCaptcha" class="form_captchar" style="background-image:url(images/nensoc.jpg); color:#434343; font-size:16px; font-weight:bold; padding:5px; text-align:center;"/><input type="text" id="txtInput" class="form_captchar"/>
+                                </div>
+                           </div>
+                           <div class="form-group text-center">
+                                <button type="submit" class="btn-default btn btn-danger btn_gui"><i class="fa fa-registered"></i> Register</button>
+                           </div>
+             		    </form>
+                </div>
+                      <div class="clearfix"></div>
+                  </div>
+                
+                </div>  
+              <div class="clearfix"></div>
+          </div> 
+      
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+      </div>
+    </div>
+</div>
+
+<div class="line_footer"></div>
+<div class="footer text-center">
+	<div class="container">
+        <h1>Copyright <b>Best HR Solutions</b> <i class="fa fa-copyright" aria-hidden="true"></i> 2016</h1> 
+        <h1><b>Head office :</b> 26th Floor, Petroland Tower, 12 Tan Trao Street, District 7, Ho Chi Minh, Vietnam</h1> 
+        <h1><b>Tel:</b> +0854165153 - <b>Mail: </b> info.besthrsolution@gmail.com</h1>
+        <p><a href="#"><i class="fa fa-facebook-f"></i></a> <a href="#"><i class="fa fa-linkedin"></i></a></p>
+        <hr>
+        <div class="col-lg-12">
+         	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-left">
+         	   <p>Design by Vuon Dao 2016</p>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 views">
+               <p> 
+               	   <b>Online</b>: <span style="padding:10px;"> 02  </span>
+                   <b>Views</b>: <span style="padding:10px;"> 15.5230</span>
+               </p>
+            </div>
+      </div>
+    </div>
+</div>
+
+</body>
+<footer>
+</footer>
+</html>
+
+
+
+

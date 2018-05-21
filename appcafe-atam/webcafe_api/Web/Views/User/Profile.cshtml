@@ -1,0 +1,187 @@
+﻿@using Web.Models
+@model VD.Data.Entity.User
+
+@{
+    ViewBag.Title = "Trang thông tin tài khoản";
+    Layout = "~/Views/Shared/_layout.cshtml";
+    VIEWSETTING __viewsetting = ViewBag.__viewsetting;
+    bool islog = __viewsetting.__login != null;
+    bool isvip = islog && __viewsetting.__login.IsVip1 == true;
+}
+
+<link href="~/Content/css/profile.css?v=2" rel="stylesheet" />
+
+<div id="user-profile-2" class="user-profile vcontainer">
+    <div class="tabbable">
+        <ul class="nav nav-tabs padding-18">
+           
+             <li class="active">
+                <a href="@Url.Action("Profile","User")">
+                    <i class="green ace-icon fa fa-user bigger-120"></i>
+                    Tiểu sử
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("DonHang","User")">
+                    <i class="blue fa fa-folder bigger-120"></i>
+                    Đơn hàng
+                </a>
+            </li>
+            
+            <li>
+                <a href="@Url.Action("LichSuGiaoDich","User")">
+                    <i class="orange ace-icon fa fa-clock-o bigger-120"></i>
+                    Lịch sử giao dịch
+                </a>
+            </li>
+
+            <li>
+                <a href="@Url.Action("LichSuNapThe","User")">
+                    <i class="blue ace-icon fa fa-users bigger-120"></i>
+                    Lịch sử nạp thẻ
+                </a>
+            </li>
+
+        </ul>
+
+        <div class="tab-content no-border padding-24">
+            <div id="home" class="tab-pane in active">
+                <div class="row">
+
+
+                    <div class="col-xs-12 col-sm-6">
+                        <h4 class="blue  text-center">
+                            <span class="middle">@Model.Fullname</span>
+
+                            <span class="label label-purple arrowed-in-right">
+                                <i class="ace-icon fa fa-circle smaller-80 align-middle"></i>
+                                online
+                            </span>
+                        </h4>
+
+                        <div class="profile-user-info">
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> Tên tài khoản </div>
+
+                                <div class="profile-info-value">
+                                    <span>@Model.Username</span>
+                                </div>
+                            </div>
+
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> Vị trí/địa chỉ </div>
+
+                                <div class="profile-info-value">
+                                    <i class="fa fa-map-marker light-orange bigger-110"></i>
+                               
+                                    <span>@Model.Address</span>
+                                </div>
+                            </div>
+
+                     
+
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> Loại thành viên </div>
+
+                                <div class="profile-info-value">
+                                        <span>THƯỜNG</span>
+                                </div>
+                            </div>
+
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> Ngày đăng ký </div>
+
+                                <div class="profile-info-value">
+                                    <i class="fa fa-calendar light-orange bigger-110"></i>
+                                    <span>@Model.CreatedDate.XuatDateTime()</span>
+                                </div>
+                            </div>
+
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> Lần cuối trực tuyến </div>
+
+                                <div class="profile-info-value">
+                                    <i class="fa fa-clock-o light-orange bigger-110"></i>
+                                    <span>@DateTime.Now.XuatDate()</span>
+                                </div>
+                            </div>
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> Mật khẩu </div>
+
+                                <div class="profile-info-value">
+                                    <a href="javascript:void(0);" onclick="clsUser.fnShowDoiMatKhau();"><i class="fa fa-key"></i> Đổi mật khẩu</a>
+                                </div>
+                            </div>
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> Thông tin cá nhân </div>
+                                <div class="profile-info-value">
+                                    <a href="javascript:void(0);" onclick="clsUser.fnShowCapNhatThongTin();"><i class="fa fa-info"></i> Cập nhật thông tin tài khoản</a>
+                                </div>
+                            </div>
+                            <div class="profile-info-row">
+                                <div class="profile-info-name">  </div>
+
+                                <div class="profile-info-value">
+                       
+                                    <a href="@Url.Action("Logout", "User")"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+                                </div>
+                            </div>
+                        
+                        </div>
+
+                        <div class="hr hr-8 dotted"></div>
+
+                        @*<div class="profile-user-info">
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name"> Website </div>
+
+                                    <div class="profile-info-value">
+                                        <a href="#" target="_blank">www.alexdoe.com</a>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name">
+                                        <i class="middle ace-icon fa fa-facebook-square bigger-150 blue"></i>
+                                    </div>
+
+                                    <div class="profile-info-value">
+                                        <a href="#">Find me on Facebook</a>
+                                    </div>
+                                </div>
+
+                                <div class="profile-info-row">
+                                    <div class="profile-info-name">
+                                        <i class="middle ace-icon fa fa-twitter-square bigger-150 light-blue"></i>
+                                    </div>
+
+                                    <div class="profile-info-value">
+                                        <a href="#">Follow me on Twitter</a>
+                                    </div>
+                                </div>
+                            </div>*@
+                    </div><!-- /.col -->
+
+                    <div class="col-xs-12 col-sm-6 center">
+
+                        @*<span class="profile-picture">
+                                <img class="editable img-responsive" alt=" Avatar" id="avatar2" src="~/Content/img/avatar6.png">
+                            </span>
+
+                            <div class="space space-4"></div>*@
+
+
+                        @*<a href="@Url.Action("Logout","User")" class="btn btn-sm btn-block btn-primary">
+                                <i class="ace-icon fa fa-sign-out bigger-110"></i>
+                                <span class="bigger-110">Đăng xuất</span>
+                            </a>*@
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+
+             
+            </div>
+
+        </div>
+    </div>
+</div>

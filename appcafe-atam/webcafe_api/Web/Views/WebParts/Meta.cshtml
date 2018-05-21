@@ -1,0 +1,29 @@
+﻿@using Web.Models
+@{
+    VIEWSETTING __vs = ViewBag.__viewsetting;
+}
+<!-- InstanceEndEditable -->
+<meta name="description" content="@__vs.__config.conf_description" />
+<meta name="keywords" content="@__vs.__config.conf_website" />
+<meta content="vietnamese" name="Language">
+<meta content="" name="abstract">
+<meta content="index, follow" name="robots">
+<meta content="C#" name="copyright">
+<!--<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Ubuntu:300,400" />-->
+<!-- for Facebook -->
+
+<meta property="og:title" content="@__vs.__config.conf_description" />
+<meta property="og:type" content="Website" />
+<meta property="og:image" content="@__vs.__config.website_logo" />
+<meta property="og:url" content="@Request.Url.ToString()" />
+<meta property="og:description" content="@__vs.__config.conf_description" />
+<meta name="DC.title" content="@__vs.__config.conf_website" />
+<meta name="geo.region" content="VN-SG" />
+<meta name="geo.placename" content="Ho Chi Minh City" />
+<meta name="geo.position" content="10.792154;106.689955" />
+<meta name="ICBM" content="10.792154, 106.689955" />
+<meta content="General" http-equiv="audience">
+<meta content="Document" name="resource-type">
+<meta content="Global" name="distribution">
+<meta content="1 day" name="revisit-after">
+<meta content="#" name="reply-to">

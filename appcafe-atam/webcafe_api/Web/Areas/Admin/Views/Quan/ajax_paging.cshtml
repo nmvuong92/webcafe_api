@@ -1,0 +1,126 @@
+﻿@model VD.Data.Paging.PG<VD.Data.Entity.MF.Quan>
+@{
+    int QuanDefaultId = ViewBag.QuanDefaultId ?? -1;
+}
+@if (Model.L.Any())
+{
+    foreach (var item in Model.L)
+    {
+        int total_quan = item.UserQuans.Count;
+        int total_cat = item.ProductCats.Count;
+        int total_product = item.ProductCats.Sum(s => s.Products.Count);
+        <tr>
+
+            <td>
+                <input type="checkbox" class="cb_item" value="@item.Id" />
+            </td>
+            <td>
+                <a class="btn btn-default btn-xs waves-effect" onclick="clsProduct.fnShowEdit(@item.Id,$(this))">
+                    <i class="fa fa-pencil"></i>
+                </a>
+            </td>
+            @*<td>@item.MaQuan</td>*@
+            <td>
+
+                <div class="vboximg">
+                    <a class="img-popup" href="@item.ImageThumbnail">
+                        <img style="width: 100%;" src="@item.ImageThumbnail" />
+                    </a>
+                    <strong>@item.TenQuan</strong>
+                </div>
+
+                @{
+                var qr_json = "{\"quan\":\"" + item.Id + "\"}";
+                var qr = Utils.getGoogleQRImageLink(200, 200, qr_json);
+                }
+
+                <div class="vboximg">
+                    <a class="img-popup" href="@qr">
+                        <img style="width: 100%;" src="@qr" />
+                    </a>
+                    <strong>@item.Id</strong>
+                </div>
+
+                @*<br />
+                    <button onclick="clsProduct.fnDatQuanChinh(@item.Id,$(this))" class="btn waves-effect @(item.Id == QuanDefaultId ? "btn-success" : " btn-default")">
+                        @if (item.Id == QuanDefaultId)
+                        {
+                            <i class="fa fa-check"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-circle-o"></i>
+                        }
+                        Quán chính
+                    </button>*@
+            </td>
+            <td>
+                @if (item.User != null)
+                {
+                    <a class="btn btn-default btn-xs waves-effect" onclick="clsProduct.fnShowEditUser(@item.UserId,$(this))">
+                        <i class="fa fa-pencil"></i>
+                        @item.User.Username
+                    </a>
+                }
+                else
+                {
+                    <span>-Chưa đặt-</span>
+                }
+            </td>
+            
+            <td>
+                <i class="fa fa-phone" aria-hidden="true"></i> @item.DienThoai
+                <br />
+                <i class="fa fa-map-marker" aria-hidden="true"></i> @item.DiaChi
+            </td>
+            <td>
+                @{
+                List<int> arr = new List<int>();
+                if (!string.IsNullOrWhiteSpace(item.BanArr))
+                {
+                    try
+                    {
+                        arr = item.BanArr.Split(',').Select(Int32.Parse).Distinct().ToList();
+                    }
+                    catch
+                    {
+                        throw new Exception("Lỗi, vui lòng kiểm tra giá trị nhập tất cả số bàn ngăn cách nhau bằng dấu phẩy!!!");
+                    }
+                }
+                foreach (var soban in arr)
+                {
+                    <button type="button" class="btn btn-default btn-circle-lg waves-effect waves-circle waves-float" style="margin-bottom: 5px;">
+                        @soban
+                    </button>
+                }
+                }
+            </td>
+
+            <td>
+                <span onclick="clsProduct.fnShowEdit(@item.Id,$(this))" class="label label-@(total_quan > 0 ? "success" : "default")">@total_quan</span> Nhân viên
+                <br />
+                <span class="label label-@(total_cat > 0 ? "success" : "default")">@total_cat</span> Danh mục sp
+                <br />
+                <span class="label label-@(total_product > 0 ? "success" : "default")">@total_product</span> Sản phẩm
+            </td>
+            @*<td>
+                    <div class="btn-group">
+                        <a class="btn btn-default waves-effect" title="Chỉnh sửa" onclick="clsProduct.fnShowEdit(@item.Id,$(this))"><i class="fa fa-pencil"></i></a>
+                        <a class="btn btn-default waves-effect" title="Xóa" onclick="clsProduct.fnDelete(@item.Id,$(this))"><i class="fa fa-remove"></i></a>
+                    </div>
+                </td>*@
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="100%" class="nodata">Empty</td>
+    </tr>
+}
+<tr class="trfooter">
+    <td colspan="100%">
+        @Html.Raw(Model.thongtinphantrang)
+    </td>
+</tr>
+

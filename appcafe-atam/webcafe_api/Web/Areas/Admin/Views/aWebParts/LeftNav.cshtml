@@ -1,0 +1,144 @@
+﻿@model VD.Data.Entity.User
+@{
+    string con = ViewContext.ParentActionViewContext.RouteData.Values["controller"].ToString().ToLower();
+    string ac = ViewContext.ParentActionViewContext.RouteData.Values["action"].ToString().ToLower();
+    var ocurid = ViewContext.ParentActionViewContext.RouteData.Values["id"];
+    VD.Data.SysConfigVM __config = ViewBag.__config;
+    var khac = (con == "article" && ac == "index")||(con=="config")||(con=="contact")||(con=="users");
+}
+
+<aside id="leftsidebar" class="sidebar">
+    <!-- User Info -->
+    <div class="user-info">
+        <div class="image">
+            <img src="@__config.website_logo" width="48" height="48" alt="User" />
+        </div>
+        <div class="info-container">
+            <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@Model.Fullname</div>
+            <div class="email">@Model.Role.Name</div>
+            <div class="btn-group user-helper-dropdown">
+                <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                <ul class="dropdown-menu pull-right">
+                    <li><a href="@Url.Action("Profile", "Auth",new{area=""})"><i class="material-icons">person</i> Tài khoản</a></li>
+                    <li><a href="@Url.Action("ChangePassword", "Auth",new{area=""})"><i class="material-icons">favorite</i> Đổi mật khẩu</a></li>
+                    <li role="seperator" class="divider"></li>
+                    <li><a href="@Url.Action("Logout","Auth",new{area=""})"><i class="material-icons">input</i> Đăng xuất</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- #User Info -->
+    <!-- Menu -->
+    <div class="menu">
+        <ul class="list">
+            <li class="header">QUẢN LÝ</li>
+            <li class="@(con == "home" && ac == "index" ? "active" : "")">
+                <a href="@Url.Action("Index","Home",new{Area="Admin"})">
+                    <i class="material-icons">home</i>
+                    <span>Tổng quan</span>
+                </a>
+            </li>
+         
+            <li class="@(con == "donhang" && ac == "index" ? "active" : "")">
+                <a href="@Url.Action("Index", "DonHang", new { Area = "Admin" })">
+                    <i class="material-icons">shopping_basket</i>
+                    <span>Đặt hàng</span>
+                </a>
+            </li>
+            @if (Model.RoleId != 3)
+            {
+                <li class="@(con == "baocao" && ac == "index" ? "active" : "")">
+                    <a href="@Url.Action("Index", "BaoCao", new { Area = "Admin" })">
+                        <i class="material-icons">timeline</i>
+                        <span>Báo cáo & thống kê</span>
+                    </a>
+                </li>
+            }
+            @if (Model.RoleId != 3)
+            { 
+                <li class="@(con == "quan"? "active" : "")">
+                    <a href="@Url.Action("Index", "Quan", new { Area = "Admin" })">
+                        <i class="material-icons">store</i>
+                        <span>Quán</span>
+                    </a>
+                </li>
+                if (Model.RoleId == 2)
+                {
+                    @*<li class="@(con == "bannew"? "active" : "")">
+                        <a href="@Url.Action("Index", "BanNew", new { Area = "Admin" })">
+                            <span>Bàn</span>
+                        </a>
+                    </li>*@
+                    <li class="@(con == "productcat" && ac == "index" ? "active" : "")">
+                        <a href="@Url.Action("Index", "ProductCat", new { Area = "Admin" })">
+                            <i class="material-icons">drag_indicator</i>
+                            <span>Danh mục sản phẩm</span>
+                        </a>
+                    </li>
+                    <li class="@(con == "product" && ac == "index" ? "active" : "")">
+                        <a href="@Url.Action("Index", "Product", new { Area = "Admin" })">
+                            <i class="material-icons">local_cafe</i>
+                            <span>Sản phẩm</span>
+                        </a>
+                    </li>
+                    @*<li class="@(con == "thucdon"? "active" : "")">
+                            <a href="@Url.Action("Index", "ThucDon", new { Area = "Admin" })">
+                                <span>Thực đơn</span>
+                            </a>
+                        </li>*@
+                    <li class="@(con == "nhanvien"? "active" : "")">
+                        <a href="@Url.Action("Index", "NhanVien", new { Area = "Admin" })">
+                            <i class="material-icons">supervised_user_circle</i>
+                            <span>Nhân viên quán</span>
+                        </a>
+                    </li>
+                }
+                
+         
+            }
+            @if (Model.RoleId == 1)
+            {
+                <li class="@(khac? "active" : "")">
+                    <a href="javascript:void(0);" class="menu-toggle toggled">
+                        <i class="material-icons">widgets</i>
+                        <span>*QUẢN TRỊ VIÊN*</span>
+                    </a>
+
+                    <ul class="ml-menu">
+                        @*<li class="@(con == "users" && ac == "index"? "active" : "")">
+                            <a href="@Url.Action("Index", "Users", new { Area = "Admin" })">Chủ quán</a>
+                        </li>*@
+                        @*<li class="@(con == "article" && ac == "index" && catid == "1" ? "active" : "")">
+                                <a href="@Url.Action("Index", "Article", new { Area = "Admin",catid=1 })">Giới thiệu</a>
+                            </li>
+                            <li class="@(con == "article" && ac == "index" && catid == "3" ? "active" : "")">
+                                <a href="@Url.Action("Index", "Article", new { Area = "Admin",catid=3 })">Chính sách, hướng dẫn</a>
+                            </li>*@
+                        <li class="@(con == "config" && ac == "index"? "active" : "")">
+                            <a href="@Url.Action("Index", "Config", new { Area = "Admin" })">Cấu hình</a>
+                        </li>
+
+                        @*<li class="@(con == "contact" && ac == "index"? "active" : "")">
+                                <a href="@Url.Action("Index", "Contact", new { Area = "Admin" })">Liên hệ</a>
+                            </li>*@
+                    </ul>
+                </li>
+            }
+        </ul>
+    </div>
+    <!-- #Menu -->
+    <!-- Footer -->
+    <div class="legal">
+        <div class="copyright">
+            &copy; 2018 - 2019 <a href="http://thietkevuondao.com" target="_blank">VƯỜN ĐÀO</a>.
+        </div>
+        <div class="version">
+            <b>Version: </b> 1.0.0
+        </div>
+        <div>
+            <b>Online</b>: <span style="padding:10px;" id="total_online"></span>
+            <p id="message"></p>
+        </div>
+    </div>
+    <!-- #Footer -->
+</aside>

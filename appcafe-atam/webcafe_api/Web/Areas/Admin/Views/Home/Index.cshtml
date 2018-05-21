@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Welcome";
+    ViewBag.Title2 = "Dashboard management";
+    Layout = "~/Views/Shared/_md.cshtml";
+
+}
+
+
+    @{Html.RenderAction("BoDem");}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Lượt truy cập</div>
+                <div class="panel-body">
+                    <div class="partialContents" data-url="@Url.Action("ThongKeLuongTruyCap","Home")">
+                        <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+

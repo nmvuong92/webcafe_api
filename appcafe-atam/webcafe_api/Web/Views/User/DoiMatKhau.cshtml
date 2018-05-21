@@ -1,0 +1,33 @@
+﻿@model Web.ViewModels.BQC.DoiMatKhauVM
+@{
+    ViewBag.Title = "Đổi mật khẩu";
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+
+@using (Ajax.BeginForm("DoiMatKhauProccess", "User", new AjaxOptions()
+{
+    OnSuccess = "clsUser.fnDoiMatKhauSuccess"
+},new{@autocomplete="off"}))
+{
+    <div class="modal-body">
+        <div style="color:red;">@Html.ValidationSummary(false)</div>
+        <div class="form-group">
+            @Html.PasswordFor(m => m.MatKhauHienTai, new { @class = "form-control", @placeholder = "Mật khẩu hiện tại",@autocomplete="off" })
+        </div>
+
+        <div class="form-group">
+            @Html.PasswordFor(m => m.MatKhauMoi, new { @class = "form-control", @placeholder = "Mật khẩu mới", @autocomplete = "off" })
+
+        </div>
+        <div class="form-group">
+            @Html.PasswordFor(m => m.XacNhanMatKhauMoi, new { @class = "form-control", @placeholder = "Xác nhận mật khẩu  mới", @autocomplete = "off" })
+        </div>
+    </div>
+    <div class="modal-footer">
+        <input type="submit" name="login-submit" id="login-submit" class="form-control btn btn-primary" value="Đổi mật khẩu">
+    </div>
+}

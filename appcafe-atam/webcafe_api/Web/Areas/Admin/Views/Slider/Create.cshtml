@@ -1,0 +1,31 @@
+﻿@model Web.Areas.Admin.ViewModels.SliderCrud
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_md.cshtml";
+}
+
+@using (Html.BeginForm("Create", "Slider", FormMethod.Post, new { data_confirm = "Are you sure?" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="show_err">@Html.ValidationSummary()</div>
+
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Url)
+        @Html.TextBoxFor(m => m.Url, new { @class = "form-control" })
+    </div>
+            <!--image-->
+    <div class="form-group group-img-ck">
+        @Html.LabelFor(m => m.Image)
+        @Html.TextBoxFor(model => model.Image, new { @class = "form-control txt-anh img-ck", @placeholder = "Url" })
+        @Html.ValidationMessageFor(m => m.Image)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Order)
+        @Html.TextBoxFor(m => m.Order, new { @class = "form-control int_num", @placeholder = "image", @style = "width:100px;" })
+        @Html.ValidationMessageFor(m => m.Order)
+    </div>
+
+    <button type="submit" class="btn btn-primary">@mui.mui.save</button>
+    <a href="@Url.Action("Index")" class="btn btn-default">@mui.mui.cancel</a>
+}

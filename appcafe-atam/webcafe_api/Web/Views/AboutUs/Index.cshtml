@@ -1,0 +1,125 @@
+﻿@using PagedList.Mvc
+@model Web.ViewModels.MF.AboutUsIndexView
+@{
+    ViewBag.Title = mui.mui.about_us;
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+  <!-- === BEGIN CONTENT === -->
+<div id="content">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <!-- Main Column -->
+            <div class="col-md-8">
+                <div class="blog-post">
+                    <div class="blog-item-header">
+                        <a href="#">
+                            @Model.Chinh.Title
+                        </a>
+
+                    </div>
+
+                    <div class="blog-item">
+                        <div class="clearfix"></div>
+                        <div class="blog-post-body row margin-top-15">
+                           @Html.Raw(Model.Chinh.Content)
+                        </div>
+                        <div class=" padding-top-20">
+                            <div class="share-fotter product clearfix">
+                                <span>CHIA SẺ</span><span class="border-share"> | </span> <i class="fa fa-2x fa-facebook padding-horiz-20"></i><i class="fa fa-2x  fa-twitter padding-horiz-20"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- End Blog Post -->
+            </div>
+            <!-- End Main Column -->
+            <!-- Side Column -->
+            <div class="col-md-4">
+
+                <!-- Recent Posts -->
+                <div class="recent-posts">
+                    <h3>Bài viết liên quan</h3>
+                    <ul class="posts-list margin-top-10">
+                        
+                        @foreach (var item in Model.LienQuan)
+                        {
+                            string _url = Url.Action("Index", "AboutUs", new { id = item.Id, seo_title = item.SEOTitle });
+                            <li>
+                                <div class="recent-post">
+                                    <a href="@_url">
+                                        <img class="pull-left" src="@item.ImageThumbnail" alt="thumb1" style="width: 100px">
+                                    </a>
+                                    <a href="@_url" class="posts-list-title">@item.Title</a>
+                                    <br>
+                                    <span class="recent-post-date">
+                                        @item.CreatedDate.XuatDate()
+                                    </span>
+                                </div>
+                                <div class="clearfix"></div>
+                            </li>
+                        }
+                      
+                    </ul>
+                </div>
+                <!-- End Recent Posts -->
+            </div>
+            <!-- End Side Column -->
+        </div>
+    </div>
+</div>
+
+
+
+@*<div id="gioithieu" class="section-content">
+    <div class="container">
+      
+        @Html.myBreadCrumbs(null, mui.mui.about_us)
+        <!-- ./breadcrumb -->
+        <div class="detail">
+            <div class="page-heading">
+                <span class="page-heading-title">@Model.Chinh.Title</span>
+            </div>
+            <p class="child">@Model.Chinh.CreatedDate.XuatDate()</p>
+            <hr>
+            <div class="para">
+                @Html.Raw(Model.Chinh.Content)
+            </div>
+            <div class="social">
+                <img src="images/mangxahoi.png" alt="">
+            </div>
+        </div>
+    </div>
+    <!-- /.col-md-6 -->
+    <div class="title-section text-center">
+        <h2>Bài viết liên quan</h2>
+        <span></span>
+    </div>
+    <div id="relate" class="container">
+        @foreach (var item in Model.LienQuan)
+        {
+            string _url = Url.Action("Index","AboutUs",new{id=item.Id,seo_title=item.SEOTitle});
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="media">
+                    <div class=" pull-left"><a href="@_url"> <img src="@item.ImageThumbnail" class="img-responsive img_news" alt="Image"></a></div>
+                    <div class="  media-body">
+                        <h3 class="heading"><a href="@_url">@item.Title</a></h3>
+                        <p class="sort">
+                            Để máy giặt hoạt động tốt, bạn cần phải bảo quản theo đúng hướng dẫn của...
+                            <a href="@_url">Xem thêm <i class="fa fa-angle-double-right"></i></a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <hr />
+    <div class="container text-center">
+        @if (Model.LienQuan.PageCount > 1)
+        {
+            @Html.PagedListPager(Model.LienQuan, page => Url.Action("Index", new { page = page, id = Model.Id }))
+        }
+    </div>
+
+</div>*@

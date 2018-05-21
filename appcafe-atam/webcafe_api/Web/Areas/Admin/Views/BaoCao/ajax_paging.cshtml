@@ -1,0 +1,84 @@
+﻿@model VD.Data.Paging.PG<VD.Data.Entity.MF.DonHang>
+
+@if (Model.L.Any())
+{
+
+    foreach (var item in Model.L)
+    {
+
+        <tr>
+
+          
+            <td>
+                @item.Id
+            </td>
+            <td>
+                @if (item.Ban != null)
+                {
+                    <span>@item.Ban</span>
+                }
+                else
+                {
+                    <span>-</span>
+                }
+               
+            </td>
+            <td>
+                <ul class="list-group">
+                    @foreach (var mon in item.CTDonHangs)
+                    {
+                        <li class="list-group-item">@mon.SanPham.ProductName<span class="badge bg-pink">@mon.SoLuong</span></li>
+                    }
+                </ul>
+            </td>
+            <td>@item.TongTienHang.ToMoneyStr()</td>
+            <td>
+                @if (item.User != null)
+                {
+                    <label class="label label-info">
+                        @item.User.Fullname
+                    </label>
+                }
+                else
+                {
+                    <label class="label label-default">-</label>
+                }
+            </td>
+            <td>
+                <label class="label label-info">
+                    @item.Quan.TenQuan
+                </label>
+            </td>
+            <td>
+                <i>@item.CreatedDate.TimeAgo()</i>
+                <br/>
+                <b>@item.CreatedDate.XuatDate()</b>
+            </td>
+            @*<td>
+
+                <div class="btn-group">
+                    <a class="btn btn-default waves-effect" onclick="clsProduct.print(@item.Id)" title="IN"><i class="fa fa-print"></i></a>
+                </div>
+
+            </td>*@
+           
+        </tr>
+    }
+    <tr>
+        <td colspan="100%">
+            <div class="text-center" style="font-weight: bold;">Tổng cộng: <span class="red">@Model.TongTien.ToMoneyStr()</span></div>
+        </td>
+    </tr>
+}
+else
+{
+    <tr>
+        <td colspan="100%" class="nodata">Empty</td>
+    </tr>
+}
+<tr class="trfooter">
+    <td colspan="100%">
+        @Html.Raw(Model.thongtinphantrang)
+    </td>
+</tr>
+

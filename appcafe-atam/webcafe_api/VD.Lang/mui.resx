@@ -1,0 +1,976 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>About us</value>
+  </data>
+  <data name="about_us" xml:space="preserve">
+    <value>About us</value>
+  </data>
+  <data name="account_managemant" xml:space="preserve">
+    <value>Account Management</value>
+  </data>
+  <data name="active_job" xml:space="preserve">
+    <value>Active job</value>
+  </data>
+  <data name="Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="any" xml:space="preserve">
+    <value>Any</value>
+  </data>
+  <data name="application_management" xml:space="preserve">
+    <value>Application management</value>
+  </data>
+  <data name="apply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="attach_cv" xml:space="preserve">
+    <value>Acttach CV file</value>
+  </data>
+  <data name="back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="birthday" xml:space="preserve">
+    <value>Birthday</value>
+  </data>
+  <data name="btn_apply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="btn_register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="btn_save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="btn_search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="btn_send" xml:space="preserve">
+    <value>Send</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="candidate" xml:space="preserve">
+    <value>Candidate</value>
+  </data>
+  <data name="candidates" xml:space="preserve">
+    <value>Candidates</value>
+  </data>
+  <data name="change_password" xml:space="preserve">
+    <value>Change Password</value>
+  </data>
+  <data name="change_picture" xml:space="preserve">
+    <value>Change picture</value>
+  </data>
+  <data name="Chef" xml:space="preserve">
+    <value>Chef</value>
+  </data>
+  <data name="citi_select" xml:space="preserve">
+    <value>--Location--</value>
+  </data>
+  <data name="click_here_change_image" xml:space="preserve">
+    <value>Click here to change profile image</value>
+  </data>
+  <data name="clients" xml:space="preserve">
+    <value>Clients</value>
+  </data>
+  <data name="Comments" xml:space="preserve">
+    <value>Comments</value>
+  </data>
+  <data name="company_about" xml:space="preserve">
+    <value>About company</value>
+  </data>
+  <data name="company_email" xml:space="preserve">
+    <value>Company email</value>
+  </data>
+  <data name="company_location" xml:space="preserve">
+    <value>Company location</value>
+  </data>
+  <data name="company_name" xml:space="preserve">
+    <value>Company name</value>
+  </data>
+  <data name="company_phone" xml:space="preserve">
+    <value>Company phone</value>
+  </data>
+  <data name="company_unpaid" xml:space="preserve">
+    <value>This account has not activated because of unpaid or end date! Please contact the customer service department for assistance with this problem. Thank you!</value>
+  </data>
+  <data name="confirm_delete" xml:space="preserve">
+    <value>Are you sure to delete this item ?</value>
+  </data>
+  <data name="consultant" xml:space="preserve">
+    <value>Consultant</value>
+  </data>
+  <data name="contact" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="contact_address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="contact_captcha" xml:space="preserve">
+    <value>Captcha code</value>
+  </data>
+  <data name="contact_company_name" xml:space="preserve">
+    <value>Company name</value>
+  </data>
+  <data name="contact_email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="contact_inquiry" xml:space="preserve">
+    <value>Inquiry</value>
+  </data>
+  <data name="contact_inquiry_note" xml:space="preserve">
+    <value>Inquiries/ Comments</value>
+  </data>
+  <data name="contact_name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="contact_person" xml:space="preserve">
+    <value>Contact Person</value>
+  </data>
+  <data name="contact_phone" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="contact_subject" xml:space="preserve">
+    <value>Topic</value>
+  </data>
+  <data name="contact_subject_note" xml:space="preserve">
+    <value>Topic/subject</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="create_new" xml:space="preserve">
+    <value>Create new</value>
+  </data>
+  <data name="cv_applied" xml:space="preserve">
+    <value>CV applied</value>
+  </data>
+  <data name="cv_applied_view_free" xml:space="preserve">
+    <value>Employers are allowed to watch for free</value>
+  </data>
+  <data name="cv_managemant" xml:space="preserve">
+    <value>CV Management</value>
+  </data>
+  <data name="cv_saved_management" xml:space="preserve">
+    <value>CV Saved</value>
+  </data>
+  <data name="cv_viewed" xml:space="preserve">
+    <value>CV viewed</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="degree" xml:space="preserve">
+    <value>Degrees</value>
+  </data>
+  <data name="degree_select" xml:space="preserve">
+    <value>--Degrees--</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Duration" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="edit_job" xml:space="preserve">
+    <value>Edit Job</value>
+  </data>
+  <data name="edit_profile" xml:space="preserve">
+    <value>Edit profile</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="employee" xml:space="preserve">
+    <value>Employer</value>
+  </data>
+  <data name="employees" xml:space="preserve">
+    <value>Employers</value>
+  </data>
+  <data name="employer_wallet" xml:space="preserve">
+    <value>Employer wallet</value>
+  </data>
+  <data name="empty_record" xml:space="preserve">
+    <value>0 item</value>
+  </data>
+  <data name="End" xml:space="preserve">
+    <value>End</value>
+  </data>
+  <data name="end_date" xml:space="preserve">
+    <value>End date</value>
+  </data>
+  <data name="fee_description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="fee_detail_discount" xml:space="preserve">
+    <value>Discount</value>
+  </data>
+  <data name="fee_detail_pay" xml:space="preserve">
+    <value>Pay (VND)</value>
+  </data>
+  <data name="fee_detail_price" xml:space="preserve">
+    <value>Price (VND)</value>
+  </data>
+  <data name="fee_detail_sale" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="fee_detail_saving" xml:space="preserve">
+    <value>Saving (VND)</value>
+  </data>
+  <data name="fee_detail_score" xml:space="preserve">
+    <value>Score</value>
+  </data>
+  <data name="fee_gate" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="fee_label" xml:space="preserve">
+    <value>Fee label</value>
+  </data>
+  <data name="fee_list" xml:space="preserve">
+    <value>Fee List</value>
+  </data>
+  <data name="fee_min_score" xml:space="preserve">
+    <value>MIN SCORE</value>
+  </data>
+  <data name="fee_price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="fee_score_filter_profile" xml:space="preserve">
+    <value>Filter Profile/1 unit</value>
+  </data>
+  <data name="fee_score_label_hot" xml:space="preserve">
+    <value>Hot</value>
+  </data>
+  <data name="fee_score_label_new" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="fee_score_label_top" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="fee_score_label_urgent" xml:space="preserve">
+    <value>Urgent</value>
+  </data>
+  <data name="fee_score_post_recruitment" xml:space="preserve">
+    <value>Post Job/Recruitment/1 unit</value>
+  </data>
+  <data name="fee_service" xml:space="preserve">
+    <value>Fee service</value>
+  </data>
+  <data name="First_Name" xml:space="preserve">
+    <value>First Name</value>
+  </data>
+  <data name="forgot_password" xml:space="preserve">
+    <value>Forgot password</value>
+  </data>
+  <data name="for_candidates" xml:space="preserve">
+    <value>For candidates</value>
+  </data>
+  <data name="for_employees" xml:space="preserve">
+    <value>For employers</value>
+  </data>
+  <data name="from" xml:space="preserve">
+    <value>from</value>
+  </data>
+  <data name="full_name" xml:space="preserve">
+    <value>Full Name</value>
+  </data>
+  <data name="gender" xml:space="preserve">
+    <value>Gender</value>
+  </data>
+  <data name="gender_select" xml:space="preserve">
+    <value>-- Gender --</value>
+  </data>
+  <data name="gridInfo" xml:space="preserve">
+    <value>of {0} items</value>
+  </data>
+  <data name="headhunting_service" xml:space="preserve">
+    <value>Use headhunting service</value>
+  </data>
+  <data name="headhunting_service_enable" xml:space="preserve">
+    <value>Enable use headhunting service</value>
+  </data>
+  <data name="headhunting_service_fee" xml:space="preserve">
+    <value>Headhunting Service Fee</value>
+  </data>
+  <data name="hello" xml:space="preserve">
+    <value>Hello</value>
+  </data>
+  <data name="hi" xml:space="preserve">
+    <value>Hi</value>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="hour" xml:space="preserve">
+    <value>hour</value>
+  </data>
+  <data name="hours" xml:space="preserve">
+    <value>hours</value>
+  </data>
+  <data name="image" xml:space="preserve">
+    <value>image</value>
+  </data>
+  <data name="industry" xml:space="preserve">
+    <value>Industry</value>
+  </data>
+  <data name="industry_focus" xml:space="preserve">
+    <value>Industry focus</value>
+  </data>
+  <data name="industry_select" xml:space="preserve">
+    <value>--Industry--</value>
+  </data>
+  <data name="is_cooking" xml:space="preserve">
+    <value>is cooking</value>
+  </data>
+  <data name="is_korean_candidates" xml:space="preserve">
+    <value>Are Korean Candidates</value>
+  </data>
+  <data name="is_korean_employer" xml:space="preserve">
+    <value>Are you KOREAN EMPLOYER? Your CV will be more noticeable candidate</value>
+  </data>
+  <data name="job" xml:space="preserve">
+    <value>Job</value>
+  </data>
+  <data name="job_company_name" xml:space="preserve">
+    <value>Company name</value>
+  </data>
+  <data name="job_description" xml:space="preserve">
+    <value>Job description</value>
+  </data>
+  <data name="job_description_management" xml:space="preserve">
+    <value>Job description management</value>
+  </data>
+  <data name="job_has_saved" xml:space="preserve">
+    <value>You saved this job</value>
+  </data>
+  <data name="job_management" xml:space="preserve">
+    <value>Job Management</value>
+  </data>
+  <data name="job_overview" xml:space="preserve">
+    <value>Job Overview</value>
+  </data>
+  <data name="job_saved_only_candidate" xml:space="preserve">
+    <value>Save jobs only for candidates</value>
+  </data>
+  <data name="job_saved_success" xml:space="preserve">
+    <value>Save job successfull!</value>
+  </data>
+  <data name="korean_candidates" xml:space="preserve">
+    <value>Korean candidates</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Last_Name" xml:space="preserve">
+    <value>Last Name</value>
+  </data>
+  <data name="last_view" xml:space="preserve">
+    <value>Last Viewed</value>
+  </data>
+  <data name="level_select" xml:space="preserve">
+    <value>--Level--</value>
+  </data>
+  <data name="location" xml:space="preserve">
+    <value>Province</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="logout" xml:space="preserve">
+    <value>Sign out</value>
+  </data>
+  <data name="message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="min" xml:space="preserve">
+    <value>min</value>
+  </data>
+  <data name="more" xml:space="preserve">
+    <value>more</value>
+  </data>
+  <data name="my_profile" xml:space="preserve">
+    <value>My profile</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="navigate" xml:space="preserve">
+    <value>Navigate</value>
+  </data>
+  <data name="new_cv" xml:space="preserve">
+    <value>NEW CV</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="not_selected" xml:space="preserve">
+    <value>not selected</value>
+  </data>
+  <data name="order" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="our_clients" xml:space="preserve">
+    <value>OUR CLIENTS</value>
+  </data>
+  <data name="our_services" xml:space="preserve">
+    <value>Our services</value>
+  </data>
+  <data name="out_hot_jobs" xml:space="preserve">
+    <value>OUR HOT JOBS</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="password_confirm" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="password_new" xml:space="preserve">
+    <value>New password</value>
+  </data>
+  <data name="password_new_confirm" xml:space="preserve">
+    <value>Confirm new password</value>
+  </data>
+  <data name="password_old" xml:space="preserve">
+    <value>Current password</value>
+  </data>
+  <data name="phone_number" xml:space="preserve">
+    <value>Phone number</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>Picture</value>
+  </data>
+  <data name="pleaseSelect" xml:space="preserve">
+    <value>please select</value>
+  </data>
+  <data name="please_select" xml:space="preserve">
+    <value>please select</value>
+  </data>
+  <data name="posted_jobs" xml:space="preserve">
+    <value>Posted Jobs</value>
+  </data>
+  <data name="post_a_job" xml:space="preserve">
+    <value>Post a job</value>
+  </data>
+  <data name="post_job_and_find_talents_services_fee" xml:space="preserve">
+    <value>Post Jobs &amp; Find Talents Service Fee</value>
+  </data>
+  <data name="post_job_find_talents" xml:space="preserve">
+    <value>Post Jobs &amp; Find Talents</value>
+  </data>
+  <data name="province" xml:space="preserve">
+    <value>Province</value>
+  </data>
+  <data name="province_select" xml:space="preserve">
+    <value>-- Province --</value>
+  </data>
+  <data name="register" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="required" xml:space="preserve">
+    <value>field {0} is required</value>
+  </data>
+  <data name="salary_select" xml:space="preserve">
+    <value>--Salary range--</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="score_advertisement" xml:space="preserve">
+    <value>Score Advertisement</value>
+  </data>
+  <data name="score_filter_profile" xml:space="preserve">
+    <value>Score Filter Profile</value>
+  </data>
+  <data name="score_paid" xml:space="preserve">
+    <value>Score paid</value>
+  </data>
+  <data name="score_post_recruitment" xml:space="preserve">
+    <value>Score Post Job/Recruitment</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="search_job" xml:space="preserve">
+    <value>Search jobs</value>
+  </data>
+  <data name="search_resume" xml:space="preserve">
+    <value>Search resume</value>
+  </data>
+  <data name="select_thumbnail" xml:space="preserve">
+    <value>select thumbnail</value>
+  </data>
+  <data name="service_price_list" xml:space="preserve">
+    <value>Service price list</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="strlen" xml:space="preserve">
+    <value>{0} may not be longer than {1} characters</value>
+  </data>
+  <data name="submit_cv" xml:space="preserve">
+    <value>Submit CV</value>
+  </data>
+  <data name="submit_job_decription" xml:space="preserve">
+    <value>Submit job decription</value>
+  </data>
+  <data name="submit_your_cv" xml:space="preserve">
+    <value>Submit your CV</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="tips" xml:space="preserve">
+    <value>Tips</value>
+  </data>
+  <data name="tips_for_candidates" xml:space="preserve">
+    <value>Tips for candidates</value>
+  </data>
+  <data name="tips_for_emloyees" xml:space="preserve">
+    <value>Tips for employers</value>
+  </data>
+  <data name="title_Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="title_date_applied" xml:space="preserve">
+    <value>Date Applied</value>
+  </data>
+  <data name="title_date_saved" xml:space="preserve">
+    <value>Date saved</value>
+  </data>
+  <data name="title_Industry" xml:space="preserve">
+    <value>Industry</value>
+  </data>
+  <data name="title_Job" xml:space="preserve">
+    <value>Job title</value>
+  </data>
+  <data name="title_Level" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="title_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="title_Salary" xml:space="preserve">
+    <value>Salary</value>
+  </data>
+  <data name="title_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="title_Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="title_View" xml:space="preserve">
+    <value>Views</value>
+  </data>
+  <data name="title_Working_type" xml:space="preserve">
+    <value>Working type</value>
+  </data>
+  <data name="top_jobs" xml:space="preserve">
+    <value>Top jobs</value>
+  </data>
+  <data name="type_position" xml:space="preserve">
+    <value>Type postion</value>
+  </data>
+  <data name="update_your_account" xml:space="preserve">
+    <value>Update your account</value>
+  </data>
+  <data name="update_your_cv" xml:space="preserve">
+    <value>Update your CV</value>
+  </data>
+  <data name="upload_file" xml:space="preserve">
+    <value>upload file</value>
+  </data>
+  <data name="username" xml:space="preserve">
+    <value>ID</value>
+  </data>
+  <data name="view_more" xml:space="preserve">
+    <value>View more</value>
+  </data>
+  <data name="wallet_current" xml:space="preserve">
+    <value>Current wallet scores</value>
+  </data>
+  <data name="wallet_remaining_amount" xml:space="preserve">
+    <value>Wallet Remaining Amount</value>
+  </data>
+  <data name="website" xml:space="preserve">
+    <value>Website</value>
+  </data>
+  <data name="welcome" xml:space="preserve">
+    <value>WELCOME TO BEST HR SOLUTION</value>
+  </data>
+  <data name="work_location" xml:space="preserve">
+    <value>Work Location</value>
+  </data>
+  <data name="work_type_select" xml:space="preserve">
+    <value>--Work Type--</value>
+  </data>
+  <data name="year_experience" xml:space="preserve">
+    <value>Experience</value>
+  </data>
+  <data name="year_experience_select" xml:space="preserve">
+    <value>--Year Experience--</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="your_cv" xml:space="preserve">
+    <value>Your CV</value>
+  </data>
+  <data name="your_cv_select" xml:space="preserve">
+    <value>Select your CV to apply</value>
+  </data>
+  <data name="your_infomation" xml:space="preserve">
+    <value>YOUR INFORMATION</value>
+  </data>
+  <data name="attach_cv_note" xml:space="preserve">
+    <value>Note: With your CV applied, employers can view your CV that you have uploaded the latest!</value>
+  </data>
+  <data name="cadidate_cv" xml:space="preserve">
+    <value>CV OF CANDIDATE</value>
+  </data>
+  <data name="cadidate_information" xml:space="preserve">
+    <value>INFORMATION OF CANDIDATE</value>
+  </data>
+  <data name="create_cv_note" xml:space="preserve">
+    <value>Our clients are Multinational Companies, FDI Enterprises, Representative Offices, and local prestigious companies which locate in big cities of Vietnam such as: HCMC, Da Nang, Dong Nai, Vung Tau, Can Tho and Ha Noi.</value>
+  </data>
+  <data name="date_modified" xml:space="preserve">
+    <value>Date Modified</value>
+  </data>
+  <data name="date_post" xml:space="preserve">
+    <value>Date Posted</value>
+  </data>
+  <data name="btn_purchase_wallet" xml:space="preserve">
+    <value>Purchase wallet</value>
+  </data>
+  <data name="btn_purchase_wallet_note" xml:space="preserve">
+    <value>Or send request to purchase wallet</value>
+  </data>
+  <data name="package" xml:space="preserve">
+    <value>Package</value>
+  </data>
+  <data name="purchase_wallet_message" xml:space="preserve">
+    <value>Submit your purchase request successfully</value>
+  </data>
+  <data name="submit_a_vacancy" xml:space="preserve">
+    <value>SUBMIT A VACANCY</value>
+  </data>
+  <data name="job_status_unpaid" xml:space="preserve">
+    <value>This account has not activated because of unpaid or end date! Please contact the customer service department for assistance with this problem. Thank you!</value>
+  </data>
+  <data name="btn_upgrade_account" xml:space="preserve">
+    <value>Upgrade Account</value>
+  </data>
+  <data name="service" xml:space="preserve">
+    <value>Service</value>
+  </data>
+  <data name="pay_view_cv_error" xml:space="preserve">
+    <value>You do not have enough points to view the candidate profile</value>
+  </data>
+  <data name="pay_view_success" xml:space="preserve">
+    <value>Payment successfully!</value>
+  </data>
+  <data name="purchase_history" xml:space="preserve">
+    <value>Purchase Service History</value>
+  </data>
+  <data name="no_data" xml:space="preserve">
+    <value>No data</value>
+  </data>
+  <data name="score" xml:space="preserve">
+    <value>Point</value>
+  </data>
+  <data name="score_current" xml:space="preserve">
+    <value>Current</value>
+  </data>
+  <data name="score_total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="pay_to_view_agree" xml:space="preserve">
+    <value>Agree to pay and view resume</value>
+  </data>
+  <data name="pay_to_view_cancel" xml:space="preserve">
+    <value>Cancel &amp; back</value>
+  </data>
+  <data name="pay_to_view_cv" xml:space="preserve">
+    <value>Please pay points to see this resume</value>
+  </data>
+  <data name="pay_to_view_price" xml:space="preserve">
+    <value>Price scores</value>
+  </data>
+  <data name="pay_to_view_remain" xml:space="preserve">
+    <value>Remaining Amount</value>
+  </data>
+  <data name="pay_to_view_score" xml:space="preserve">
+    <value>Wallet Score</value>
+  </data>
+  <data name="no_account" xml:space="preserve">
+    <value>Do not have an account?</value>
+  </data>
+  <data name="register_now" xml:space="preserve">
+    <value>Register now</value>
+  </data>
+  <data name="captcha_fail" xml:space="preserve">
+    <value>Captcha code is invalid!</value>
+  </data>
+  <data name="contact_success" xml:space="preserve">
+    <value>Thanks for contact us!</value>
+  </data>
+  <data name="feedback" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="feedback_success" xml:space="preserve">
+    <value>Thanks for feedback us!</value>
+  </data>
+  <data name="job_benefit" xml:space="preserve">
+    <value>Benefit</value>
+  </data>
+  <data name="job_requirement" xml:space="preserve">
+    <value>Job requirements</value>
+  </data>
+  <data name="gender_all" xml:space="preserve">
+    <value>Not required</value>
+  </data>
+  <data name="gender_female" xml:space="preserve">
+    <value>Female</value>
+  </data>
+  <data name="gender_male" xml:space="preserve">
+    <value>Male</value>
+  </data>
+  <data name="person" xml:space="preserve">
+    <value>Number of recruits</value>
+  </data>
+  <data name="please_login_view_salary" xml:space="preserve">
+    <value>[Please login to view salary]</value>
+  </data>
+  <data name="job_other" xml:space="preserve">
+    <value>Jobs other</value>
+  </data>
+  <data name="degreeText" xml:space="preserve">
+    <value>Other degree</value>
+  </data>
+  <data name="educational" xml:space="preserve">
+    <value>Educational Background</value>
+  </data>
+  <data name="job_information" xml:space="preserve">
+    <value>Career goals</value>
+  </data>
+  <data name="work_experience" xml:space="preserve">
+    <value>Work Experience</value>
+  </data>
+  <data name="cv_data_attach" xml:space="preserve">
+    <value>Please enter full data or upload to your profile</value>
+  </data>
+  <data name="approce_ok" xml:space="preserve">
+    <value>&lt;label class="label label-success"&gt;Approved&lt;/label&gt;</value>
+  </data>
+  <data name="approce_wait" xml:space="preserve">
+    <value>&lt;label class="label label-warning"&gt;Pending&lt;/label&gt;</value>
+  </data>
+  <data name="title_approve" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="edit_your_cv_success" xml:space="preserve">
+    <value>Your CV was successfully updated !</value>
+  </data>
+  <data name="edit_your_cv_success_approve" xml:space="preserve">
+    <value>Your CV was successfully updated. Please wait for our approvement. </value>
+  </data>
+  <data name="submit_your_cv_success" xml:space="preserve">
+    <value>Your CV was successfully submitted!</value>
+  </data>
+  <data name="submit_your_cv_success_wait_approve" xml:space="preserve">
+    <value>Your CV was successfully submitted. Please wait for our approvement.</value>
+  </data>
+  <data name="pay_to_view_contact" xml:space="preserve">
+    <value>View contact</value>
+  </data>
+  <data name="industry_sub" xml:space="preserve">
+    <value>Sub-industry</value>
+  </data>
+  <data name="money_no_enough" xml:space="preserve">
+    <value>Money Not Enough</value>
+  </data>
+  <data name="host_a_dinner" xml:space="preserve">
+    <value>host a dinner</value>
+  </data>
+  <data name="Meals" xml:space="preserve">
+    <value>Meals</value>
+  </data>
+  <data name="range" xml:space="preserve">
+    <value>the field {0} must be between {1} and {2}</value>
+  </data>
+  <data name="search_for_a_dinner" xml:space="preserve">
+    <value>search for a dinner</value>
+  </data>
+  <data name="Stuff" xml:space="preserve">
+    <value>Stuff</value>
+  </data>
+  <data name="search_job_title" xml:space="preserve">
+    <value>Job title</value>
+  </data>
+  <data name="hot_jobs" xml:space="preserve">
+    <value>Hot Jobs</value>
+  </data>
+  <data name="new_jobs" xml:space="preserve">
+    <value>New jobs</value>
+  </data>
+  <data name="tick_here_to_search_korean_candidates" xml:space="preserve">
+    <value>Please click here if you want to find Korean candidates
+</value>
+  </data>
+  <data name="vip_jobs_1000plus" xml:space="preserve">
+    <value>Vip jobs $1000+</value>
+  <comment>Vip jobs $1000</comment></data>
+  <data name="login_employees_label" xml:space="preserve">
+    <value>Employers</value>
+  </data>
+  <data name="product" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="news" xml:space="preserve">
+    <value>News</value>
+  </data>
+  <data name="san_pham_chinh" xml:space="preserve">
+    <value>Main products</value>
+  <comment>sản phẩm chính</comment></data>
+  <data name="bai_viet_lien_quan" xml:space="preserve">
+    <value>Related posts</value>
+  </data>
+  <data name="thong_tin_chi_tiet_san_pham" xml:space="preserve">
+    <value>Product details</value>
+  </data>
+  <data name="san_pham_lien_quan" xml:space="preserve">
+    <value>Related products</value>
+  </data>
+</root>

@@ -1,0 +1,190 @@
+﻿@model VD.Data.Paging.PG<VD.Data.Entity.MF.DonHang>
+@{
+    IEnumerable<SelectListItem> ddlTrangThaiGiaoHang = ViewBag.ddlTrangThaiGiaoHang;
+    IEnumerable<SelectListItem> ddlTrangThaiThanhToan = ViewBag.ddlTrangThaiThanhToan;
+}
+@if (Model.L.Any())
+{
+
+    foreach (var item in Model.L)
+    {
+
+        <tr>
+
+            <td class="mobile_hid">
+                <input type="checkbox" class="cb_item" value="@item.Id" />
+                <div class="text-center">
+                    @if (item.DeviceType == 1)
+                    {
+                        <i title="Đặt hàng bằng web" class="fa fa-internet-explorer" aria-hidden="true"></i>
+                    }
+                    else if (item.DeviceType == 2)
+                    {
+                        <i title="Đặt hàng bằng ứng dụng di động @item.ModelNumber" class="fa fa-mobile" aria-hidden="true"></i>
+                    }
+                </div>
+            </td>
+            <td>
+                <div class="text-center">
+                    <a class="font-underline col-blue-grey font-bold" title="@item.ModelNumber - @item.UniqueID">@(item.Id)</a>
+                    <br />
+                    <div class="btn-group">
+                        <a class="btn btn-default waves-effect" onclick="clsProduct.fnShowEdit(@item.Id,@item.QuanId,false)" title="Sửa đơn hàng"><i class="fa fa-pencil"></i></a>
+                        <a class="btn btn-default waves-effect" onclick="clsProduct.print(@item.Id)" title="IN"><i class="fa fa-print"></i></a>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="text-center" style="border:1px #778899 solid; border-radius: 10;">
+                    <span class="font-32">@item.Ban</span>
+                    <br />
+                    <span class="label label-@(item.HinhThucMuaHangId==1?"default":item.HinhThucMuaHangId==2?"info":"danger")">@item.HinhThucMuaHang.Ten</span>
+                </div>
+            </td>
+            <td>
+                @foreach (var mon in item.CTDonHangs)
+                {
+                    <span>- @mon.SanPham.ProductName (@mon.SoLuong)</span><br />
+                }
+                @if (item.HinhThucMuaHangId == 3)
+                {
+                    <div style="border: 1px #E3E3E3 solid;border-radius: 5px;background-color: #FCFFC4;">
+                        <ul style="margin-left:-15px;">
+                            <li>Đ/C: @item.DiaChiGiaoHang</li>
+                            <li>Y/C: @item.YeuCauKhac</li>
+                            <li><i class="fa fa-mobile-phone"></i>: @item.SDT</li>
+                        </ul>
+                    </div>
+                }
+            </td>
+            <td>
+                <p class="font-bold col-red">@item.TongTienHang.ToMoneyStr()</p>
+                <br /><i title="Tiền khách đưa" class="fa fa-hand-o-right" aria-hidden="true"></i> @item.TienKhachDua.ToMoneyStr()
+                <br /><i title="Tiền thừa thối lại" class="fa fa-hand-o-left" aria-hidden="true"></i> @item.TienThuaThoiLai.ToMoneyStr()
+            </td>
+            <td>
+                @{
+                    string cssClass2 = "btn-default";
+                    if (item.TrangThaiGiaoHangId == 2)
+                    {
+                        cssClass2 = "btn-success";
+                    }
+                    else if (item.TrangThaiGiaoHangId == 3)
+                    {
+                        cssClass2 = "btn-danger";
+                    }
+                }
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn @cssClass2 waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @item.TrangThaiGiaoHang.Ten
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        @foreach (var ddlitem in ddlTrangThaiGiaoHang)
+                        {
+                            <li><a href="javascript:void(0);" onclick="clsProduct.fnThayDoiTrangThaiGiaoHang(@item.Id,@ddlitem.Value)" class=" waves-effect waves-block">@ddlitem.Text</a></li>
+                        }
+                    </ul>
+                </div>
+                <div class="btn-group" role="group">
+                    @{
+                        cssClass2 = "btn-default";
+                        if (item.TrangThaiThanhToanId == 2)
+                        {
+                            cssClass2 = "btn-success";
+                        }
+                        else if (item.TrangThaiThanhToanId == 3)
+                        {
+                            cssClass2 = "btn-danger";
+                        }
+                    }
+                    <button type="button" class="btn @cssClass2 waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @item.TrangThaiThanhToan.Ten
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        @foreach (var ddlitem in ddlTrangThaiThanhToan)
+                        {
+                            <li><a href="javascript:void(0);" onclick="clsProduct.fnThayDoiTrangThaiThanhToan(@item.Id,@ddlitem.Value)" class=" waves-effect waves-block">@ddlitem.Text</a></li>
+                        }
+                    </ul>
+                </div>
+            </td>
+
+            <td class="mobile_hid">
+                @if (item.User != null)
+                {
+                    <label class="label label-info">
+                        @item.User.Fullname
+                    </label>
+                }
+                else
+                {
+                    <label class="label label-default">Khách</label>
+                }
+                <br />
+                <label class="label label-info">
+                    @item.Quan.TenQuan
+                </label>
+            </td>
+            <td><small>@item.CreatedDate.TimeAgo()</small></td>
+            <td>
+
+                @if (item.TrangThaiThanhToanId == 2)
+                {
+                    <i class="fa fa-check"></i>
+                }
+                else
+                {
+                    <span class="badge" style="background-color: @(item.SoLanGoiTinhTien > 0 ? "red" : "gray")">@item.SoLanGoiTinhTien lần</span>
+                    if (item.SoLanGoiTinhTien > 0)
+                    {
+                        <br />
+                        <small>@item.CreatedDate.TimeAgo()</small>
+                    }
+                }
+            </td>
+            <td class="mobile_hid">
+                @{
+                    var slgopy = item.GopYs.Count;
+                    cssClass2 = "label-default";
+                    if (slgopy > 0)
+                    {
+                        cssClass2 = "label-success";
+                    }
+                    bool firstGop = true;
+                }
+                @if (slgopy == 1)
+                {
+                    var first_cmt = item.GopYs.First();
+                    <code>@first_cmt.CreatedDate.XuatDateTime()</code>
+                    <p>@first_cmt.NoiDungGopY</p>
+                }
+                else if (slgopy > 1)
+                {
+                    var first_cmt = item.GopYs.Last();
+                    <code>@first_cmt.CreatedDate.XuatDateTime()</code>
+                    <p>@first_cmt.NoiDungGopY</p>
+                    <a class="btn btn-default waves-effect" onclick="clsProduct.fnShowEdit(@item.Id,@item.QuanId,true)" title="Sửa đơn hàng"><span class="badge @cssClass2">Tất cả @item.GopYs.Count góp ý</span></a>
+                }
+            </td>
+        </tr>
+                    }
+                    <tr>
+                        <td colspan="100%">
+                            <div class="text-center" style="font-weight: bold;">Tổng cộng: <span class="red">@Model.TongTien.ToMoneyStr()</span></div>
+                        </td>
+                    </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="100%" class="nodata">Empty</td>
+                        </tr>
+                    }
+<tr class="trfooter">
+    <td colspan="100%">
+        @Html.Raw(Model.thongtinphantrang)
+    </td>
+</tr>
+

@@ -1,0 +1,219 @@
+﻿@using VD.Data.Temp
+@using Web.App_Code
+@model Web.Areas.Admin.ViewModels.MF.QuanCRUD
+
+@{
+    loginVM __auth = ViewBag.__auth;
+    var isAdmin = __auth.RoleId == 1;
+    ViewBag.Title = "Quán: "+Model.TenQuan;
+    ViewBag.Title2 = "EDIT";
+    Layout = "~/Views/Shared/_bootstrap_modal.cshtml";
+}
+<style>
+    .bootstrap-tagsinput,.bootstrap-tagsinput input{
+        background-color: yellow !important;
+    }
+</style>
+<div class="modal-body">
+    @using (Ajax.BeginForm("Edit", FormMethod.Post, new AjaxOptions { OnSuccess = "fnOnSuccess" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="show_err" style="color:red;">
+            @Html.ValidationSummary(false)
+        </div>
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-horizontal">
+            @*<div class="form-group">
+                @Html.RequiredLabelFor(model => model.MaQuan, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.MaQuan, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.MaQuan, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+            <div class="form-group">
+                @Html.RequiredLabelFor(model => model.TenQuan, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.TenQuan, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TenQuan, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.RequiredLabelFor(model => model.DiaChi, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.DiaChi, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.RequiredLabelFor(model => model.DienThoai, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.DienThoai, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DienThoai, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="card">
+                <div class="header bg-blue-grey">
+                    <h2>
+                        Hình ảnh (Không bắt buộc)<small>Tải ảnh lên...</small>
+                    </h2>
+                    <ul class="header-dropdown m-r--5">
+                        <li>
+                            <a href="javascript:void(0);">
+                                <i class="material-icons">mic</i>
+                            </a>
+                        </li>
+                        @*<li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Action</a></li>
+                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Another action</a></li>
+                            <li><a href="javascript:void(0);" class=" waves-effect waves-block">Something else here</a></li>
+                        </ul>
+                    </li>*@
+                    </ul>
+                </div>
+                <div class="body">
+                    @Html.TextBoxFor(model => model.ImageThumbnail, new { @class = "form-control", @style = "display: none;" })
+                    <div class="ajaxImg text-center">
+                        @if (!string.IsNullOrWhiteSpace(Model.ImageThumbnail))
+                        {
+                            <img  alt="User Pic" src="@Model.ImageThumbnail" id="profile-image1">
+                        }
+                        else
+                        {
+                            <img alt="User Pic" src="http://icons.iconarchive.com/icons/dryicons/aesthetica-2/128/image-up-icon.png" id="profile-image1" class="img-circle img-responsive">
+                        }
+                        <input id="profile-image-upload" class="hidden" type="file" data-val="#ImageThumbnail" />
+                        <div style="color:#999;">@mui.mui.click_here_change_image</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="header bg-blue-grey">
+                    <h2>
+                        Bàn<small>Danh sách số bàn của quán</small>
+                    </h2>
+                </div>
+                <div class="body">
+                    @Html.TextBoxFor(m => m.BanArr, new { @data_role = "tagsinput" })
+                </div>
+            </div>
+            <script>
+                $(function () {
+                    $('#BanArr').tagsinput();
+                });
+            </script>
+            <div class="card">
+                <div class="header bg-blue-grey">
+                    <h2>
+                        Nhân viên (Không bắt buộc) <small>Danh sách nhân viên của quán</small>
+                    </h2>
+                    <ul class="header-dropdown m-r--5">
+                        <li>
+                            <a href="javascript:void(0);">
+                                <i class="material-icons">mic</i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="body">
+                    @if (isAdmin)
+                    {
+                        <div class="alert alert-warning">
+                            <strong>Warning!</strong> Tài khoản quản trị không quản lý phần này
+                        </div>
+                    }
+                    else
+                    {
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width: 50px;">Chọn</th>
+                                    <th>Họ tên</th>
+                                    <th>SĐT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (!Model.DanhSachNhanVien.Any())
+                                {
+                                    <tr>
+                                        <td colspan="100%">
+                                            <p class="animated zoomIn text-center">Chưa có nhân viên nào, hãy <a href="@Url.Action("Index", "NhanVien", new { area = "Admin" })">tạo danh sách nhân viên</a></p>
+                                        </td>
+                                    </tr>
+                                }
+                                @foreach (var item in Model.DanhSachNhanVien)
+                                {
+                                    <tr>
+                                        <td>
+                                            <input @(Model.DanhSachNhanVienChon.Contains(item.Id) ? "checked=checked" : "") type="checkbox" value="@item.Id" name="@(Html.IdFor(m=>m.NhanVienIDs)+"[]")" />
+                                        </td>
+                                        <td>@item.Fullname</td>
+                                        <td>@item.Phone</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">@mui.mui.cancel</button>
+            <button type="submit" class="btn btn-primary">@mui.mui.save</button>
+        </div>
+
+    }
+
+    <script>
+        function fnOnSuccess(data) {
+            if (data.r) {
+                $('#modalCRUD').modal('hide');
+                cls.fnReload();
+            } else {
+                toastr.error(data.m);
+            }
+        }
+
+        $(function () {
+            $('#profile-image1').on('click', function () {
+                $('#profile-image-upload').click();
+            });
+        });
+        $("#profile-image-upload").change(function () {
+            var formData = new FormData();
+            var returnVal = $($(this).data("val"));
+            var totalFiles = document.getElementById("profile-image-upload").files.length;
+            for (var i = 0; i < totalFiles; i++) {
+                var file = document.getElementById("profile-image-upload").files[i];
+                formData.append("profile-image-upload", file);
+                formData.append("pathAppSettings", "path_img_quan");
+                if ($("#cbCLC").is(":checked")) {
+                    formData.append("sw", "200");
+                    formData.append("sh", "200");
+                }
+            }
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UploadImg","Ajax",new{area="Admin"})',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    $("#profile-image1").attr("src", response.v);
+                    returnVal.val(response.v);
+                },
+                error: function (error) {
+                    alert("errror");
+                }
+            });
+        });
+
+    </script>
+</div>

@@ -1,0 +1,92 @@
+﻿@model VD.Data.Paging.PG<VD.Data.Entity.MF.Product>
+
+@if (Model.L.Any())
+{
+
+    foreach (var item in Model.L)
+    {
+
+        <tr>
+            <td>
+                <input type="checkbox" class="cb_item" value="@item.Id" />
+            </td>
+            <td>
+                <a class="btn btn-default btn-xs waves-effect" onclick="clsProduct.fnShowEdit(@item.Id,$(this))">@item.Id</a>
+            </td>
+            <td>@item.ProductName</td>
+            <td>
+               @item.Price.ToMoneyStr()
+               @if (item.SoLuongGia > 0)
+               {
+                   <br/>
+                   <code>@item.SoLuongGia Giá phụ</code>
+                   @*<table>
+                       @foreach (var giaphu in item.BangGiaCT)
+                       {
+                           <tr>
+                               <td>@giaphu.Ten</td>
+                               <td>@giaphu.Price.ToMoneyStr()</td>
+                           </tr>
+                       }
+                   </table>*@
+               }
+            </td>
+            <td>@item.ProductCat.Name</td>
+            <td>
+                <a class="img-popup" href="@item.ThumbnailImage">
+                    <img src="@item.ThumbnailImage" width="50px;" />
+                </a>
+            </td>
+            @*<td>
+
+                @if (item.Hot)
+                {
+                    <button class="btn btn-default btn-circle waves-effect waves-circle waves-float" onclick="clsProduct.fnSetMainProduct(@item.Id,$(this),'hot')"><i class="fa fa-check"></i></button>
+                }
+                else
+                {
+                    <button class="btn btn-default btn-circle waves-effect waves-circle waves-float" onclick="clsProduct.fnSetMainProduct(@item.Id,$(this),'hot')"><i class="fa fa-circle-o"></i></button>
+                }
+            </td>
+            <td>
+                @if (item.New)
+                {
+                    <button class="btn btn-default btn-circle waves-effect waves-circle waves-float" onclick="clsProduct.fnSetMainProduct(@item.Id,$(this),'new')"><i class="fa fa-check"></i></button>
+                }
+                else
+                {
+                    <button class="btn btn-default btn-circle waves-effect waves-circle waves-float" onclick="clsProduct.fnSetMainProduct(@item.Id,$(this),'new')"><i class="fa fa-circle-o"></i></button>
+                }
+            </td>
+            <td>
+                @if (item.IsGiamGia)
+                {
+                    <button class="btn btn-default btn-circle waves-effect waves-circle waves-float" onclick="clsProduct.fnSetMainProduct(@item.Id,$(this),'giam_gia')"><i class="fa fa-check"></i></button>
+                }
+                else
+                {
+                    <button class="btn btn-default btn-circle waves-effect waves-circle waves-float" onclick="clsProduct.fnSetMainProduct(@item.Id,$(this),'giam_gia')"><i class="fa fa-circle-o"></i></button>
+                }
+            </td>*@
+           
+            @*<td>
+                <div class="btn-group">
+                    <a class="btn btn-default waves-effect" title="Chỉnh sửa" onclick="clsProduct.fnShowEdit(@item.Id,$(this))"><i class="fa fa-pencil"></i></a>
+                    <a class="btn btn-default waves-effect" title="Xóa" onclick="clsProduct.fnDelete(@item.Id,$(this))"><i class="fa fa-remove"></i></a>
+                </div>
+            </td>*@
+    </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="100%" class="nodata">Empty</td>
+    </tr>
+}
+<tr class="trfooter">
+    <td colspan="100%">
+        @Html.Raw(Model.thongtinphantrang)
+    </td>
+</tr>
+

@@ -1,0 +1,659 @@
+﻿@model VD.Data.Entity.MF.DonHang
+
+@{
+    ViewBag.Title = "Đơn hàng";
+    ViewBag.Title2 = "LIST";
+    Layout = "~/Views/Shared/_md.cshtml";
+
+}
+<script>var BaseUserId = @ViewBag.BaseUserId;</script>
+<style>
+    .selected {
+        color: red;
+    }
+</style>
+
+<div id="ViewTinTuc">
+    <div class="info-box waves-effect hover-zoom-effect" style="display:none;" onclick="clsProduct.fnReload(); $(this).fadeOut(500);" id="tb_donhangmoi">
+        <div class="icon bg-red">
+            <i class="material-icons">shopping_cart</i>
+        </div>
+        <div class="content">
+            <div class="text">Có đơn hàng mới (bấm vào để tải lại)</div>
+            <div class="number count-to" data-from="0" data-to="125" data-speed="1000" data-fresh-interval="20">125</div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- /.btn-group -->
+        <div class="col-xs-4">
+            <select v-model="QuanDefaultId" class="form-control" v-on:change="fnReloadTable();">
+                <option v-bind:value="item.Id" v-for="item of ddlQuan">{{item.TenQuan}}</option>
+            </select>
+        </div>
+        <div class="col-xs-4">
+            <div class="btn-group">
+                <button class="btn btn-default btn-sm waves-effect" onclick="clsProduct.fnReload();"><i class="fa fa-refresh"></i> Tải lại</button>
+                <button class="btnXoaMucChon btn btn-default btn-sm waves-effect" onclick="clsProduct.fnDeletes();" type="button"><i class="fa fa-remove"></i> Xóa chọn</button>
+            </div>
+        </div>
+       
+        <div class="col-xs-4">
+            <p><i class="fa fa-search"></i> Thời gian <input type="checkbox" id="cbIsLocThoiGian" checked="checked" onchange="toggleLocThoiGian($(this));" /></p>
+            <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
+                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                <span></span> <b class="caret"></b>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix m-b-20"></div>
+    <table class="tblData">
+        <thead>
+            <tr>
+             
+                <th data-col="@Html.IdFor(m=>m.Id)" class="colOrder">#Mã ĐH</th>
+                <th data-col="@Html.IdFor(m => m.Ban)" class="colOrder">@Html.DisplayNameFor(m => m.Ban)</th>
+                <th>Số lượng món</th>
+                <th data-col="@Html.IdFor(m => m.TongTienHang)" class="colOrder">@Html.DisplayNameFor(m => m.TongTienHang)</th>
+                <th data-col="@Html.IdFor(m => m.UserId)" class="colOrder">@Html.DisplayNameFor(m => m.UserId)</th>
+                <th data-col="@Html.IdFor(m => m.QuanId)" class="colOrder">@Html.DisplayNameFor(m => m.QuanId)</th>
+                <th data-col="@Html.IdFor(m => m.CreatedDate)" class="colOrder">@Html.DisplayNameFor(m => m.CreatedDate)</th>
+                @*<th></th>*@
+            </tr>
+        </thead>
+        <tbody class="view_data">
+            <tr>
+                <td colspan="100%">Đang nạp</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="ovl" style="display:none;"></div>
+
+
+    <!-- Modal -->
+    <div class="modal fade-scale" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document" id="myModal_content">
+
+        </div>
+    </div>
+
+
+   
+</div>
+<audio id="jump_audio" src="@Url.Content("~/Content/jump.wav")" autostart="false"></audio>
+
+@section JS{
+    <script>
+        function toggleLocThoiGian(that){
+            $('#reportrange').toggle();
+            var current = that.is(":checked");
+            if(current){
+                // $("#reportrange").show();
+            }else{
+                // $("#reportrange").hide();
+            }
+            console.log($('#reportrange').data('daterangepicker').startDate.format("YYYY-MM-DD"));
+            console.log($('#reportrange').data('daterangepicker').endDate.format("YYYY-MM-DD"));
+            //cbIsLocThoiGian
+            cls.fnReload();
+        }
+        var gb_sql_from_date= moment().format("YYYY-MM-DD");
+        var gb_sql_to_date= moment().format("YYYY-MM-DD");
+        $(function() {
+          
+            var start = moment();//.subtract(29, 'days');
+            var end = moment();
+
+            function cb(start, end) {
+                $('#reportrange span').html(start.format('DD/MM/YYYY') + ' - ' + end.format('DD/MM/YYYY'));
+            }
+                      
+            $('#reportrange').daterangepicker({
+                startDate: start,
+                endDate: end,
+                ranges: {
+                    'Hôm nay': [moment(), moment()],
+                    'Hôm qua': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    '7 ngày qua': [moment().subtract(6, 'days'), moment()],
+                    '30 ngày trước': [moment().subtract(29, 'days'), moment()],
+                    'Tháng này': [moment().startOf('month'), moment().endOf('month')],
+                    'Tháng trước': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                "locale": {
+                    "format": "DD/MM/YYYY",
+                    "separator": " - ",
+                    "applyLabel": "Áp dụng",
+                    "cancelLabel": "Hủy bỏ",
+                    "fromLabel": "Từ",
+                    "toLabel": "Đến",
+                    "customRangeLabel": "Chọn khoảng thời gian",
+                    "weekLabel": "W",
+                    "daysOfWeek": [
+                        "CN",
+                        "T2",
+                        "T3",
+                        "T4",
+                        "T5",
+                        "T6",
+                        "T7"
+                    ],
+                    "monthNames": [
+                        "tháng giêng",
+                        "Tháng hai",
+                        "Tháng Ba",
+                        "Tháng Tư",
+                        "Có thể",
+                        "Tháng Sáu",
+                        "Tháng Bảy",
+                        "Tháng Tám",
+                        "Tháng Chín",
+                        "Tháng Mười",
+                        "Tháng Mười Một",
+                        "Tháng mười hai"
+                    ],
+                    "firstDay": 1
+                },
+                         
+
+            }, cb);
+
+            cb(start, end);
+
+            $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+                gb_sql_from_date = picker.startDate.format('YYYY-MM-DD');
+                gb_sql_to_date = picker.endDate.format('YYYY-MM-DD');
+                console.log(gb_sql_from_date);
+                console.log(gb_sql_to_date);
+                if($("#cbIsLocThoiGian").is(":checked")){
+                    cls.fnReload();
+                }
+                          
+            });
+                                                
+        });
+    </script>
+    <script src="~/Scripts/jquery.signalR-1.2.2.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(function () {
+            function PlaySound() {
+                var sound = document.getElementById("jump_audio");
+                sound.play();
+            }
+            var notify_total = 0;
+            var usr = $.connection.usersOnLine;
+            $.connection.hub.start()
+                .done(function () {
+                    //connected
+                    console.log("hub connected");
+                });
+            usr.client.log = function (message) {
+                $('#message').append('<li>' + message + '</li>');
+            };
+            usr.client.showUsersOnLine = function (data) {
+                $("#total_online").html(data);
+            };
+            usr.client.showMsg = function (msg) {
+                $("#msg").html(msg);
+            };
+            
+            usr.client.notify_new_donhang = function (_BaseUserId,msg) {
+                if (_BaseUserId == BaseUserId) {
+                    PlaySound();
+                    notify_total++;
+                    $("#tb_donhangmoi").find(".number").first().countTo({ from: 0, to: notify_total });
+                    $("#tb_donhangmoi").show();
+                }
+            };
+            $("#btnTB").on("click", function () {
+                usr.server.showMsg($("#txtTB").val());
+            });
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        var vueDonHang = new Vue({
+            el: "#ViewTinTuc",
+            data: {
+                mode: 2,
+                QuanDefaultId: -1,
+                ddlQuan: [],
+                donHangMoi: {
+                    ctdonhang: []
+                },
+                thucdonchon:null,
+                thucdon: [],
+              
+                giohang: [],
+                soluong: 1,
+                GhiChu: "",
+                ddl: null,
+                TrangThaiThanhToanId: 1,
+                TrangThaiGiaoHangId: 1,
+                Ban:"",
+            },
+            methods: {
+                initial: function () {
+                    $.getJSON("@Url.Action("ajax_auth_ddlquan","Roles")", function (data) {
+                        data.unshift({
+                            Id: -1,
+                            TenQuan: "-Tất cả quán-",
+                        });
+                        vueDonHang.ddlQuan = data;
+                    });
+                    $.getJSON("@Url.Action("ajax_lay_quan_mac_dinh","Roles")", function (data) {
+                        vueDonHang.QuanDefaultId = parseInt(data);
+                        cls.fnInit();
+                    });
+                    $.getJSON("@Url.Action("ajax_ddl")", function (data) {
+                        vueDonHang.ddl = data;
+                    });
+                },
+                showTaoDonHang: function () {
+                    if (this.QuanDefaultId != -1) {
+                        $("#modal_tao_donhang").modal("show");
+                        this.getThucdon();
+                        //this.getBan();
+                    } else {
+                        swal("Chưa chọn quán");
+                    }
+                },
+                changeMode:function(_mode) {
+                    this.mode = _mode;
+                },
+                getThucdon:function() {
+                    $.getJSON("@Url.Action("ajax_get_thucdon")?quanid=" + this.QuanDefaultId, function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            data[i].ThucDonCT = [];
+                            data[i].STT = i + 1;
+                        }
+                        vueDonHang.thucdon = data;
+                        if (vueDonHang.thucdon.length > 0) {
+                            vueDonHang.chonThucDon(vueDonHang.thucdon[0]);
+                        }
+                    });
+                },
+                chonThucDon: function (_thucdon) {
+                    vueDonHang.thucdonchon = _thucdon;
+                    if (vueDonHang.thucdonchon.ThucDonCT.length == 0) {
+                        $.getJSON("@Url.Action("ajax_get_thucdonct")?thucdonid=" + _thucdon.Id, function (data) {
+                            for (var i = 0; i < data.length; i++) {
+                                data[i].SoLuong = 0;
+                                data[i].STT = i + 1;
+                            }
+                            vueDonHang.thucdonchon.ThucDonCT = data;
+                        });
+                    }
+                },
+                tongTienGioHang: function () {
+                    var total = 0;
+                    for (var i = 0; i < this.giohang.length; i++) {
+                        total += this.giohang[i].Product.Price * this.giohang[i].SoLuong;
+                    }
+                    return total;
+                },
+                selectThucDonCT: function (_thucdonct, _sl) {
+                   
+                    _thucdonct.SoLuong = _sl;
+                  
+                   
+                    if (_sl == 0) { //remove
+                        for (var i = 0; i < this.giohang.length; i++) {
+                            if (this.giohang[i].Id == _thucdonct.Id) {
+                                this.giohang.splice(i, 1);
+                                break;
+                            }
+                        }
+                    } else {
+                        //check exists
+                        var exists = false;
+                        //update so luong
+                        for (var i = 0; i < this.giohang.length; i++) {
+                            if (this.giohang[i].Id == _thucdonct.Id) {
+                               
+                                this.giohang[i].SoLuong = _thucdonct.SoLuong;
+                               
+                                exists = true;
+                                break;
+                            }
+                        }
+                        if (!exists) {
+                            this.giohang.push(_thucdonct);
+                        }
+                    }
+                },
+                vmoney:function(x) {
+                    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + "₫";
+                },
+                taoDonHang:function() {
+                    if (this.giohang.length == 0) {
+                        swal("Giỏ hàng rỗng!");
+                        return;
+                    }
+                    var _model = {
+                        GioHang: [],
+                        Ban: this.Ban,
+                        GhiChu: this.GhiChu,
+                        QuanId: this.QuanDefaultId,
+                        TrangThaiGiaoHangId: this.TrangThaiGiaoHangId,
+                        TrangThaiThanhToanId: this.TrangThaiThanhToanId,
+                    };
+
+                    for (var i = 0; i < this.giohang.length; i++) {
+                        _model.GioHang.push({
+                            ProductId: this.giohang[i].Product.Id,
+                            Price: this.giohang[i].Product.Price,
+                            SoLuong: this.giohang[i].SoLuong,
+                        });
+                    }
+                    var ajaxops = {
+                        url: "@Url.Action("ajax_dathang")",
+                        param: JSON.stringify({ model: _model }),
+                        fnSuccess: function (data) { //Success
+                           
+                            if (data.r) {
+                                vueDonHang.giohang = [];
+                                cls.fnReload();
+                                $("#modal_tao_donhang").modal("hide");
+                            } else {
+                                swal(data.m);
+                            }
+                        }
+                    };
+                    fnAjax(ajaxops);
+                },
+                fnReloadTable:function() {
+                    clsProduct.fnReload();
+                },
+                changeSL: function (item, sl) {
+                    if (item.SoLuong+sl>=0) {
+                        item.SoLuong = item.SoLuong + sl;
+                    }
+                }
+            }
+        });
+        vueDonHang.initial();
+       
+        var clsProduct = new function () {
+            var self = this;
+            self.modalCRUD = "#modalCRUD";
+            self.fnShowCreate = function () {
+                $.get('@Url.Action("Create", "DonHang", new { area = "admin" })', function (data) {
+                    $(self.modalCRUD).find(".main").html(data);
+                    $(self.modalCRUD).modal('show');
+                });
+            }
+            self.fnReload = function () {
+                cls.fnReloadTable();
+            }
+
+            $("#ddlProductCat").change(function () {
+                cls.fnReload();
+            });
+
+            $("#ddlProductCat2").change(function () {
+                cls.fnReload();
+            });
+            self.print = function (id) {
+                window.open("DonHang/Print?id=" + id, '_blank', 'location=yes,height=1000,width=1000,scrollbars=yes,status=yes');
+            }
+            self.fnDelete = function (_id, that) {
+                if (confirm("Bạn có chắc xóa?") == true) {
+                    var ajaxops = {
+                        url: "@Url.Action("Delete", "DonHang")",
+                        param: JSON.stringify({ id: _id }),
+                        fnSuccess: function (data) { //Success
+                            if (!data.r) {
+                                alert(data.m);
+                            } else {
+                                cls.fnReload();
+                            }
+                        }
+                    };
+                    fnAjax(ajaxops);
+                }
+            }
+
+
+            self.fnDeletes = function () {
+                var checkes = $(".cb_item:checked");
+                if (checkes.length != 0) {
+                    if (confirm("Bạn có xóa " + checkes.length + " mục?") == true) {
+                        var _arr = [];
+                        checkes.each(function () {
+                            _arr.push(GetDefaultID($(this).val()));
+                        });
+                        var opts = {
+                            fnSuccess: function (data) { //Success
+                                cls.fnReload();
+                                if (data.r) {
+                                    toastr.success(data.m);
+                                    $("#btnSelectAll").data("select-all", false);
+                                    $("#btnSelectAll").html("<i class='fa fa-square-o'></i>");
+                                } else {
+                                    toastr.error(data.m);
+                                }
+                                cls.fnReload();
+                            },
+                            param: JSON.stringify({ arr: _arr }),
+                            url: "@Url.Action("xoachon", "DonHang", new { area = "Admin" })"
+                        };
+                        fnAjax(opts);
+                    }
+                } else {
+                    toastr.warning("Select items!", "Message");
+                }
+            }
+
+            self.fnShowEdit = function (_id) {
+                $.get("@Url.Action("Edit", "DonHang", new { area = "admin" })/" + _id, function (data) {
+                    $(self.modalCRUD).find(".main").html(data);
+                    $(self.modalCRUD).modal('show');
+                });
+            }
+
+            self.fnToggleHetHang = function (_id) {
+                var ajaxops = {
+                    url: "@Url.Action("toggleHetHang")",
+                    param: JSON.stringify({ id: _id }),
+                    fnSuccess: function (data) { //Success
+                        if (data.r) {
+                            toastr.success(data.m);
+                        } else {
+                            toastr.error(data.m);
+                        }
+                    }
+                };
+                fnAjax(ajaxops);
+            }
+            self.fnChangeSL = function (_id, that) {
+
+                var _newsl = that.val();
+                var ajaxops = {
+                    url: "@Url.Action("editSLSP")",
+                    param: JSON.stringify({ ctid: _id, sl: _newsl }),
+                    fnSuccess: function (data) { //Success
+                        if (data.r) {
+                            that.closest("tr").find(".col_item_thanh_tien").html(data.v.ThanhTien);
+                            $("#col_item_tong_tien").html(data.v.TongTien);
+                            toastr.success(data.m);
+                        } else {
+                            toastr.error(data.m);
+                        }
+                    }
+                };
+                fnAjax(ajaxops);
+            }
+        }
+       
+
+        var paging_config = {
+            root: $("#ViewTinTuc"),
+            row_per_page: 20,
+            curpage: 1,
+            col_sort_default: "Id|desc",
+            fnjs: ['cls.fnPaging', 'cls.fnRpp'],
+            roleid: -1,
+            statusid: -1,
+            isvip: false,
+            catid: -1,
+            quanid: vueDonHang.QuanDefaultId,
+            tu:gb_sql_from_date,
+            den:gb_sql_to_date,
+            loctg:$("#cbIsLocThoiGian").is(":checked"),
+        };
+        var cls = new clsPaging(paging_config);
+
+
+        function clsPaging(_config) {
+            var self = this;
+            self.config = _config;
+            self.root = _config.root;
+            self.loadded = false;
+            self.fnInit = function () {
+                var col_sort_default = self.config.col_sort_default.split("|");
+                var key = col_sort_default[0];
+                var value = col_sort_default[1];
+                var searched = self.root.find(".colOrder[data-col='" + key + "']").first();
+                searched.data("sort", value).addClass(value);
+
+
+                //add event change cb_item
+                $(document).on('change', '.cb_item', function () {
+                    if ($(this).is(":checked")) {
+                        $(this).parent().parent().addClass("selected");
+                    } else {
+                        $(this).parent().parent().removeClass("selected");
+                    }
+                });
+                for (var i = 0; i < self.root.find("select").length; i++) {
+                    var searched2 = self.root.find("select").eq(i);
+                    if (searched2.attr("data-filter")) {
+                        searched2.change(function () {
+                            var ikey = $(this).data("filter");
+                            self.config[ikey] = GetDefaultID($(this).val());
+                            self.config.curpage = 1;
+                            if (self.loadded) {
+                                self.fnReload();
+                            }
+                        }).trigger("change");
+                    }
+                }
+                self.loadded = true;
+                self.fnReload();
+            }
+            self.fnReloadTable = function () {
+                self.fnReload();
+            }
+            self.root.on('click', 'a[data-pg]', function () {
+                var data_pg = $(this).attr("data-pg");
+                self.fnPaging(data_pg);
+            });
+            self.root.on('change', 'select.ddlrpp', function () {
+                var num = parseInt($(this).val());
+                self.config.row_per_page = num;
+                self.fnReload();
+            });
+
+
+
+            self.myVar = undefined;
+            self.curboloc = [];
+            self.param = {};
+            self.fnReload = function () {
+                self.fnPaging(self.config.curpage);
+            }
+
+
+            self.getSort = function () {
+                var rs = "|";
+                for (var i = 0; i < $(".colOrder").length; i++) {
+                    var col = $(".colOrder").eq(i);
+                    if (col.data("sort") == "asc" || col.data("sort") == "desc") {
+                        rs = col.data("col") + "|" + col.data("sort");
+                        break;
+                    }
+                }
+                if (rs == "|") {
+                    rs = self.config.col_sort_default;
+                }
+                return rs;
+            }
+            self.fnPaging = function (tranghientai) {
+                self.config.curpage = typeof tranghientai !== 'undefined' ? tranghientai : 1;
+                var get_sort = self.getSort();
+                self.param = {
+                    tranghientai: self.config.curpage,
+                    tongdongmottrang: self.config.row_per_page,
+                    tentruongsort: get_sort.split("|")[0],
+                    giatrisort: get_sort.split("|")[1],
+                    bolocs: self.curboloc,
+                    Fnjs: self.config.fnjs,
+                    quanid: vueDonHang.QuanDefaultId,
+                    tu:gb_sql_from_date,
+                    den:gb_sql_to_date,
+                    loctg:$("#cbIsLocThoiGian").is(":checked"),
+         
+                };
+
+                var opts = {
+                    url: "@Url.Action("ajax_paging")",
+                    datareturn: "html",
+                    fnSuccess: function (data) {
+                        self.root.find('.view_data').html(data);
+                        fnInit();
+                    },
+                    param: JSON.stringify({ paging: this.param }),
+                };
+                fnAjax(opts);
+            }
+            self.root.find("#btnSelectAll").first().click(function () {
+                var thiss = $(this);
+                var isSelectAll = thiss.data("select-all");
+                thiss.data("select-all", !isSelectAll);
+                if (!isSelectAll == true) { //show
+                    self.root.find(".cb_item").each(function () {
+                        $(this).prop('checked', true);
+                    });
+                    thiss.html("<i class='fa fa-check-square'></i>");
+                } else {//hide
+                    $(".cb_item").each(function () {
+                        $(this).prop('checked', false);
+                    });
+                    thiss.html("<i class='fa fa-square-o'></i>");
+                }
+                self.root.find(".cb_item").trigger("change");
+            });
+
+            //sortting
+            self.root.find(".colOrder").click(function () {
+                var thiss = $(this);
+                var cursortfield = thiss.data("col");
+                var cur_sort_data = thiss.data("sort");
+                (cur_sort_data == "asc") ? thiss.data("sort", "desc").addClass("desc").removeClass("asc") : thiss.data("sort", "asc").addClass("asc").removeClass("desc");
+                //remove all sort parameter class
+                self.root.find(".colOrder").not(thiss).data("sort", "").removeClass("asc").removeClass("desc");
+                self.fnReload();
+            });
+
+            //---search filter
+            self.root.find(".txt_search").keyup(function () {
+                var thiss = $(this);
+                thiss.addClass("txt_search_loading");
+                delay(function () {
+                    self.curboloc = [];
+                    self.curpage = 1; //set ve trang 1
+                    for (var i = 0; i < self.root.find(".txt_search").length; i++) {
+                        var stim = self.root.find(".txt_search").eq(i);
+                        if (stim.val() != "") {
+                            self.curboloc.push({ tentruongloc: stim.data("col"), giatriloc: stim.val() });
+                        }
+                    }
+                    self.fnReload();
+                    thiss.removeClass("txt_search_loading");
+                }, 500);
+            });
+        }
+    </script>
+}

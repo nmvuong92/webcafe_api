@@ -1,0 +1,47 @@
+﻿@model Web.Areas.Admin.Controllers.BoDem
+<div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box bg-pink hover-expand-effect">
+            <div class="icon">
+                <i class="material-icons">playlist_add_check</i>
+            </div>
+            <div class="content">
+                <div class="text">ĐƠN HÀNG</div>
+                <div class="number count-to" data-from="0" data-to="@Model.donhang" data-speed="15" data-fresh-interval="20"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box bg-cyan hover-expand-effect">
+            <div class="icon">
+                <i class="material-icons">local_dining</i>
+            </div>
+            <div class="content">
+                <div class="text">SẢN PHẨM</div>
+                <div class="number count-to" data-from="0" data-to="@Model.sanpham" data-speed="1000" data-fresh-interval="20"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box bg-light-green hover-expand-effect">
+            <div class="icon">
+                <i class="material-icons">forum</i>
+            </div>
+            <div class="content">
+                <div class="text">BÀI VIẾT</div>
+                <div class="number count-to" data-from="0" data-to="@Model.tintuc" data-speed="1000" data-fresh-interval="20"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box bg-orange hover-expand-effect">
+            <div class="icon">
+                <i class="material-icons">inbox</i>
+            </div>
+            <div class="content">
+                <div class="text">INBOX</div>
+                <div class="number count-to" data-from="0" data-to="@Model.inbox" data-speed="1000" data-fresh-interval="20"></div>
+            </div>
+        </div>
+    </div>
+</div>

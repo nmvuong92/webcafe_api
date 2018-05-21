@@ -1,0 +1,55 @@
+﻿@using VD.Data.Entity;
+@model VD.Data.Paging.PG<User>
+
+@if (Model.L.Any())
+{
+
+    foreach (var item in Model.L)
+    {
+
+        <tr>
+
+            <td>
+                <input type="checkbox" class="cb_item" value="@item.Id" />
+            </td>
+            <td>
+                <a class="btn btn-default btn-xs waves-effect" onclick="clsUsers.fnShowEdit(@item.Id,$(this))">@item.Id</a>
+
+            </td>
+            <td>@item.Fullname</td>
+            <td>@item.Username</td>
+            <td>
+                <a class="img-popup" href="@item.Image">
+                    <img src="@item.Image" width="50px;" />
+                </a>
+            </td>
+            <td>@item.GioiTinh</td>
+            <td>@item.Phone</td>
+            <td>@item.Address</td>
+            <td>@item.Role.Name</td>
+            <td>@item.UserStatus.Name</td>
+            <td><span class="label label-@(item.Quans.Count>0?"success":"default")">@item.Quans.Count</span></td>
+            <td><span class="label label-@(item.Members.Count>0?"success":"default")">@item.Members.Count</span></td>
+            @*<td>
+
+                    <div class="btn-group">
+                        <a class="btn btn-default" title="Sửa" onclick="clsUsers.fnShowEdit(@item.Id,$(this))"><i class="fa fa-pencil"></i></a>
+                        <a class="btn btn-default" title="Xóa" onclick="clsUsers.fnDelete(@item.Id,$(this))"><i class="fa fa-remove"></i></a>
+                    </div>
+
+                </td>*@
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="100%" class="nodata">Empty</td>
+    </tr>
+}
+<tr class="trfooter">
+    <td colspan="100%">
+        @Html.Raw(Model.thongtinphantrang)
+    </td>
+</tr>
+

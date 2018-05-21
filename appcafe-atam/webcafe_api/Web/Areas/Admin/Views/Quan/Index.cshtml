@@ -1,0 +1,405 @@
+﻿@using VD.Data.Temp
+@model VD.Data.Entity.MF.Quan
+
+@{
+    loginVM __auth = ViewBag.__auth;
+    bool isAdmin = (__auth.RoleId == 1 && __auth.Username == "admin");
+    ViewBag.Title = "Quản lý quán";
+    ViewBag.Title2 = "LIST";
+    Layout = "~/Views/Shared/_md.cshtml";
+
+}
+@if (!isAdmin)
+{
+    <div class="alert alert-info">
+        <strong>Thông tin!</strong> Liên hệ <u>quản trị viên</u> nếu muốn mở thêm quán/ đại lý quán!
+    </div>
+}
+
+<style>
+    .vboximg {
+        width: 100px;
+        border: 1px #c0c0c0 solid;
+        border-radius: 5px;
+        margin: 0 auto;
+        padding: 5px;
+        text-align: center;
+        float: left;
+      
+    }
+
+        .vboximg strong {
+            display: block;
+            margin-top: 0;
+            padding-top: 0;
+        }
+</style>
+<div id="ViewTinTuc">
+    <div class="mailbox-controls row">
+        <!-- /.btn-group -->
+        <div class="col-xs-12  col-sm-4">
+            <div class="btn-group">
+                @if (isAdmin)
+                {
+                    <button class="btn-create-new btn btn-success btn-sm waves-effect" onclick="clsProduct.fnShowCreate();"><i class="fa fa-plus"></i> Tạo mới</button>
+                }
+                <button onclick="clsProduct.fnReload();" class="btn btn-default btn-sm waves-effect" type="button"><i class="fa fa-refresh"></i> Tải lại</button>
+                @if (isAdmin)
+                {
+                    <button class="btnXoaMucChon btn btn-default btn-sm waves-effect" onclick=" clsProduct.fnDeletes(); " type="button"><i class="fa fa-remove"></i> Xóa chọn</button>
+                }
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            <input type="text" placeholder="search" class="txt_search form-control" data-col="full_text_search" />
+        </div>
+    </div>
+    <div class="m-b-20"></div>
+    <table class="tblData">
+        <thead>
+            <tr>
+                <th style="width: 33px; text-align:center;">
+                    <a data-select-all=false id="btnSelectAll"><i class="fa fa-square-o"></i></a>
+                </th>
+                <th style="width: 35px;" data-col="@Html.IdFor(m=>m.Id)" class="colOrder">#</th>
+                @*<th data-col="@Html.IdFor(m => m.MaQuan)" class="colOrder">@Html.DisplayNameFor(m => m.MaQuan)</th>*@
+                <th style="width: 210px" data-col="@Html.IdFor(m => m.TenQuan)" class="colOrder">@Html.DisplayNameFor(m => m.TenQuan)</th>
+                <th>Chủ quán</th>
+                <th data-col="@Html.IdFor(m => m.DiaChi)" class="colOrder">SĐT/Địa chỉ</th>
+                <th style="width: 25%;">Danh sách bàn</th>
+                <th>Thống kê</th>
+            </tr>
+            @*<tr>
+                    <th></th>
+                    <th></th>
+                    <th><input type="text" class="txt_search" data-col="@Html.IdFor(m => m.ProductName)" /></th>
+                    <th></th>
+                    <th></th>
+
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>*@
+        </thead>
+        <tbody class="view_data"></tbody>
+    </table>
+    <div class="ovl" style="display:none;"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade-scale" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document" id="myModal_content">
+
+    </div>
+</div>
+
+@section JS{
+
+    <script type="text/javascript">
+        var clsProduct = new function () {
+            var self = this;
+
+            self.modalCRUD = "#modalCRUD";
+
+            self.fnShowCreate = function () {
+                var catid = $("#ddlProductCat").val();
+                $.get('@Url.Action("Create", new { area="admin"})?catid=' + catid, function (data) {
+                    $(self.modalCRUD).find(".main").html(data);
+                    $(self.modalCRUD).modal('show');
+                });
+            }
+            self.fnReload = function () {
+                cls.fnReloadTable();
+            }
+
+            $("#ddlProductCat").change(function () {
+                cls.fnReload();
+            });
+
+
+            self.fnDelete = function (_id, that) {
+                swal({
+                    title: "Are you sure?",
+                    text: "You will not be able to recover this imaginary file!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "No, cancel plx!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        var ajaxops = {
+                            url: "@Url.Action("Delete")",
+                            param: JSON.stringify({ id: _id }),
+                            fnSuccess: function (data) { //Success
+                                if (!data.r) {
+                                    swal("Cancelled", data.m, "error");
+                                } else {
+                                    cls.fnReload();
+                                    swal("Deleted!", data.m, "success");
+                                }
+                            }
+                        };
+                        fnAjax(ajaxops);
+                    } else {
+                        swal("Cancelled", "Your imaginary file is safe :)", "error");
+                    }
+                });
+
+            }
+
+
+
+            self.fnDeletes = function () {
+                var checkes = $(".cb_item:checked");
+                if (checkes.length == 0) {
+                    swal("Chưa chọn mục xóa!");
+                    return;
+                }
+
+                var stralert = "Bạn có xóa " + checkes.length + " mục?";
+
+                swal({
+                    title: stralert,
+                    text: "You will not be able to recover this imaginary file!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "No, cancel plx!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }, function (isConfirm) {
+                    if (isConfirm) {
+                        var _arr = [];
+                        checkes.each(function () {
+                            _arr.push(GetDefaultID($(this).val()));
+                        });
+                        var opts = {
+                            fnSuccess: function (data) { //Success
+                                cls.fnReload();
+                                if (data.r) {
+                                    swal("Deleted!", data.m, "success");
+                                    $("#btnSelectAll").data("select-all", false);
+                                    $("#btnSelectAll").html("<i class='fa fa-square-o'></i>");
+                                } else {
+                                    swal("Cancelled", data.m, "error");
+                                }
+                                cls.fnReload();
+                            },
+                            param: JSON.stringify({ arr: _arr }),
+                            url: "@Url.Action("xoachon", new { area = "Admin" })"
+                        };
+                        fnAjax(opts);
+
+                    } else {
+                        swal("Cancelled", "Your imaginary file is safe :)", "error");
+                    }
+                });
+            }
+
+            self.fnShowEdit = function (_id) {
+                $.get("@Url.Action("Edit", new { area = "admin" })/" + _id, function (data) {
+                    $(self.modalCRUD).find(".main").html(data);
+                    $(self.modalCRUD).modal('show');
+                });
+            }
+            self.fnShowEditUser = function (_id) {
+                $.get("@Url.Action("EditUser", new { area = "admin" })/" + _id, function (data) {
+                    $(self.modalCRUD).find(".main").html(data);
+                    $(self.modalCRUD).modal('show');
+                });
+            }
+
+            self.fnDatQuanChinh = function (_id) {
+
+                var opts = {
+                    fnSuccess: function (data) { //Success
+                        cls.fnReload();
+                        if (data.r) {
+                            swal("Đã lưu!", data.m, "success");
+                        } else {
+                            swal("Thất bại", data.m, "error");
+                        }
+                        cls.fnReload();
+                    },
+                    param: JSON.stringify({ quanid: _id }),
+                    url: "@Url.Action("AjaxDatQuanChinh", new { area = "Admin" })"
+                };
+                fnAjax(opts);
+            }
+        }
+
+
+        var paging_config = {
+            root: $("#ViewTinTuc"),
+            row_per_page: 20,
+            curpage: 1,
+            col_sort_default: "Id|desc",
+            fnjs: ['cls.fnPaging', 'cls.fnRpp'],
+            roleid: -1,
+            statusid: -1,
+            isvip: false,
+            catid: -1,
+        };
+        var cls = new clsPaging(paging_config);
+        cls.fnInit();
+
+
+
+        function clsPaging(_config) {
+            var self = this;
+            self.config = _config;
+            self.root = _config.root;
+            self.loadded = false;
+            self.fnInit = function () {
+                var col_sort_default = self.config.col_sort_default.split("|");
+                var key = col_sort_default[0];
+                var value = col_sort_default[1];
+                var searched = self.root.find(".colOrder[data-col='" + key + "']").first();
+                searched.data("sort", value).addClass(value);
+
+
+                //add event change cb_item
+                $(document).on('change', '.cb_item', function () {
+                    if ($(this).is(":checked")) {
+                        $(this).parent().parent().addClass("selected");
+                    } else {
+                        $(this).parent().parent().removeClass("selected");
+                    }
+                });
+                for (var i = 0; i < self.root.find("select").length; i++) {
+                    var searched2 = self.root.find("select").eq(i);
+                    if (searched2.attr("data-filter")) {
+                        searched2.change(function () {
+                            var ikey = $(this).data("filter");
+                            self.config[ikey] = GetDefaultID($(this).val());
+                            self.config.curpage = 1;
+                            if (self.loadded) {
+                                self.fnReload();
+                            }
+                        }).trigger("change");
+                    }
+                }
+                self.loadded = true;
+                self.fnReload();
+            }
+            self.fnReloadTable = function () {
+                self.fnReload();
+            }
+            self.root.on('click', 'a[data-pg]', function () {
+                var data_pg = $(this).attr("data-pg");
+                self.fnPaging(data_pg);
+            });
+            self.root.on('change', 'select.ddlrpp', function () {
+                var num = parseInt($(this).val());
+                self.config.row_per_page = num;
+                self.fnReload();
+            });
+
+
+
+            self.myVar = undefined;
+            self.curboloc = [];
+            self.param = {};
+            self.fnReload = function () {
+                self.fnPaging(self.config.curpage);
+            }
+
+
+            self.getSort = function () {
+                var rs = "|";
+                for (var i = 0; i < $(".colOrder").length; i++) {
+                    var col = $(".colOrder").eq(i);
+                    if (col.data("sort") == "asc" || col.data("sort") == "desc") {
+                        rs = col.data("col") + "|" + col.data("sort");
+                        break;
+                    }
+                }
+                if (rs == "|") {
+                    rs = self.config.col_sort_default;
+                }
+                return rs;
+            }
+            self.fnPaging = function (tranghientai) {
+                self.config.curpage = typeof tranghientai !== 'undefined' ? tranghientai : 1;
+                var get_sort = self.getSort();
+                self.param = {
+                    tranghientai: self.config.curpage,
+                    tongdongmottrang: self.config.row_per_page,
+                    tentruongsort: get_sort.split("|")[0],
+                    giatrisort: get_sort.split("|")[1],
+                    bolocs: self.curboloc,
+                    Fnjs: self.config.fnjs,
+                    roleid: self.config.roleid,
+                    statusid: self.config.statusid,
+                    isvip: $("#cbIsVip").is(':checked'),
+                    catid: $("#ddlProductCat").val(),
+                    catid2: -1
+                };
+
+                var opts = {
+                    url: "@Url.Action("ajax_paging")",
+                    datareturn: "html",
+                    fnSuccess: function (data) {
+                        self.root.find('.view_data').html(data);
+                        fnInit();
+                    },
+                    param: JSON.stringify({ paging: this.param }),
+                };
+                fnAjax(opts);
+            }
+            self.root.find("#btnSelectAll").first().click(function () {
+                var thiss = $(this);
+                var isSelectAll = thiss.data("select-all");
+                thiss.data("select-all", !isSelectAll);
+                if (!isSelectAll == true) { //show
+                    self.root.find(".cb_item").each(function () {
+                        $(this).prop('checked', true);
+                    });
+                    thiss.html("<i class='fa fa-check-square'></i>");
+                } else {//hide
+                    $(".cb_item").each(function () {
+                        $(this).prop('checked', false);
+                    });
+                    thiss.html("<i class='fa fa-square-o'></i>");
+                }
+                self.root.find(".cb_item").trigger("change");
+            });
+
+            //sortting
+            self.root.find(".colOrder").click(function () {
+                var thiss = $(this);
+                var cursortfield = thiss.data("col");
+                var cur_sort_data = thiss.data("sort");
+                (cur_sort_data == "asc") ? thiss.data("sort", "desc").addClass("desc").removeClass("asc") : thiss.data("sort", "asc").addClass("asc").removeClass("desc");
+                //remove all sort parameter class
+                self.root.find(".colOrder").not(thiss).data("sort", "").removeClass("asc").removeClass("desc");
+                self.fnReload();
+            });
+
+            //---search filter
+            self.root.find(".txt_search").keyup(function () {
+                var thiss = $(this);
+                thiss.addClass("txt_search_loading");
+                delay(function () {
+                    self.curboloc = [];
+                    self.curpage = 1; //set ve trang 1
+                    for (var i = 0; i < self.root.find(".txt_search").length; i++) {
+                        var stim = self.root.find(".txt_search").eq(i);
+                        if (stim.val() != "") {
+                            self.curboloc.push({ tentruongloc: stim.data("col"), giatriloc: stim.val() });
+                        }
+                    }
+                    self.fnReload();
+                    thiss.removeClass("txt_search_loading");
+                }, 500);
+            });
+        }
+    </script>
+}

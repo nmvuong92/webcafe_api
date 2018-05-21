@@ -1,0 +1,64 @@
+﻿@model VD.Data.Temp.EditUserVM
+@{
+    ViewBag.Title = Model.HoTen + " - Cập nhật thông tin cá nhân";
+    Layout = "~/Views/Shared/_md.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-lg-4">
+
+
+    </div>
+    <div class="col-lg-6">
+        <h2 style="color:red;" onclick="$(this).hide();">@TempData["message"]</h2>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                @ViewBag.Title
+
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("EditProfile", "Auth", FormMethod.Post, new { @role = "form", area = "" }))
+                {
+                    @Html.HiddenFor(m => m.ID)
+                    <div class="form-group">
+                        Username
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @readonly = "readonly" })
+                    </div>
+                    <div class="form-group ">
+                        Họ tên
+                        @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group ">
+                        Điện thoại
+                        @Html.TextBoxFor(m => m.DienThoai, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group ">
+                        Email
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    </div>
+
+                    <div class="form-group ">
+                        Địa chỉ
+                        @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control" })
+                    </div>
+
+                    <!--footer-->
+                    <div class="text-center">
+
+                        <button type="submit" class="btn btn-success btn-xl" onclick="return confirm('Xác nhận cập nhật?')">Lưu</button>
+                        <a href="@Url.Action("Profile")" class="btn btn-default btn-xl">Hủy bỏ</a>
+
+                    </div>
+                    <div class="DivErrs" style="color:red;">@Html.ValidationSummary()</div>
+
+                }
+            </div>
+        </div>
+        <div class="col-lg-5">
+        </div>
+
+    </div>
+</div>

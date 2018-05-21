@@ -1,0 +1,38 @@
+﻿@using VD.Data.Entity
+@using Web.Models
+@model walletView
+@if (Model.candidate != null)
+{
+}
+else if (Model.Employee != null)
+{
+
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>@mui.mui.score_post_recruitment</th>
+            <td>
+                <span class="hh-coin">
+                    <span>@Model.Employee.ScorePostRecruitment.ToString("n0")</span>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th>@mui.mui.score_filter_profile</th>
+            <td>
+                <span class="hh-coin">
+                    <span>@Model.Employee.ScoreFilterprofile.ToString("n0")</span>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <th>@mui.mui.score_advertisement</th>
+            <td>
+                <span class="hh-coin">
+                    <span>@Model.Employee.ScoreAdvertisement.ToString("n0")</span>
+                </span>
+            </td>
+        </tr>
+    </table>
+
+}
+

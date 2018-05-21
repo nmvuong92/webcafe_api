@@ -1,0 +1,72 @@
+﻿@model VD.Data.Entity.MF.ImgTmp
+
+<style>
+    .img-temps img {
+        width: 100px;
+    }
+
+    .img-temps .item {
+        position: relative;
+        float: left;
+        width: 100px;
+        outline: 2px #e0ffff solid;
+        transition: 0.2s ease;
+        margin: 5px;
+        padding: 2px;
+    }
+
+        .img-temps .item:hover {
+            -webkit-transform: scale(1.1);
+            -ms-transform: scale(1.1);
+            transform: scale(1.1);
+            transition: 1s ease;
+        }
+
+    .img-temps button {
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+    }
+
+    .img-temps .active {
+        outline: 5px #8b008b solid;
+    }
+</style>
+
+<div class="img-temps">
+    @foreach (var item in Model.ImgTmpDetails)
+    {
+        <div class="item @(item.IsMain?"active":"")" onclick="clsImg.setMainImage(@item.Id,$(this))">
+            <img src="@item.Thumbnail" />
+            <button type="button" onclick="clsImg.delete(@item.Id,$(this),event);">Xóa</button>
+        </div>
+    }
+    <div class="clearfix"></div>
+</div>
+
+<script>
+    var clsImg=new function() {
+        var self = this;
+        self.delete = function (__id, that, e) {
+            e.stopPropagation();
+            $.getJSON("/Vdadmin/FileUpload/DeleteImage?id=" + __id, function (data) {
+                if (data.r) {
+                    that.closest(".item").remove();
+                } else {
+                    toastr.error(data.m);
+                }
+            });
+        }
+        self.setMainImage = function(__id,that) {
+         
+            $.getJSON("/Vdadmin/FileUpload/SetMain?id="+__id,function(data) {
+                if (data.r) {
+                    $(".img-temps .item ").removeClass("active");
+                    that.addClass("active");
+                } else {
+                    toastr.error(data.m);
+                }
+            });
+        }
+    }
+</script>

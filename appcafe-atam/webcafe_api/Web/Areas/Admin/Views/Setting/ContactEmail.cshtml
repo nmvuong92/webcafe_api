@@ -1,0 +1,69 @@
+﻿@model Web.Areas.Admin.ViewModels.SettingEmailContactVM
+@{
+    ViewBag.Title = "Setting Contact Email";
+    ViewBag.Title2 = "Paging row per page";
+    Layout = "~/Views/Shared/_md.cshtml";
+}
+<div class="container">
+    <div class="col-md-12">
+        <table class="table table-bordered table-template-data">
+            <thead>
+                <tr>
+                    <th style="width:30%;">Input key</th>
+                    <th>explanation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>{full_name}</th>
+                    <td>Họ tên</td>
+                </tr>
+                <tr>
+                    <th>{phone_number}</th>
+                    <td>Số điện thoại</td>
+                </tr>
+                <tr>
+                    <th>{address}</th>
+                    <td>Địa chỉ</td>
+                </tr>
+                <tr>
+                    <th>{email}</th>
+                    <td>Email</td>
+                </tr>
+
+                <tr>
+                    <th>{subject}</th>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <th>{content}</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>{company_name}</th>
+                    <td>Company name</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+</div>
+@using (Html.BeginForm())
+{
+   
+    <div class="form-group">
+        @Html.LabelFor(m => m.is_reply_contact)
+        @Html.CheckBoxFor(m => m.is_reply_contact)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.etmp_reply_contact_title)
+        @Html.TextAreaFor(m => m.etmp_reply_contact_title, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.etmp_reply_contact)
+        @Html.TextAreaFor(m => m.etmp_reply_contact, new { @class = "form-control sEditor" })
+    </div>
+    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Update setting</button>
+}

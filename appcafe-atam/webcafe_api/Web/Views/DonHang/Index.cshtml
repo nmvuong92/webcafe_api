@@ -1,0 +1,324 @@
+﻿@using VD.Data
+@model ThanhToanVM
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_layout.cshtml";
+    bool islog = MySsAuthUsers.GetAuth() != null;
+    string back_url = ViewBag.back_url;
+}
+<link href="~/Content/Plugin/pace/pace.css" rel="stylesheet" />
+<link href="~/Content/dccd/assets/css/tabs.css?v=3" rel="stylesheet" />
+<style>
+    .vcenter {
+        vertical-align: middle;
+        line-height: 90px; 
+    }
+</style>
+
+<div id="content">
+    <div class="container background-white">
+        <div class="row margin-vert-30">
+            <div class="container" id="GioHang">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Tên sản phẩm</th>
+                            <th>Hình ảnh</th>
+                            <th>Giá</th>
+                            <th style="width:160px">Số lượng</th>
+                            <th>Thành tiền</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in ct_gio_hang" class="text-center">
+                            <td class="text-left vcenter"><a target="_blank" v-bind:href="item.Link">{{item.TenSanPham}}</a></td>
+                            <td><img v-bind:src="item.HinhAnh" style="width:70px;" /></td>
+                            <td>{{num(item.DonGia)}}</td>
+                            <td>
+
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" v-on:click="changeSoLuong(item,-1)">-</button>
+                                    </span>
+                                    <input type="text" class="form-control" v-model="item.SoLuong" readonly="readonly" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" v-on:click="changeSoLuong(item,1)">+</button>
+                                    </span>
+                                </div>
+
+
+                            </td>
+                            <td>{{num(item.ThanhTien)}}</td>
+                            <td>
+                                <button v-on:click="fnXoa(item)" class="btn btn-danger"><i class="fa fa-remove"></i></button>
+                            </td>
+                        </tr>
+                        <tr v-if="ct_gio_hang!=null && ct_gio_hang.length==0">
+                            <td colspan="100%">Giỏ hàng rỗng</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+                <a style="margin:5px;" class="btn btn-primary" href="javascript:history.back()"><i class="fa fa-arrow-left"></i> Tiếp tục mua hàng</a>
+                <div class="row">
+                    <div class="col-md-3 text-right">
+                        Tổng tiền hàng: {{num(gio_hang.TongTienHang)}}
+                    </div>
+
+                    <div class="col-md-3 text-right">
+                        VAT: {{num(gio_hang.TienVat)}}
+                    </div>
+                    <div class="col-md-3 text-right">
+                        Giá Ship: {{num(GiaShip)}}
+                    </div>
+                    <div class="col-md-3 text-right">
+                        Thành tiền: {{num(parseInt(gio_hang.ThanhTien)+parseInt(GiaShip))}}
+                    </div>
+
+                </div>
+
+
+
+                <h1 style="margin-top: 25px;">HÌNH THỨC THANH TOÁN</h1>
+                <div class="tab_container vtab">
+                    <input id="tab1" type="radio" name="tabs" checked>
+                    <label for="tab1"><i class="fa fa-code"></i><span>THANH TOÁN VÀ NHẬN HÀNG</span></label>
+                    <input id="tab2" type="radio" name="tabs">
+                    <label for="tab2"><i class="fa fa-pencil-square-o"></i><span> HƯỚNG DẪN MUA HÀNG </span></label>
+
+                    <section id="content1" class="tab-content">
+                        @if (islog)
+                        {
+                            <h3>Thông tin khách hàng</h3>
+                            using (Html.BeginForm("Index", "DonHang", FormMethod.Post))
+                            {
+                                <div style="color: red;">
+                                    @Html.ValidationSummary(false)
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="col-sm-12">
+                                            <div id="boxBilling">
+                                                <div class="form-horizontal">
+                                                    <div class="form-group">
+                                                        @Html.DropDownListFor(m => m.XungDanh, Model.ddlXungDanh, "--Danh Xưng--", new { @class = "form-control" })
+
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div>
+                                                            <div class="row">
+                                                                <div class="col-sm-6">
+                                                                    @Html.TextBoxFor(m => m.Ho, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Ho) })
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    @Html.TextBoxFor(m => m.Ten, new { @class = "form-control", placeholder = HttpUtility.HtmlDecode((Html.DisplayNameFor(m => m.Ten)).ToHtmlString()) })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div>
+                                                            @Html.TextBoxFor(m => m.DiaChi, new { @class = "form-control", placeholder = "Địa chỉ nhận hàng" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        @Html.DropDownListFor(m => m.ProvinceId, Model.ddlProvince, "--" + HttpUtility.HtmlDecode((Html.DisplayNameFor(m => m.ProvinceId)).ToHtmlString()) + "--", new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.DistrictId) })
+                                                    </div>
+                                                    <div class="form-group">
+                                                        @Html.DropDownListFor(m => m.DistrictId, Model.ddlDistrict, "--" + HttpUtility.HtmlDecode((Html.DisplayNameFor(m => m.DistrictId)).ToHtmlString()) + "--", new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.DistrictId) })
+                                                        <code>+{{num(GiaShip)}} Giá ship</code>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        @Html.DropDownListFor(m => m.WardId, Model.ddlWard, "--" + HttpUtility.HtmlDecode((Html.DisplayNameFor(m => m.WardId)).ToHtmlString()) + "--", new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.WardId) })
+                                                    </div>
+                                                    <div class="form-group">
+                                                        @Html.TextBoxFor(m => m.SDT, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.SDT) })
+                                                    </div>
+                                                    <div class="form-group">
+                                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email) })
+                                                    </div>
+                                                    <div class="form-group">
+                                                        @Html.DropDownListFor(m => m.HTTTID, Model.ddlHttt, "--Hình thức thanh toán--", new { @class = "form-control" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-success" disabled="ct_gio_hang!=null && ct_gio_hang.length==0">  Đặt hàng <i class="glyphicon glyphicon-menu-right"></i> </button>
+                                        </div>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+                        else
+                        {
+
+                            <a style="color:#000" class="btn btn-info input-block-level form-control" href="javascript:void(0);" onclick="clsUser.showPopLogin('Đăng nhập');">Đăng nhập</a>
+                        }
+
+
+
+
+                    </section>
+
+                    <section id="content2" class="tab-content">
+
+
+                        @{Html.RenderAction("PartialHuongDanMuaHang", "TinTuc");}
+
+
+                    </section>
+
+                </div>
+
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+@section JS{
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@1.5.4/src/loadingoverlay.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@1.5.4/extras/loadingoverlay_progress/loadingoverlay_progress.min.js"></script>
+    <script src="~/Content/Plugin/pace/pace.min.js"></script>
+
+
+
+
+
+    <script type="text/javascript">
+        $(function() {
+            $(document).ajaxStart(function() {
+                Pace.start();
+                $("#GioHang").LoadingOverlay("show");
+
+            });
+            $(document).ajaxStop(function() {
+                $("#GioHang").LoadingOverlay("hide", true);
+                Pace.stop();
+            });
+            $("#ProvinceId").change(function() {
+                var id = $(this).val();
+                console.log(id);
+                if (id != "") {
+
+                    $.getJSON("/Donhang/ddlDistrict?province_id=" + id, function(data) {
+                        var _ops = "<option value=''>--Chọn quận/huyện--</option>";
+                        for (var i = 0; i < data.length; i++) {
+                            _ops += "<option value='" + data[i].Id + "'>" + data[i].Name + "</option>";
+                        }
+                        $("#DistrictId").html(_ops);
+                    });
+                }
+            });
+            $("#DistrictId").change(function() {
+                var id = $(this).val();
+
+                if (id != "") {
+                    //la y gia ship
+
+                    $.getJSON("/Donhang/LayGiaShip?district_id=" + id, function(data) {
+                        vueCart.GiaShip = data;
+                    });
+                    $.getJSON("/Donhang/ddlWard?district_id=" + id, function(data) {
+                        var _ops = "<option value=''>--Chọn phường/xã--</option>";
+                        for (var i = 0; i < data.length; i++) {
+                            _ops += "<option value='" + data[i].Id + "'>" + data[i].Name + "</option>";
+                        }
+                        $("#WardId").html(_ops);
+                    });
+
+                }
+
+            });
+        });
+
+
+        var vueCart = new Vue({
+            el: "#GioHang",
+
+            data: {
+                GiaShip: 0,
+                gio_hang: {
+                    TongTienHang: 0,
+                    TienVat: 0,
+                    ThanhTien: 0,
+                },
+                ct_gio_hang: null,
+
+            },
+            methods: {
+                fnDis: function() {
+                    $("#GioHang").LoadingOverlay("show");
+                },
+                fnEna: function() {
+                    $("#GioHang").LoadingOverlay("hide", true);
+                },
+                fnLayGioHang: function() {
+
+                    $.getJSON("@Url.Action("LayGioHang", "DonHang")", function(data) {
+                        vueCart.gio_hang = data;
+                        vueCart.ct_gio_hang = data.CTGioHangs;
+                    });
+                },
+                fnXoa: function(item) {
+
+                    var ajaxops = {
+                        url: "@Url.Action("Xoa", "DonHang")",
+                        param: JSON.stringify({ id: item.SanPhamId }),
+                        fnSuccess: function(data) { //Success
+                            vueCart.fnLayGioHang();
+                        }
+                    };
+                    fnAjax(ajaxops);
+                },
+                changeSoLuong: function(item, slct) {
+                    item.SoLuong += slct;
+                    var ajaxops = {
+                        url: "@Url.Action("CapNhatSoLuong", "DonHang")",
+                        param: JSON.stringify({ id: item.SanPhamId, sl: item.SoLuong }),
+                        fnSuccess: function(data) { //Success
+                            vueCart.fnLayGioHang();
+                        }
+                    };
+                    fnAjax(ajaxops);
+                },
+                num: function(x) {
+                    if (x != null) {
+                        var parts = x.toString().split(".");
+                        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                        return parts.join(",");
+                    }
+                    return "";
+                }
+            },
+            updated: function() {
+                $("#SLSPGH").html(this.ct_gio_hang.length);
+            }
+        });
+        vueCart.fnLayGioHang();
+
+        function laygiaship() {
+            var id = $("#DistrictId").val();
+            if (id != "") {
+                $.getJSON("/Donhang/LayGiaShip?district_id=" + id, function(data) {
+                    vueCart.GiaShip = data;
+                    vueCart.GiaShip = data;
+                });
+            }
+        }
+
+        laygiaship();
+    </script>
+}

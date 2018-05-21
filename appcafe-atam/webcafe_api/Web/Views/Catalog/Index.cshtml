@@ -1,0 +1,72 @@
+﻿@model Web.ViewModels.MF.CatalogView
+@{
+    ViewBag.Title = "Catalog";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+
+<style>
+       .catalog-item {
+       -webkit-filter: brightness(100%);
+        -webkit-transition: all 1s ease;
+        -moz-transition: all 1s ease;
+        -o-transition: all 1s ease;
+        -ms-transition: all 1s ease;
+        transition: all 1s ease;
+	background:#dcdcdc;
+        /*background: url(http://images.all-free-download.com/images/graphiclarge/blurred_golden_background_192849.jpg) no-repeat center;*/
+        padding: 10px;
+        border: 1px #ccc solid; margin-bottom:15px
+    }
+     .catalog-item:hover {
+         border-radius:0%;
+         -webkit-filter: brightness(90%);
+     }
+     .vvvactive {
+         border: 1px #ccc solid;
+         background:#dcdcdc;
+         color: red
+     }
+</style>
+<div id="gioithieu" class="section-content">
+    <div class="container">
+        <!-- breadcrumb -->
+        @*<div class="breadcrumb clearfix">
+                <a class="home" href="index.html" title="Trở về trang chủ">Trang chủ</a>
+                <span class="navigation-pipe"></span>
+                <span class="navigation_page">Giới thiệu</span>
+
+            </div>*@
+        @Html.myBreadCrumbs(null, "Catalog")
+        <!-- ./breadcrumb -->
+
+        <div class="container">
+            @foreach (var item in Model.List)
+            {
+                <a href="@Url.Action("Index",new{id=item.Id})">
+                    
+			<div class="col-md-@(12/Model.List.Count) text-center catalog-item @(Model.main != null && Model.main.Id == item.Id ? "vvvactive" : "")">
+                        	<h2>@item.Title</h2>
+			</div>
+                    
+                   
+                </a>
+
+            }
+
+        </div>
+        <div class="detail" style="margin-bottom: 25px;">
+            @if (Model.main != null)
+            {
+                <div class="page-heading">
+                    <span class="page-heading-title">@Model.main.Title</span>
+                </div>
+                <hr>
+                <div class="para">
+                    <embed width="100%" height="5000px" name="plugin" id="plugin" src="@Model.main.HinhAnh" type="application/pdf" internalinstanceid="3">
+                </div>
+
+            }
+        </div>
+    </div>
+</div>

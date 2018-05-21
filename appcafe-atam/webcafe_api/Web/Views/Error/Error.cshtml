@@ -1,0 +1,29 @@
+﻿@model VD.Lib.DTO.MesDto
+@{
+    ViewBag.Title = "Error";
+    //Layout = null;
+    Layout = "~/Views/Shared/_hht.cshtml";
+}
+<div class="container content">
+
+    @*<h2>Mã Thông điệp: @Model.Code</h2>*@
+    <div class="alert alert-danger alert-dismissible">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        <h4><i class="icon fa fa-ban"></i> @Model.Code!</h4>
+        @Html.Raw(Model.Message)
+        <br />@Html.Raw(Model.Message2)
+        <br />
+        <i>Đường dẫn: @HttpContext.Current.Request.Url.AbsoluteUri</i>
+    </div>
+    @*<div style="text-align: center;">
+            <a href="@Url.Action("Login","Auth",new{area=""})" class="btn btn-success"><i class="fa fa-key"></i> Đăng nhập</a>
+        </div>*@
+</div>
+@if (true)
+{
+    @section JS{
+        <script>
+                $GB_MODAL_DANGNHAP.modal('show');
+        </script>
+    }
+}
