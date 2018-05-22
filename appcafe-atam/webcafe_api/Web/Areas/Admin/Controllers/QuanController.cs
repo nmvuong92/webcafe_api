@@ -62,7 +62,6 @@ namespace Web.Areas.Admin.Controllers
             {
                 r = rs.F(ex.Message);
             }
-
             return Json(r, JsonRequestBehavior.DenyGet);
         }
         public ActionResult ChonQuanMacDinh(int? id)

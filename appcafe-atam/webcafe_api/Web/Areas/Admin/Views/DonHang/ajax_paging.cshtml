@@ -64,15 +64,15 @@
             </td>
             <td>
                 @{
-                    string cssClass2 = "btn-default";
-                    if (item.TrangThaiGiaoHangId == 2)
-                    {
-                        cssClass2 = "btn-success";
-                    }
-                    else if (item.TrangThaiGiaoHangId == 3)
-                    {
-                        cssClass2 = "btn-danger";
-                    }
+                string cssClass2 = "btn-default";
+                if (item.TrangThaiGiaoHangId == 2)
+                {
+                    cssClass2 = "btn-success";
+                }
+                else if (item.TrangThaiGiaoHangId == 3)
+                {
+                    cssClass2 = "btn-danger";
+                }
                 }
                 <div class="btn-group" role="group">
                     <button type="button" class="btn @cssClass2 waves-effect dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -146,13 +146,9 @@
             </td>
             <td class="mobile_hid">
                 @{
-                    var slgopy = item.GopYs.Count;
-                    cssClass2 = "label-default";
-                    if (slgopy > 0)
-                    {
-                        cssClass2 = "label-success";
-                    }
-                    bool firstGop = true;
+                var slgopy = item.GopYs.Count;
+              
+                bool firstGop = true;
                 }
                 @if (slgopy == 1)
                 {
@@ -165,23 +161,26 @@
                     var first_cmt = item.GopYs.Last();
                     <code>@first_cmt.CreatedDate.XuatDateTime()</code>
                     <p>@first_cmt.NoiDungGopY</p>
-                    <a class="btn btn-default waves-effect" onclick="clsProduct.fnShowEdit(@item.Id,@item.QuanId,true)" title="Sửa đơn hàng"><span class="badge @cssClass2">Tất cả @item.GopYs.Count góp ý</span></a>
                 }
+                <a class="btn btn-default waves-effect" onclick="clsProduct.fnShowEdit(@item.Id,@item.QuanId,true)" title="Sửa đơn hàng"><span class="badge">@item.GopYs.Count góp ý</span></a>
+                <button title="Phản hồi" type="button" onclick="clsProduct.fnShowEdit(@item.Id,@item.QuanId,true)" class="btn btn-default btn-circle-sm waves-effect waves-circle waves-float">
+                    <i class="material-icons">forum</i>
+                </button>
             </td>
         </tr>
-                    }
-                    <tr>
-                        <td colspan="100%">
-                            <div class="text-center" style="font-weight: bold;">Tổng cộng: <span class="red">@Model.TongTien.ToMoneyStr()</span></div>
-                        </td>
-                    </tr>
-                    }
-                    else
-                    {
-                        <tr>
-                            <td colspan="100%" class="nodata">Empty</td>
-                        </tr>
-                    }
+    }
+    <tr>
+        <td colspan="100%">
+            <div class="text-center" style="font-weight: bold;">Tổng cộng: <span class="red">@Model.TongTien.ToMoneyStr()</span></div>
+        </td>
+    </tr>
+}
+else
+{
+    <tr>
+        <td colspan="100%" class="nodata">Empty</td>
+    </tr>
+}
 <tr class="trfooter">
     <td colspan="100%">
         @Html.Raw(Model.thongtinphantrang)

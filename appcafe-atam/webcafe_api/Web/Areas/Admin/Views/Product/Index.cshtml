@@ -44,6 +44,7 @@
                 <th data-col="@Html.IdFor(m => m.Price)" class="colOrder">@Html.DisplayNameFor(m => m.Price)</th>
                 <th data-col="@Html.IdFor(m => m.ProductCatId)" class="colOrder">@Html.DisplayNameFor(m => m.ProductCatId)</th>
                 <th data-col="@Html.IdFor(m => m.ThumbnailImage)" class="colOrder">@Html.DisplayNameFor(m => m.ThumbnailImage)</th>
+                <th>Quán</th>
                 @*<th>Hot?</th>
                 <th>New?</th>
                 <th>Giãm giá?</th>*@
@@ -96,11 +97,7 @@
                             TenQuan: "-Tất cả quán-",
                         });
                         vue.ddlQuan = data;
-                    });
-                    $.getJSON("@Url.Action("ajax_lay_quan_mac_dinh","Roles")", function (data) {
-                        vue.QuanDefaultId = parseInt(data);
-                        vue.chonQuan();
-                        cls.fnInit();
+                        clsProduct.fnReload();
                     });
                 },
                 chonQuan: function () {
@@ -115,7 +112,7 @@
                             }
                         }
                     }
-                   
+                  
                     clsProduct.fnReload();
                 },
                 chonCat: function () {

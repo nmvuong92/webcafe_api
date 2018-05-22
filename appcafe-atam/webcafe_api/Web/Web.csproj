@@ -418,6 +418,7 @@
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\NhanVienController.cs" />
     <Compile Include="Areas\Admin\Controllers\ThucDonController.cs" />
+    <Compile Include="Areas\Admin\ViewModels\BanStateVM.cs" />
     <Compile Include="Areas\Admin\ViewModels\ContactCRUD.cs" />
     <Compile Include="Areas\Admin\ViewModels\DonHangCRUD.cs" />
     <Compile Include="Areas\Admin\ViewModels\EditDonHangVM.cs" />

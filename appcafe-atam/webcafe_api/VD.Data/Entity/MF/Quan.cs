@@ -34,6 +34,7 @@ namespace VD.Data.Entity.MF
 
         //
         public virtual ICollection<ProductCat> ProductCats { get; set; }
+        public virtual ICollection<DonHang> DonHangs { get; set; }
         //public virtual ICollection<Ban> Ban { get; set; }
 
         public string BanArr { get; set; }

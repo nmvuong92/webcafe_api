@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Transactions;
 using System.Web.Mvc;
-using OfficeOpenXml.FormulaParsing.Excel.Functions.Text;
-using Omu.ValueInjecter.Utils;
 using VD.Data;
 using VD.Data.Entity.MF;
 using VD.Data.IRepository;
 using VD.Data.Paging;
 using VD.Lib.DTO;
-using VD.Lib.Encode;
 using Web.Areas.Admin.ViewModels.MF;
 using Web.Controllers;
 using Web.Security;
@@ -43,7 +39,14 @@ namespace Web.Areas.Admin.Controllers
         {
             var __auth = MySsAuthUsers.GetAuth();
             PG<Product> vmpg;
-            vmpg = _ProductServ.GetQueryPaging(paging, w => w.ProductCat.Quan.UserId == __auth.OwnerId);
+            if (__auth.Username == "admin")
+            {
+                vmpg = _ProductServ.GetQueryPaging(paging);
+            }
+            else
+            {
+                vmpg = _ProductServ.GetQueryPaging(paging, w => w.ProductCat.Quan.UserId == __auth.OwnerId);
+            }
             return PartialView(vmpg);
         }
 

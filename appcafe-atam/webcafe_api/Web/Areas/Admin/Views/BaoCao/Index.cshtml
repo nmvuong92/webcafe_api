@@ -241,13 +241,12 @@
                             TenQuan: "-Tất cả quán-",
                         });
                         vueDonHang.ddlQuan = data;
+               
                     });
-                    $.getJSON("@Url.Action("ajax_lay_quan_mac_dinh","Roles")", function (data) {
-                        vueDonHang.QuanDefaultId = parseInt(data);
-                        cls.fnInit();
-                    });
+                 
                     $.getJSON("@Url.Action("ajax_ddl")", function (data) {
                         vueDonHang.ddl = data;
+                        cls.fnInit();
                     });
                 },
                 showTaoDonHang: function () {

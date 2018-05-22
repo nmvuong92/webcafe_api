@@ -25,10 +25,10 @@ namespace Web.Areas.Admin.Controllers
         // GET: Admin/Home
         public ActionResult Index()
         {
-         
-            return View();
-           
+            return RedirectToAction("Index", "DonHang");
+           // return View();
         }
+
         [HttpGet]
         public PartialViewResult ThongKeLuongTruyCap()
         {

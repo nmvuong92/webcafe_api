@@ -43,6 +43,7 @@ namespace VD.Lib.DTO
     }
     public class donhang_sp : smartpaging
     {
+        public int ban { get; set; }
         public int quanid { get; set; }
         public int trangthaigiaohangid { get; set; }
         public int trangthaithanhtoanid { get; set; }

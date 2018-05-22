@@ -68,7 +68,15 @@ namespace Web.Areas.Admin.Controllers
             paging.trangthaigiaohangid = -1;
             paging.trangthaithanhtoanid = 2;
             PG<DonHang> vmpg;
-            vmpg = _DonHangServ.GetQueryPaging(paging,w=>w.BaseUserId==__auth.OwnerId);
+            if (__auth.Username == "admin")
+            {
+                vmpg = _DonHangServ.GetQueryPaging(paging);
+            }
+            else
+            {
+                vmpg = _DonHangServ.GetQueryPaging(paging, w => w.BaseUserId == __auth.OwnerId);
+            }
+           
             return PartialView(vmpg);
         }
 

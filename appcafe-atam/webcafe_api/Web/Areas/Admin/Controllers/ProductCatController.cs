@@ -37,7 +37,15 @@ namespace Web.Areas.Admin.Controllers
         {
             var __auth = MySsAuthUsers.GetAuth();
             PG<ProductCat> vmpg;
-            vmpg = _productCatRepo.GetQueryPaging(paging, w => w.Quan.UserId== __auth.OwnerId);
+            if (__auth.Username == "admin")
+            {
+                vmpg = _productCatRepo.GetQueryPaging(paging);
+            }
+            else
+            {
+                vmpg = _productCatRepo.GetQueryPaging(paging, w => w.Quan.UserId == __auth.OwnerId);
+            }
+         
             return PartialView(vmpg);
         }
 

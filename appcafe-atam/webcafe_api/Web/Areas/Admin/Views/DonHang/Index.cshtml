@@ -25,10 +25,36 @@
         margin-top: -4px;
         color: #555;
     }
+
     .trselected {
         background-color: #ffdede !important;
         color: black !important;
-       
+    }
+
+    .banBadge {
+        position: relative;
+        overflow: initial !important;
+        margin: 5px;
+    }
+
+        .banBadge .badge {
+        }
+
+        .banBadge .badge_top {
+            position: absolute !important;
+            top: -5px !important;
+            right: 12px !important;
+        }
+
+        .banBadge .badge_bottom {
+            position: absolute !important;
+            bottom: -5px !important;
+            right: 12px !important;
+            top: auto !important;
+        }
+
+    .bg-deep-purple:hover, .bg-deep-purple:focus, .bg-deep-purple.focus {
+        color: white !important;
     }
 </style>
 
@@ -73,17 +99,6 @@
     <div class="row">
         <!-- /.btn-group -->
         <div class="col-md-4">
-            <select v-model="QuanDefaultId" class="form-control" v-on:change="fnReloadTable();">
-                <option v-bind:value="item.Id" v-for="item of ddlQuan">{{item.TenQuan}}</option>
-            </select>
-            <select style="margin-top: 5px;" v-model="F_TrangThaiGiaoHangId" class="form-control" v-on:change="fnReloadTable();">
-                <option v-bind:value="item.Value" v-for="item of ddlTrangThaiGiaoHang">{{item.Text}}</option>
-            </select>
-            <select style="margin-top: 5px;" v-model="F_TrangThaiThanhToanId" class="form-control" v-on:change="fnReloadTable();">
-                <option v-bind:value="item.Value" v-for="item of ddlTrangThaiThanhToan">{{item.Text}}</option>
-            </select>
-        </div>
-        <div class="col-md-4">
             <div class="btn-group">
                 @if (!isAdmin)
                 {
@@ -97,10 +112,22 @@
                 }
             </div>
             <input type="number" placeholder="Nhập mã đơn hàng" class="txt_search form-control" data-col="full_text_search" />
+
+            <select v-model="QuanDefaultId" class="form-control" v-on:change="fnReloadTable();">
+                <option v-bind:value="item.Id" v-for="item of ddlQuan">{{item.TenQuan}}</option>
+            </select>
+            <select style="margin-top: 5px;" v-model="F_TrangThaiGiaoHangId" class="form-control" v-on:change="fnReloadTable();">
+                <option v-bind:value="item.Value" v-for="item of ddlTrangThaiGiaoHang">{{item.Text}}</option>
+            </select>
+            <select style="margin-top: 5px;" v-model="F_TrangThaiThanhToanId" class="form-control" v-on:change="fnReloadTable();">
+                <option v-bind:value="item.Value" v-for="item of ddlTrangThaiThanhToan">{{item.Text}}</option>
+            </select>
         </div>
-        <div class="col-md-4">
-            <button v-for="item in getBan()" type="button" class="btn btn-default btn-circle-lg waves-effect waves-circle waves-float" style="margin-bottom: 5px;">
-                {{item}}
+        <div class="col-md-8">
+            <button v-bind:class="[item.Ban==BanSelected?'bg-deep-purple':'btn-default']" v-on:click="fnSelectBan(item)" v-for="item in BanState" type="button" class="banBadge btn btn-circle-lg waves-effect waves-circle waves-float" style="margin-bottom: 5px;">
+                {{item.Ban}}
+                <span class="badge badge_top bg-pink" title="Chưa thanh toán" v-if="item.SoLuongBanChuaThanhToan>0">{{item.SoLuongBanChuaThanhToan}}</span>
+                <span class="badge badge_bottom bg-teal" title="Chưa giao hàng" v-if="item.SoLuongBanChuaGiaoHang>0">{{item.SoLuongBanChuaGiaoHang}}</span>
             </button>
         </div>
     </div>
@@ -169,7 +196,6 @@
                                     <th>ĐƠN GIÁ</th>
                                     <th style="width:100px;">SỐ LƯỢNG</th>
                                     <th>THÀNH TIỀN</th>
-                                   
                                 </tr>
                             </thead>
                             <tbody>
@@ -201,7 +227,7 @@
                                     <td>
                                         {{vmoney(item.Product.Price*item.SoLuong)}}
                                     </td>
-                                   
+
                                 </tr>
                                 <tr>
                                     <td colspan="100%">
@@ -296,7 +322,7 @@
                                             <th style="max-width: 250px;">SẢN PHẨM</th>
                                             @*<th>ĐƠN GIÁ</th>*@
                                             <th>TÊN GIÁ/ĐƠN GIÁ x SỐ LƯỢNG = THÀNH TIỀN</th>
-                                           
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -314,10 +340,10 @@
                                                 <span v-html="item.Product.ProductName"></span>
                                             </td>
                                             @*<td>
-                                                <p class="font-bold">{{vmoney(item.Product.Price)}}</p>
-                                            </td>*@
+                                                    <p class="font-bold">{{vmoney(item.Product.Price)}}</p>
+                                                </td>*@
                                             <td>
-                                             
+
                                                 <table>
                                                     <tr>
                                                         <td>Niêm yết</td>
@@ -341,7 +367,7 @@
                                                     </tr>
                                                 </table>
                                             </td>
-                                          
+
                                         </tr>
                                     </tbody>
                                 </table>
@@ -361,11 +387,25 @@
                             </div>
                             <div class="media-body">
                                 <h4 class="media-heading">{{item.ThoiGian}}</h4> {{item.NoiDungGopY}}
-                            </div>
 
+                                <div class="media" v-for="rep of item.Replies">
+                                    <div class="media-left">
+                                        <a href="#">
+                                            <img class="media-object" src="http://placehold.it/64x64" width="64" height="64">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">{{rep.NguoiPhanHoi}} <code>{{rep.ThoiGian}}</code></h4>{{rep.NoiDung}}
+                                      
+                                    </div>
+                                </div>
+                                <textarea v-model="item.NoiDungPhanHoiMoi" class="form-control" placeholder="Nhập nội dung phản hồi"></textarea>
+                                <div class="text-right">
+                                    <button v-on:click="fnPhanHoi(item)" class="btn btn-primary waves-effect"> PHẢN HỒI </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -475,7 +515,7 @@
             Object.keys(object).map(function (i) {
                 cloned[i] = object[i];
             });
- 
+
             return cloned;
         }
         var vueDonHang = new Vue({
@@ -509,9 +549,12 @@
                 DiaChiGiaoHang:"",
                 idedit:-1,
 
-                F_TrangThaiThanhToanId: 1,
+                F_TrangThaiThanhToanId: -1,
                 F_TrangThaiGiaoHangId: -1,
                 DSGopYJson:[],
+
+                BanState:[],
+                BanSelected:-1,
             },
             methods: {
                 initial: function () {
@@ -538,6 +581,7 @@
                             TenQuan:"-Tất cả quán-"
                         });
                         vueDonHang.QuanDefaultId = qdata[0].Id;
+                        vueDonHang.getBanState();
                         cls.fnInit();
                     });
                     $.getJSON("@Url.Action("ajax_ddl_trangthaidonhang", "Roles")", function (data) {
@@ -562,6 +606,26 @@
                         vueDonHang.ddl = data;
                     });
                 },
+                getBanState:function() {
+                    if (this.QuanDefaultId != -1) {
+                        $.getJSON("@Url.Action("LayBanStateCuaQuan", "DonHang")?quanid=" + this.QuanDefaultId, function(data) {
+                            vueDonHang.BanState = data;
+                        });
+                    } else {
+                        vueDonHang.BanState = [];
+                    }
+                },
+                fnUnSelectBan:function() {
+                    this.BanSelected =-1;
+                },
+                fnSelectBan:function(ban) {
+                    if (this.BanSelected == ban.Ban) {
+                        this.BanSelected = -1;
+                    } else {
+                        this.BanSelected = ban.Ban;
+                    }
+                    clsProduct.fnReload();
+                },
                 reset:function() {
                     this.idedit = -1;
                     this.GhiChu = "";
@@ -573,24 +637,6 @@
                     this.thucdon = [];
                     this.soluong = 1;
                     this.DSGopYJson = [];
-                },
-                getBan:function() {
-                    var ban=[];
-                    if (this.QuanDefaultId != -1) {
-                        var findQuan = this.ddlQuan.find(function(s) {
-                            return s.Id = vueDonHang.QuanDefaultId;
-                        });
-                        if (findQuan != undefined) {
-                            console.log(findQuan);
-                            return ban;
-
-                            ban= $.map(findQuan.BanArr.text().split(','), function(value){
-                                return parseInt(value, 10);
-                                // or return +value; which handles float values as well
-                            });
-                        }
-                    }
-                    return ban;
                 },
                 showTaoDonHang: function () {
                     this.reset();
@@ -607,6 +653,29 @@
                     this.reset();
                     this.mode = 3;//add
                     $("#modal_tao_donhang").modal("show");
+                },
+                fnPhanHoi:function(curCmt) {
+                    if (curCmt.NoiDungPhanHoiMoi.length > 0) {
+                        var _model = {
+                            NoiDungPhanHoi: curCmt.NoiDungPhanHoiMoi,
+                            GopYId: curCmt.Id,
+                            DonHangId: this.idedit,
+                        };
+                        var ajaxops = {
+                            url: "@Url.Action("ajax_reply")",
+                            param: JSON.stringify({ model: _model }),
+                            fnSuccess: function (data) { //Success
+                                if (data.r) {
+                                    swal("Thông báo",data.m,"success");
+                                } else {
+                                    swal("Thông báo",data.m,"error");
+                                }
+                            }
+                        };
+                        fnAjax(ajaxops);
+                    } else {
+                        swal("Chưa nhập nội dung phản hồi");
+                    }
                 },
                 changeMode:function(_mode) {
                     this.mode = _mode;
@@ -649,9 +718,9 @@
                             }
                         }
                     }
-                   
+
                     //xu ly thuc don ct
-                    outer_loop: 
+                    outer_loop:
                         for (var i = 0; i < this.thucdon.length;i++) {
                             dance:
                                 for (var j = 0; j < this.thucdon[i].ThucDonCTSelectVM.length; j++) { //search in menu
@@ -672,23 +741,23 @@
                 },
                 ///type:1 niem yet, 2: gia phu
                 fnMenuChangeSL:function(item,type,sanpham) { //item có thể là sanpham hoặc 1 bảng giá
-                   
+
                     if (item.SoLuong == 0) {
                         //remove in array
                         var __giaid = -1;
-                        
-                            if (type == 1) {
-                                __giaid = item.GiaId;
-                            }else if (type == 2) {
-                                __giaid = item.Id;
+
+                        if (type == 1) {
+                            __giaid = item.GiaId;
+                        }else if (type == 2) {
+                            __giaid = item.Id;
+                        }
+                        for (var i = 0; i < this.giohang.length; i++) {
+                            if (this.giohang[i].Id == sanpham.Id&&this.giohang[i].GiaId == __giaid) {
+                                this.giohang.splice(i, 1);
+                                break;
                             }
-                            for (var i = 0; i < this.giohang.length; i++) {
-                                if (this.giohang[i].Id == sanpham.Id&&this.giohang[i].GiaId == __giaid) {
-                                    this.giohang.splice(i, 1);
-                                    break;
-                                }
-                            }
-                            return;
+                        }
+                        return;
                     }
                     if (type == 1) { //nếu là giá niêm yết
                         //nếu tồn tại trong giỏ hàng thì cập nhật giá
@@ -765,7 +834,7 @@
                             GiaId: this.giohang[i].GiaId,
                         });
                     }
-                   
+
                     var ajaxops = {
                         url: "@Url.Action("ajax_dathang")",
                         param: JSON.stringify({ model: _model }),
@@ -833,9 +902,6 @@
                             vueDonHang.DSGopYJson = data.DSGopYJson;
                             //
                             vueDonHang.syncEditCart();
-
-                           
-
                         });
                     });
                 },
@@ -868,7 +934,7 @@
                             GiaId: this.giohang[i].GiaId,
                         });
                     }
-                  
+
                     var ajaxops = {
                         url: "@Url.Action("ajax_edit_dathang")",
                         param: JSON.stringify({ model: _model }),
@@ -899,11 +965,10 @@
             self.showDSGopY = function() {
                 vueDonHang.showDSGopY();
             }
-
             self.fnReload = function () {
                 cls.fnReloadTable();
-            }
 
+            }
             $("#ddlProductCat").change(function () {
                 cls.fnReload();
             });
@@ -945,10 +1010,11 @@
                                     toastr.success(data.m);
                                     $("#btnSelectAll").data("select-all", false);
                                     $("#btnSelectAll").html("<i class='fa fa-square-o'></i>");
+                                    vueDonHang.getBanState();
+                                    cls.fnReload();
                                 } else {
                                     toastr.error(data.m);
                                 }
-                                cls.fnReload();
                             },
                             param: JSON.stringify({ arr: _arr }),
                             url: "@Url.Action("xoachon", "DonHang", new { area = "Admin" })"
@@ -990,7 +1056,9 @@
                             alert(data.m);
                         } else {
                             cls.fnReload();
+                            vueDonHang.getBanState();
                         }
+
                     }
                 };
                 fnAjax(ajaxops);
@@ -1004,6 +1072,7 @@
                             alert(data.m);
                         } else {
                             cls.fnReload();
+                            vueDonHang.getBanState();
                         }
                     }
                 };
@@ -1056,7 +1125,8 @@
             catid: -1,
             quanid: vueDonHang.QuanDefaultId,
             trangthaigiaohangid:vueDonHang.F_TrangThaiGiaoHangId,
-            trangthaithanhtoanid:vueDonHang.F_TrangThaiThanhToanId
+            trangthaithanhtoanid:vueDonHang.F_TrangThaiThanhToanId,
+            ban:vueDonHang.BanSelected,
         };
         var cls = new clsPaging(paging_config);
 
@@ -1147,7 +1217,8 @@
                     Fnjs: self.config.fnjs,
                     quanid: vueDonHang.QuanDefaultId,
                     trangthaigiaohangid:vueDonHang.F_TrangThaiGiaoHangId,
-                    trangthaithanhtoanid:vueDonHang.F_TrangThaiThanhToanId
+                    trangthaithanhtoanid:vueDonHang.F_TrangThaiThanhToanId,
+                    ban:vueDonHang.BanSelected,
 
                 };
 

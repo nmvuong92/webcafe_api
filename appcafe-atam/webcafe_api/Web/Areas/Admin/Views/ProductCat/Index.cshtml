@@ -82,9 +82,6 @@
                             TenQuan: "-Tất cả quán-",
                         });
                         vue.ddlQuan = data;
-                    });
-                    $.getJSON("@Url.Action("ajax_lay_quan_mac_dinh","Roles")", function (data) {
-                        vue.QuanDefaultId = parseInt(data);
                         cls.fnInit();
                     });
                 },

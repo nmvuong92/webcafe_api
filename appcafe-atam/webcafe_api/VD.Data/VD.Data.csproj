@@ -178,6 +178,10 @@
     <Compile Include="Migrations\201805121553169_mg_gopytable.Designer.cs">
       <DependentUpon>201805121553169_mg_gopytable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805220622531_mg_gopy_reply.cs" />
+    <Compile Include="Migrations\201805220622531_mg_gopy_reply.Designer.cs">
+      <DependentUpon>201805220622531_mg_gopy_reply.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repository\ArticleRepository.cs" />
     <Compile Include="Repository\QuanRepository.cs" />
     <Compile Include="Repository\DonHangRepository.cs" />
@@ -316,6 +320,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805121553169_mg_gopytable.resx">
       <DependentUpon>201805121553169_mg_gopytable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805220622531_mg_gopy_reply.resx">
+      <DependentUpon>201805220622531_mg_gopy_reply.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

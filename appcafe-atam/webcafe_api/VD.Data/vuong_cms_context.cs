@@ -92,6 +92,7 @@ namespace VD.Data
         public DbSet<HinhThucMuaHang> HinhThucMuaHang { get; set; }
         public DbSet<BangGiaCT> BangGiaCT { get; set; }
         public DbSet<GopY> GopY { get; set; }
+        public DbSet<GopYReply> GopYReply { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
       

@@ -34,6 +34,10 @@ namespace VD.Data.Repository
             {
                 query = query.Where(w => w.TrangThaiThanhToanId == paging.trangthaithanhtoanid);
             }
+            if (paging.ban != -1)
+            {
+                query = query.Where(w => w.Ban==paging.ban);
+            }
             if (paging.loctg)
             {
                 query = query.Where(e => EntityFunctions.TruncateTime(e.CreatedDate) >= paging.tu

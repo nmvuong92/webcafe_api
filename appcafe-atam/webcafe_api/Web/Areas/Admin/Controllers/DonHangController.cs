@@ -69,7 +69,39 @@ namespace Web.Areas.Admin.Controllers
             ViewBag.QuanDefaultId = user.QuanDefaultId;
             ViewBag.BaseUserId = __auth.ID;
             ViewBag.__auth = __auth;
+
+          
             return View(vm);
+        }
+
+        [HttpGet]
+        public JsonResult LayBanStateCuaQuan(int quanid)
+        {
+            var arr = new List<BanStateVM>();
+            var quan = __db.Quan.FirstOrDefault(q=>q.Id==quanid);
+            if (quan != null)
+            {
+                if (!string.IsNullOrWhiteSpace(quan.BanArr))
+                {
+                    try
+                    {
+                        var arrban = quan.BanArr.Split(',').Select(Int32.Parse).Distinct().ToList();
+                        arrban.Insert(0,0);
+                        arr=arrban.Select(s => new BanStateVM()
+                        {
+                            Ban = s,
+                            SoLuongBanChuaGiaoHang = quan.DonHangs.Count(c=>c.TrangThaiGiaoHangId==1&&c.Ban==s),
+                            SoLuongBanChuaThanhToan = quan.DonHangs.Count(c => c.TrangThaiThanhToanId == 1 && c.Ban == s),
+                        }).ToList();
+                    }
+                    catch
+                    {
+
+                    }
+                }
+            }
+            return Json(arr, JsonRequestBehavior.AllowGet);
+            
         }
 
         [HttpPost]
@@ -140,25 +172,56 @@ namespace Web.Areas.Admin.Controllers
             {
                 Id=s.Id,
                 NoiDungGopY=s.NoiDungGopY,
-                ThoiGian= s.CreatedDate.XuatDateTime(),
+                ThoiGian = s.ModifiedDate.XuatDateTime() + "-" + s.ModifiedDate.TimeAgo(),
+                NoiDungPhanHoiMoi = "",
+                Replies = s.GopYReplies.ToList().Select(r=>new GopYReplyJson()
+                {
+                    NoiDung = r.NoiDung,
+                    NguoiPhanHoi = r.UserReply.Fullname,
+                    ThoiGian = r.ModifiedDate.XuatDateTime() + "-" + r.ModifiedDate.TimeAgo(),
+                  
+                }).ToList()
             }).ToList();
             return Json(dh, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
-        /*
-      
-        [HttpGet]
-        public JsonResult ajax_get_ban(int quanid)
+        [HttpPost]
+        public JsonResult ajax_reply(ReplyPhanHoiForm model)
         {
-            var thucdon = __db.Ban.Where(w => w.QuanId == quanid).ToList().Select(s => new Ban()
+            rs r;
+            if (ModelState.IsValid)
             {
-                Id = s.Id,
-                TenBan = s.TenBan,
-                MaBan = s.MaBan
-            }).ToList();
-            return Json(thucdon, JsonRequestBehavior.AllowGet);
-        }*/
+                try
+                {
+                    var donhang = __db.DonHangs.Find(model.DonHangId);
+                    var quan = donhang.Quan;
+
+                    var __auth = MySsAuthUsers.GetAuth();
+                    var newRep = new GopYReply()
+                    {
+                        GopYId = model.GopYId,
+                        NoiDung = model.NoiDungPhanHoi,
+                        UserReplyId = __auth.ID,
+                    };
+                    __db.GopYReply.Add(newRep);
+                    __db.SaveChanges();
+                    OneSignalAPI.SendMsgToUser(quan.TenQuan + " #TH" + donhang.Id, model.NoiDungPhanHoi, donhang.UniqueID);
+                    r = rs.T("Đã phản hồi thành công!");
+                }
+                catch (Exception ex)
+                {
+                    r = rs.F("Lỗi: "+ex.Message);
+                }
+            }
+            else
+            {
+                r = rs.F("Lỗi, vui lòng thử lại. " + string.Join(";", ModelState.Values
+                                           .SelectMany(x => x.Errors)
+                                           .Select(x => x.ErrorMessage).Distinct()));
+            }
+            return Json(r, JsonRequestBehavior.DenyGet);
+        }
         [HttpGet]
         public JsonResult ajax_get_thucdon(int quanid)
         {
